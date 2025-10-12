@@ -131,10 +131,8 @@ def create_app():
                 finally:
                     # DB에 로그 저장 (오류가 나도 입력/옵션은 남길 수 있게 finally에서 처리)
                     try:
-                        sess = session.get("user", {})
-                        user_id = sess.get("user_id")
-                        if user_id is None:
-                            user_id = "guest"
+                        sess = session.get("user") or {}
+                        user_id = sess.get("user_id") or "guest"
 
                         # 실제 클라이언트 IP (프록시 뒤에 있으면 X-Forwarded-For 참조)
                         request_ip = request.headers.get("X-Forwarded-For", request.remote_addr)
