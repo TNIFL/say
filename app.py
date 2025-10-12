@@ -268,4 +268,4 @@ if __name__ == "__main__":
     # 개발 중 최초 1회는 마이그레이션 대신 간단 생성도 가능:
     # with app.app_context():
     #     db.create_all()
-    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)), debug=True)
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 8080)), debug=True)
