@@ -239,6 +239,10 @@ def create_app():
             page=default_page,
         )
 
+    @app.route("/health")
+    def health():
+        return "ok", 200
+
     @app.route("/history")
     def user_history():
         # 로그인 여부 확인
