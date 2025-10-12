@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>착하게 말하기</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --bg:#0f1115; --panel:#171a21; --text:#e9edf3; --muted:#8b93a7;
+      --border:#232837; --accent:#3b82f6; --shadow:0 8px 24px rgba(0,0,0,.25);
+    }
+    body.light{
+      --bg:#f7f9fc; --panel:#ffffff; --text:#1a1c22; --muted:#6f7380;
+      --border:#d6d8e0; --accent:#2563eb; --shadow:0 4px 12px rgba(0,0,0,.1);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--text);
+      font:14px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,Apple SD Gothic Neo,Arial,sans-serif;
+      transition:background .3s, color .3s;
+    }
+
+    .main{max-width:1100px; margin:24px auto; padding:16px}
+    .stack{display:grid; gap:16px}
+    .card{
+      background:var(--panel); border:1px solid var(--border);
+      border-radius:16px; padding:16px; box-shadow:var(--shadow);
+      transition:background .3s, border-color .3s;
+    }
+    .card h3{margin:0 0 10px 0}
+    .small{color:var(--muted); font-size:12px}
+    .hint{border-left:3px solid var(--border); padding-left:10px}
+
+    .row{display:grid; gap:12px}
+    .row.cols-2{grid-template-columns:1fr 1fr}
+    @media (max-width:880px){ .row.cols-2{grid-template-columns:1fr} }
+
+    textarea, select, input[type="text"]{
+      width:100%; background:transparent; color:var(--text);
+      border:1px solid var(--border); border-radius:12px; padding:12px; outline:none;
+      transition:border-color .2s, background .3s, color .3s;
+    }
+    textarea{min-height:180px; resize:vertical}
+
+    .toolbar{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+    .spacer{flex:1}
+    .btn{
+      appearance:none; border:none; cursor:pointer; padding:10px 14px;
+      border-radius:12px; font-weight:700; background:var(--accent); color:#fff;
+      transition:.15s transform ease, .15s opacity;
+    }
+    .btn.secondary{background:none; border:1px solid var(--border); color:var(--text)}
+    .btn:active{transform:translateY(1px)}
+    .btn.ghost{background:transparent; border:1px solid var(--border); color:var(--text)}
+
+    /* 멀티 선택 / 칩 */
+    .chipbox{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px}
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      background:transparent; border:1px solid var(--accent); color:var(--text);
+      padding:6px 10px; border-radius:999px; cursor:pointer; user-select:none;
+    }
+    .chip .x{font-weight:700; opacity:.8}
+    .input-group{display:flex; gap:8px; align-items:center}
+    .input-group > *:first-child{flex:1}
+
+    .output{
+      min-height:180px; white-space:pre-wrap; word-break:break-word;
+      background:transparent; border:1px solid var(--border);
+      border-radius:12px; padding:12px;
+    }
+
+    .theme-toggle{cursor:pointer; background:none; border:1px solid var(--border);
+      color:var(--text); padding:8px 12px; border-radius:12px; font-size:13px}
+
+    .checkbox-group{
+      display:flex; flex-wrap:wrap; gap:16px; margin-top:10px;
+      font-size:13px; color:var(--text); align-items:center;
+    }
+    .checkbox-item{display:inline-flex; align-items:center; gap:8px}
+    .checkbox-item input{transform:scale(1.2);}
+        /* === Site Header / Brand === */
+    .site-header{
+      position: sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      border-bottom: 1px solid var(--border);
+    }
+    .site-header .inner{
+      max-width:1100px; margin:0 auto; padding:10px 16px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .brand{
+      display:inline-flex; align-items:center; gap:10px;
+      text-decoration:none; color:var(--text);
+    }
+    .brand-mark{
+      width:28px; height:28px; border-radius:10px;
+      display:inline-grid; place-items:center;
+      background: linear-gradient(135deg, var(--accent), #91f2c3);
+      box-shadow: 0 6px 16px rgba(0,0,0,.20), inset 0 0 0 1px rgba(255,255,255,.12);
+    }
+    .brand-mark svg{ width:16px; height:16px; fill:#0b1020 }
+    .brand-title{
+      font-weight:800; letter-spacing:.2px;
+      background: linear-gradient(90deg, var(--accent), #91f2c3);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      font-size:16px;
+    }
+    .header-actions{ display:flex; align-items:center; gap:8px }
+  </style>
+</head>
+<!-- ... <head>와 스타일은 기존 그대로 ... -->
+<body>
+  <!-- 헤더는 main 바깥에 두어도 되지만, 기존 구조 유지 -->
+  <div class="main">
+    <header class="site-header">
+      <div class="inner">
+        <a class="brand" href="/">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 5.5C4 4.12 5.34 3 7 3h10c1.66 0 3 1.12 3 2.5v7c0 1.38-1.34 2.5-3 2.5H11l-3.6 3.1c-.52.45-1.4.09-1.4-.55V15H7c-1.66 0-3-1.12-3-2.5v-7Z"></path>
+            </svg>
+          </span>
+          <span class="brand-title">착하게 말해요</span>
+        </a>
+
+        <div class="header-actions" style="display:flex; align-items:center; gap:8px; min-width:0;">
+          <!-- 다크/라이트 토글 -->
+          <button id="themeToggle" class="theme-toggle">🌙 다크/라이트</button>
+          <a class="btn ghost" href="{{ url_for('feedback') }}">피드백</a>
+
+          {% if session.get('user') %}
+            <!-- 로그인 상태: 기록보기 + 사용자 이메일 + 로그아웃 -->
+            <a class="btn ghost" href="{{ url_for('user_history') }}">기록보기</a>
+            <span class="small" title="{{ session.get('user').user_id }}"
+                  style="max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; opacity:.8;">
+              {{ session.get('user').user_id }}
+            </span>
+            <a class="btn ghost" href="{{ url_for('auth.logout') }}">로그아웃</a>
+          {% else %}
+            <!-- 비로그인 상태: 로그인 버튼만 -->
+            <a class="btn ghost" href="{{ url_for('auth.login_page') }}">로그인</a>
+          {% endif %}
+        </div>
+      </div>
+    </header>
+
+
+    <!-- 이하 본문/폼 부분은 기존 그대로 -->
+    <!-- ... -->
+
+    <form id="polishForm" class="stack" method="post" action="/">
+      <!-- 1층: 입력 -->
+      <section class="card">
+        <h3>입력</h3>
+        <p class="small hint">전달할 문장을 아래에 입력하세요.</p>
+        <textarea id="input_text" name="input_text" placeholder="예) 왜 이렇게 늦게 보내세요? 다음부턴 제때 보내세요.">{{ input_text or "" }}</textarea>
+      </section>
+
+      <!-- 2층: 카테고리 & 말투 (여러 개 추가/삭제 가능) -->
+      <section class="card">
+        <h3>카테고리 & 말투 설정 (복수 추가 / 칩 클릭 제거)</h3>
+
+        <div class="row cols-2">
+          <!-- 카테고리 -->
+          <div>
+            <label class="small" for="categorySelect">카테고리 선택 후 ‘추가’</label>
+            <div class="input-group">
+              <select id="categorySelect">
+                <option value="" disabled selected>카테고리 선택…</option>
+                <option value="general">일반</option>
+                <option value="work">업무</option>
+                <option value="support">고객응대</option>
+                <option value="community">커뮤니티</option>
+                <option value="apology">사과</option>
+                <option value="inquiry">문의</option>
+              </select>
+              <button type="button" class="btn" id="addCategoryBtn">추가</button>
+            </div>
+            <div class="chipbox" id="categoryChips" aria-live="polite"></div>
+            <!-- 서버로 전달될 hidden inputs 컨테이너 -->
+            <div id="categoryHidden"></div>
+          </div>
+
+          <!-- 말투 -->
+          <div>
+            <label class="small" for="toneSelect">말투 선택 후 ‘추가’</label>
+            <div class="input-group">
+              <select id="toneSelect">
+                <option value="" disabled selected>말투 선택…</option>
+                <option value="soft">부드럽게</option>
+                <option value="polite">정중하게</option>
+                <option value="concise">간결하게</option>
+                <option value="report">보고서체</option>
+                <option value="friendly">친근하게</option>
+              </select>
+              <button type="button" class="btn" id="addToneBtn">추가</button>
+            </div>
+            <div class="chipbox" id="toneChips" aria-live="polite"></div>
+            <!-- 서버로 전달될 hidden inputs 컨테이너 -->
+            <div id="toneHidden"></div>
+          </div>
+        </div>
+
+        <!-- ✅ 옵션들: 존댓말 / 완충문·인사 / 이모지 -->
+        <div class="checkbox-group">
+          <label class="checkbox-item">
+            <input type="checkbox" id="honorific" name="honorific" value="on" {% if honorific_checked %}checked{% endif %}>
+            <span>존댓말 유지</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="opener" name="opener" value="on" {% if opener_checked %}checked{% endif %}>
+            <span>완충문·인사 추가</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="emoji" name="emoji" value="on" {% if emoji_checked %}checked{% endif %}>
+            <span>이모지 허용 🙂</span>
+          </label>
+        </div>
+
+        <div class="toolbar" style="margin-top:8px;">
+          <span class="small">선택한 칩을 클릭하면 제거됩니다.</span>
+          <span class="spacer"></span>
+          <button type="button" id="clearAll" class="btn ghost">전체 초기화</button>
+        </div>
+      </section>
+
+      <!-- 3층: 출력 -->
+      <section class="card">
+        <h3>출력</h3>
+        <div id="output_text" class="output">{{ output_text or "서버에서 처리된 결과가 여기에 표시됩니다." }}</div>
+        <div class="toolbar" style="margin-top:8px;">
+          <span class="small">※ 원하는 결과가 나오지 않을수도 있습니다</span>
+          <span class="spacer"></span>
+          <button type="submit" class="btn">순화하기</button>
+        </div>
+      </section>
+    </form>
+  </div>
+
+  <script>
+    // --- 테마 토글 ---
+    (function themeToggle(){
+      const btn = document.getElementById('themeToggle');
+      const saved = localStorage.getItem('theme') || 'dark';
+      if (saved === 'light') document.body.classList.add('light');
+      btn.addEventListener('click', ()=>{
+        document.body.classList.toggle('light');
+        localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+      });
+    })();
+
+    // --- 칩 유틸 ---
+    function createChip(text, value, group, hiddenContainer, inputName){
+      if (document.querySelector(`.${group}-chip[data-value="${CSS.escape(value)}"]`)) return;
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = `chip ${group}-chip`;
+      chip.dataset.value = value;
+      chip.textContent = text + ' ';
+      const x = document.createElement('span');
+      x.className = 'x';
+      x.textContent = '×';
+      chip.appendChild(x);
+
+      const hid = document.createElement('input');
+      hid.type = 'hidden';
+      hid.name = inputName;      // 예: categories, tones
+      hid.value = value;
+      hid.dataset.value = value;
+
+      return { chip, hid };
+    }
+
+    function addItem(selectEl, chipsBoxEl, hiddenBoxEl, group, inputName){
+      const opt = selectEl.options[selectEl.selectedIndex];
+      if (!opt || !opt.value) return;
+      const made = createChip(opt.text, opt.value, group, hiddenBoxEl, inputName) || {};
+      if (!made.chip || !made.hid) return;
+      chipsBoxEl.appendChild(made.chip);
+      hiddenBoxEl.appendChild(made.hid);
+      selectEl.selectedIndex = 0;
+    }
+
+    function removeItem(value, group, chipsBoxEl, hiddenBoxEl){
+      const chip = chipsBoxEl.querySelector(`.${group}-chip[data-value="${CSS.escape(value)}"]`);
+      const hid  = hiddenBoxEl.querySelector(`input[data-value="${CSS.escape(value)}"]`);
+      if (chip) chip.remove();
+      if (hid) hid.remove();
+    }
+
+    function clearAll(){
+      ['categoryChips','toneChips','categoryHidden','toneHidden'].forEach(id=>{
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = '';
+      });
+      document.getElementById('categorySelect').selectedIndex = 0;
+      document.getElementById('toneSelect').selectedIndex = 0;
+      // ✅ 체크박스도 해제
+      ['honorific','opener','emoji'].forEach(id=>{
+        const el = document.getElementById(id);
+        if (el) el.checked = false;
+      });
+    }
+
+    // --- 초기 바인딩 ---
+    (function bind(){
+      const cSel = document.getElementById('categorySelect');
+      const tSel = document.getElementById('toneSelect');
+      const cChips = document.getElementById('categoryChips');
+      const tChips = document.getElementById('toneChips');
+      const cHidden = document.getElementById('categoryHidden');
+      const tHidden = document.getElementById('toneHidden');
+
+      document.getElementById('addCategoryBtn').addEventListener('click', ()=>{
+        addItem(cSel, cChips, cHidden, 'category', 'categories');
+      });
+      document.getElementById('addToneBtn').addEventListener('click', ()=>{
+        addItem(tSel, tChips, tHidden, 'tone', 'tones');
+      });
+
+      // 칩 클릭 제거 (이벤트 위임)
+      cChips.addEventListener('click', (e)=>{
+        const btn = e.target.closest('.category-chip');
+        if (!btn) return;
+        removeItem(btn.dataset.value, 'category', cChips, cHidden);
+      });
+      tChips.addEventListener('click', (e)=>{
+        const btn = e.target.closest('.tone-chip');
+        if (!btn) return;
+        removeItem(btn.dataset.value, 'tone', tChips, tHidden);
+      });
+
+      document.getElementById('clearAll').addEventListener('click', clearAll);
+    })();
+
+    // --- ✅ 서버에서 전달된 선택 값 복원 ---
+    (function restoreFromServer(){
+      const preCats  = JSON.parse('{{ selected_categories | tojson | safe }}');
+      const preTones = JSON.parse('{{ selected_tones | tojson | safe }}');
+      const honorificChecked = JSON.parse('{{ 'true' if honorific_checked else 'false' }}');
+      const openerChecked    = JSON.parse('{{ 'true' if opener_checked else 'false' }}');
+      const emojiChecked     = JSON.parse('{{ 'true' if emoji_checked else 'false' }}');
+
+      const cSel = document.getElementById('categorySelect');
+      const tSel = document.getElementById('toneSelect');
+      const cChips = document.getElementById('categoryChips');
+      const tChips = document.getElementById('toneChips');
+      const cHidden = document.getElementById('categoryHidden');
+      const tHidden = document.getElementById('toneHidden');
+
+      // 체크박스 복원
+      document.getElementById('honorific').checked = honorificChecked;
+      document.getElementById('opener').checked = openerChecked;
+      document.getElementById('emoji').checked = emojiChecked;
+
+      // 카테고리 칩 복원
+      preCats.forEach(val => {
+        const opt = Array.from(cSel.options).find(o => o.value === val);
+        if (!opt) return;
+        const made = createChip(opt.text, val, 'category', cHidden, 'categories');
+        if (made) { cChips.appendChild(made.chip); cHidden.appendChild(made.hid); }
+      });
+
+      // 말투 칩 복원
+      preTones.forEach(val => {
+        const opt = Array.from(tSel.options).find(o => o.value === val);
+        if (!opt) return;
+        const made = createChip(opt.text, val, 'tone', tHidden, 'tones');
+        if (made) { tChips.appendChild(made.chip); tHidden.appendChild(made.hid); }
+      });
+    })();
+  </script>
+</body>
+</html>

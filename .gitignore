@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.DS_Store
+
+# Virtual env
+.venv/
+venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+
+# Flask/Build
+instance/
+*.log
+
+# Env/Secrets
+.env
+*.env
+
+# Node (혹시 있을 경우)
+node_modules/
+
+# Alembic cache
+migrations/__pycache__/
