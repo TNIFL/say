@@ -27,3 +27,5 @@ node_modules/
 
 # Alembic cache
 migrations/__pycache__/
+
+trash/
