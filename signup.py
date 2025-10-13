@@ -17,6 +17,8 @@ def signup():
         # --- 기본 검증 ---
         if not validate.validate_user_id(user_id):
             return render_template("signup.html", error="잘못된 아이디 형식입니다.", user_id=user_id, email=email)
+        if not validate.validate_user_password(password):
+            return render_template("signup.html", error="잘못된 비밀번호 형식입니다.", user_id=user_id, email=email)
         if not user_id:
             return render_template("signup.html", error="아이디를 입력해주세요.", user_id=user_id, email=email)
         if not email or not password:

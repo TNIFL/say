@@ -2,6 +2,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 from models import User  # 실제 DB에서 사용자 확인
 from werkzeug.security import check_password_hash
+import validate
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -17,6 +18,16 @@ def login_page():
         user = User.query.filter_by(user_id=user_id).first()
 
         # 3) 존재 여부 및 비밀번호 확인
+        if not validate.validate_user_id(user_id):
+            return render_template("login.html",
+                                   error="잘못된 아이디 형식입니다.",
+                                   user_id=user_id,
+                                   remember=remember)
+        if not validate.validate_user_password(password):
+            return render_template("login.html",
+                                   error="잘못된 비밀번호 형식입니다.",
+                                   user_id=user_id,
+                                   remember=remember)
         if user and check_password_hash(user.password_hash, password):
             session["user"] = {"user_id": user.user_id, "email": user.email}
             session.permanent = remember
