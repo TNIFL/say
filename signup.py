@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 from werkzeug.security import generate_password_hash
 from models import db, User  # ✅ SQLAlchemy 모델 불러오기
-
+import validate
 signup_bp = Blueprint("signup", __name__)
 
 @signup_bp.route("/signup", methods=["GET", "POST"])
@@ -15,6 +15,8 @@ def signup():
         agree = bool(request.form.get("agree"))
 
         # --- 기본 검증 ---
+        if not validate.validate_user_id(user_id):
+            return render_template("signup.html", error="잘못된 아이디 형식입니다.", user_id=user_id, email=email)
         if not user_id:
             return render_template("signup.html", error="아이디를 입력해주세요.", user_id=user_id, email=email)
         if not email or not password:
