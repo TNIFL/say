@@ -270,6 +270,20 @@ def create_app():
 
         return render_template("history.html", logs=logs, user=user)
 
+    # app.py 안의 create_app() 내부, 다른 route들과 같은 레벨에 추가
+    @app.route("/terms")
+    def terms():
+        return render_template("terms.html")
+
+    @app.route("/privacy")
+    def privacy():
+        return render_template("privacy.html")
+
+    @app.route("/disclaimer")
+    def disclaimer():
+        return render_template("disclaimer.html")
+
+
     return app
 
 
