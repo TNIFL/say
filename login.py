@@ -19,7 +19,7 @@ def login_page():
 
         # 3) 존재 여부 및 비밀번호 확인
         if user and check_password_hash(user.password_hash, password):
-            session["user"] = {"user_id": user.user_id, "email": user.email}
+            session["user"] = {"id": user.id, "user_id": user.user_id, "email": user.email}
             session.permanent = remember
             return redirect(url_for("polish"))
         else:

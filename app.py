@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 import os
 
 from config import Config  # 환경설정 (SECRET_KEY, DATABASE_URL 등)
-from models import db, RewriteLog, Feedback  # SQLAlchemy 인스턴스
+from models import db, RewriteLog, Feedback, User  # SQLAlchemy 인스턴스
 from login import auth_bp  # 로그인 블루프린트
 from signup import signup_bp  # 회원가입 블루프린트
 
@@ -135,13 +135,11 @@ def create_app():
                     try:
                         sess = session.get("user") or {}
                         user_id = sess.get("user_id")
-                        user_pk = sess.get("id")
 
                         # 실제 클라이언트 IP (프록시 뒤에 있으면 X-Forwarded-For 참조)
                         request_ip = request.headers.get("X-Forwarded-For", request.remote_addr)
 
                         log = RewriteLog(
-                            user_pk=user_pk,
                             user_id=user_id,
                             input_text=input_text,
                             output_text=output_text,
@@ -156,6 +154,10 @@ def create_app():
                             completion_tokens=completion_tokens,
                             total_tokens=total_tokens,
                         )
+                        if user_id:
+                            user = User.query.filter_by(user_id=user_id).first()
+                            if user:
+                                log.user_pk = user.id
                         db.session.add(log)
                         db.session.commit()
                     except Exception as log_err:
