@@ -126,18 +126,22 @@ def create_app():
                     completion_tokens = getattr(usage, "completion_tokens", None) if usage else None
                     total_tokens = getattr(usage, "total_tokens", None) if usage else None
 
-                except Exception as e:
-                    output_text = f"[오류] {e}"
+                except OpenAI.APIError as APIError:
+                    output_text = f"[오류] {APIError}"
+                except OpenAI.RateLimitError as ratelimitError:
+                    output_text = f"[오류] {ratelimitError}"
                 finally:
                     # DB에 로그 저장 (오류가 나도 입력/옵션은 남길 수 있게 finally에서 처리)
                     try:
                         sess = session.get("user") or {}
-                        user_id = sess.get("user_id") or "guest"
+                        user_id = sess.get("user_id")
+                        user_pk = sess.get("id")
 
                         # 실제 클라이언트 IP (프록시 뒤에 있으면 X-Forwarded-For 참조)
                         request_ip = request.headers.get("X-Forwarded-For", request.remote_addr)
 
                         log = RewriteLog(
+                            user_pk=user_pk,
                             user_id=user_id,
                             input_text=input_text,
                             output_text=output_text,

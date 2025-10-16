@@ -40,7 +40,7 @@ def signup():
         db.session.commit()
 
         # --- 가입 즉시 로그인 처리 ---
-        session["user"] = {"id": new_user.id, "email": email, "user_id": user_id}
+        session["user"] = {"user_id": user_id, "email": email}
         return redirect(url_for("polish"))
 
     # GET 요청
