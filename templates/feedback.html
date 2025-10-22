@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>착하게 말해요 · 건의사항</title>
+  <meta name="color-scheme" content="dark light">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root{
@@ -79,6 +80,55 @@
       color:#d1fae5; padding:10px 12px; border-radius:12px; font-size:13px;
     }
     body.light .success{color:#065f46}
+    /* === 폼 요소 다크/라이트 가시성 개선 === */
+    body { color-scheme: dark; }
+    body.light { color-scheme: light; }
+
+    :root{
+      --control-bg:#10141c;
+      --control-bg-focus:#151b26;
+      --control-text:var(--text);
+      --control-border:var(--border);
+      --control-placeholder:color-mix(in srgb, var(--text) 45%, transparent);
+    }
+    body.light{
+      --control-bg:#ffffff;
+      --control-bg-focus:#f4f7fb;
+      --control-text:#1a1c22;
+      --control-border:#d6d8e0;
+      --control-placeholder:#9aa0ae;
+    }
+
+    /* input / select / textarea 공통 */
+    select, textarea, input[type="text"], input[type="email"] {
+      background-color: var(--control-bg);
+      color: var(--control-text);
+      border: 1px solid var(--control-border);
+      border-radius: 12px;
+      padding: 12px;
+      outline: none;
+      transition: border-color .15s, background-color .15s, color .15s;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: var(--control-placeholder);
+    }
+
+    select:focus, textarea:focus, input[type="text"]:focus, input[type="email"]:focus {
+      background-color: var(--control-bg-focus);
+      border-color: var(--accent);
+      outline: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      outline-offset: 1px;
+    }
+
+    select option {
+      background: var(--panel);
+      color: var(--text);
+    }
+
+    select:hover, textarea:hover, input[type="text"]:hover, input[type="email"]:hover {
+      border-color: color-mix(in srgb, var(--accent) 35%, var(--control-border));
+    }
   </style>
 </head>
 <body>
