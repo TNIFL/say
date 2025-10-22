@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>착하게 말하기</title>
+  <meta name="color-scheme" content="dark light">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root{
@@ -109,6 +110,75 @@
       font-size:16px;
     }
     .header-actions{ display:flex; align-items:center; gap:8px }
+    /* 브라우저 기본 컨트롤(셀렉트 드롭다운 포함) 다크/라이트 힌트 */
+    body { color-scheme: dark; }
+    body.light { color-scheme: light; }
+
+    /* 폼 컨트롤 공통 토큰 */
+    :root{
+      --control-bg: #10141c;         /* 다크 기본 배경 */
+      --control-bg-focus: #151b26;   /* 포커스 시 살짝 밝게 */
+      --control-text: var(--text);
+      --control-border: var(--border);
+      --control-placeholder: color-mix(in srgb, var(--text) 45%, transparent);
+    }
+    body.light{
+      --control-bg: #ffffff;          /* 라이트 기본 배경 */
+      --control-bg-focus: #f4f7fb;
+      --control-text: #1a1c22;
+      --control-border: #d6d8e0;
+      --control-placeholder: #9aa0ae;
+    }
+
+    /* 입력류 기본 스타일 (select / input / textarea 모두 통일) */
+    select, textarea, input[type="text"]{
+      background-color: var(--control-bg);
+      color: var(--control-text);
+      border: 1px solid var(--control-border);
+      border-radius: 12px;
+      padding: 12px;
+      outline: none;
+      transition: border-color .15s ease, background-color .15s ease, color .15s ease;
+    }
+
+    /* 플레이스홀더 대비 개선 */
+    input::placeholder, textarea::placeholder{
+      color: var(--control-placeholder);
+    }
+
+    /* 포커스 가시성 확실히 */
+    select:focus, textarea:focus, input[type="text"]:focus{
+      background-color: var(--control-bg-focus);
+      border-color: var(--accent);
+      outline: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      outline-offset: 1px;
+    }
+
+    /* 일부 환경에서 드롭다운 목록(<option>) 대비 보정 */
+    select option{
+      background: var(--panel);
+      color: var(--text);
+    }
+
+    /* 호버 시 테두리 살짝 강조 (선택) */
+    select:hover, textarea:hover, input[type="text"]:hover{
+      border-color: color-mix(in srgb, var(--accent) 35%, var(--control-border));
+    }
+
+    /* 필요 시 셀렉트 기본 외형 유지(화살표 살리기) - appearance 제거 안 함
+       만약 커스텀 화살표 쓰고 싶으면 아래 주석 해제
+    */
+    /*
+    select{
+      appearance: none;
+      padding-right: 2.2rem;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%238b93a7'><path d='M7 10l5 5 5-5z'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 12px 12px;
+    }
+    */
+
   </style>
 </head>
 <!-- ... <head>와 스타일은 기존 그대로 ... -->
