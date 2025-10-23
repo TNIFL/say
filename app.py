@@ -20,6 +20,7 @@ def create_app():
     # 환경설정 로드
     app.config.from_object(Config)
 
+
     # (선택) 확장에서 쿠키 세션을 쓸 경우 권장
     # app.config.update(
     #     SESSION_COOKIE_SAMESITE="None",  # ★ 확장에서 credentials: "include" 시 필수
