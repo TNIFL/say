@@ -7,13 +7,11 @@ from flask_migrate import Migrate
 import os
 
 import build_prompt
-import claude_prompt_generator
-import gpt_prompt_generator
+from generator import claude_prompt_generator
 from config import Config  # 환경설정 (SECRET_KEY, DATABASE_URL 등)
 from models import db, RewriteLog, Feedback, User  # SQLAlchemy 인스턴스
 from login import auth_bp  # 로그인 블루프린트
 from signup import signup_bp  # 회원가입 블루프린트
-from gemini_prompt_generator import call_gemini
 from build_prompt import build_prompt
 
 load_dotenv()

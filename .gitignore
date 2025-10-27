@@ -31,3 +31,5 @@ migrations/__pycache__/
 trash/
 
 users.json
+
+prompt.txt
