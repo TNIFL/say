@@ -1,10 +1,11 @@
 import os
 from dotenv import load_dotenv
-import anthropic
 from typing import Tuple, Dict, Any
 
 # 환경변수 로드
 load_dotenv()
+
+import anthropic
 
 #claude-haiku-4-5-20251001
 #claude-sonnet-4-5-20250929
