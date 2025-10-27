@@ -164,6 +164,24 @@
     select:hover, textarea:hover, input[type="text"]:hover{
       border-color: color-mix(in srgb, var(--accent) 35%, var(--control-border));
     }
+    /* === GPT/Gemini Segmented Toggle === */
+.segmented{
+  display:inline-flex; gap:0; border:1px solid var(--border);
+  border-radius:12px; overflow:hidden; background:transparent;
+  box-shadow: var(--shadow);
+}
+.segmented button{
+  appearance:none; background:transparent; border:0; cursor:pointer;
+  padding:8px 12px; font-weight:700; color:var(--text);
+  transition: background .15s ease, color .15s ease;
+}
+.segmented button:not(.active):hover{
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+.segmented button.active{
+  background: var(--accent); color:#fff;
+}
+
 
     /* 필요 시 셀렉트 기본 외형 유지(화살표 살리기) - appearance 제거 안 함
        만약 커스텀 화살표 쓰고 싶으면 아래 주석 해제
@@ -306,6 +324,20 @@
           <button type="button" id="clearAll" class="btn ghost">전체 초기화</button>
         </div>
       </section>
+    <!-- Provider 선택 (기본: Gemini) -->
+<input type="hidden" id="providerInput" name="provider" value="gemini">
+
+<div class="toolbar" style="margin:0 0 12px 0; justify-content:flex-end;">
+  <div class="segmented" role="tablist" aria-label="모델 선택">
+    <button type="button" class="provider-btn" data-value="openai" role="tab" aria-selected="false">
+      GPT
+    </button>
+      <button type="button" class="provider-btn" data-value="claude" role="tab" aria-selected="false">
+      CLAUDE
+    </button>
+  </div>
+</div>
+
 
       <!-- 3층: 출력 -->
       <section class="card">
@@ -464,6 +496,33 @@
         if (made) { tChips.appendChild(made.chip); tHidden.appendChild(made.hid); }
       });
     })();
+
+  // === GPT / Gemini 토글 ===
+  (function providerToggle(){
+    const hidden = document.getElementById('providerInput');
+    const buttons = Array.from(document.querySelectorAll('.provider-btn'));
+
+    // 초기값: localStorage > hidden.value 순으로 복원
+    const saved = localStorage.getItem('provider') || hidden.value || 'gemini';
+    setProvider(saved);
+
+    buttons.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        setProvider(btn.dataset.value);
+      });
+    });
+
+    function setProvider(val){
+      buttons.forEach(b=>{
+        const on = (b.dataset.value === val);
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      hidden.value = val;
+      localStorage.setItem('provider', val);
+    }
+  })();
+
   </script>
 </body>
 </html>

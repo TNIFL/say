@@ -29,8 +29,5 @@ node_modules/
 migrations/__pycache__/
 
 trash/
-users.json
 
-prompt.txt
-update.txt
-func.txt
+users.json
