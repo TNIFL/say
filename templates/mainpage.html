@@ -81,7 +81,8 @@
     }
     .checkbox-item{display:inline-flex; align-items:center; gap:8px}
     .checkbox-item input{transform:scale(1.2);}
-        /* === Site Header / Brand === */
+
+    /* 헤더 */
     .site-header{
       position: sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
@@ -92,13 +93,9 @@
       max-width:1100px; margin:0 auto; padding:10px 16px;
       display:flex; align-items:center; justify-content:space-between; gap:12px;
     }
-    .brand{
-      display:inline-flex; align-items:center; gap:10px;
-      text-decoration:none; color:var(--text);
-    }
+    .brand{ display:inline-flex; align-items:center; gap:10px; text-decoration:none; color:var(--text); }
     .brand-mark{
-      width:28px; height:28px; border-radius:10px;
-      display:inline-grid; place-items:center;
+      width:28px; height:28px; border-radius:10px; display:inline-grid; place-items:center;
       background: linear-gradient(135deg, var(--accent), #91f2c3);
       box-shadow: 0 6px 16px rgba(0,0,0,.20), inset 0 0 0 1px rgba(255,255,255,.12);
     }
@@ -106,31 +103,26 @@
     .brand-title{
       font-weight:800; letter-spacing:.2px;
       background: linear-gradient(90deg, var(--accent), #91f2c3);
-      -webkit-background-clip:text; background-clip:text; color:transparent;
-      font-size:16px;
+      -webkit-background-clip:text; background-clip:text; color:transparent; font-size:16px;
     }
     .header-actions{ display:flex; align-items:center; gap:8px }
-    /* 브라우저 기본 컨트롤(셀렉트 드롭다운 포함) 다크/라이트 힌트 */
+
+    /* 브라우저 컨트롤 힌트 */
     body { color-scheme: dark; }
     body.light { color-scheme: light; }
 
-    /* 폼 컨트롤 공통 토큰 */
+    /* 폼 컨트롤 토큰 */
     :root{
-      --control-bg: #10141c;         /* 다크 기본 배경 */
-      --control-bg-focus: #151b26;   /* 포커스 시 살짝 밝게 */
-      --control-text: var(--text);
-      --control-border: var(--border);
+      --control-bg: #10141c; --control-bg-focus: #151b26;
+      --control-text: var(--text); --control-border: var(--border);
       --control-placeholder: color-mix(in srgb, var(--text) 45%, transparent);
     }
     body.light{
-      --control-bg: #ffffff;          /* 라이트 기본 배경 */
-      --control-bg-focus: #f4f7fb;
-      --control-text: #1a1c22;
-      --control-border: #d6d8e0;
+      --control-bg: #ffffff; --control-bg-focus: #f4f7fb;
+      --control-text: #1a1c22; --control-border: #d6d8e0;
       --control-placeholder: #9aa0ae;
     }
 
-    /* 입력류 기본 스타일 (select / input / textarea 모두 통일) */
     select, textarea, input[type="text"]{
       background-color: var(--control-bg);
       color: var(--control-text);
@@ -140,87 +132,48 @@
       outline: none;
       transition: border-color .15s ease, background-color .15s ease, color .15s ease;
     }
-
-    /* 플레이스홀더 대비 개선 */
-    input::placeholder, textarea::placeholder{
-      color: var(--control-placeholder);
-    }
-
-    /* 포커스 가시성 확실히 */
+    input::placeholder, textarea::placeholder{ color: var(--control-placeholder); }
     select:focus, textarea:focus, input[type="text"]:focus{
       background-color: var(--control-bg-focus);
       border-color: var(--accent);
       outline: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
       outline-offset: 1px;
     }
-
-    /* 일부 환경에서 드롭다운 목록(<option>) 대비 보정 */
-    select option{
-      background: var(--panel);
-      color: var(--text);
-    }
-
-    /* 호버 시 테두리 살짝 강조 (선택) */
+    select option{ background: var(--panel); color: var(--text); }
     select:hover, textarea:hover, input[type="text"]:hover{
       border-color: color-mix(in srgb, var(--accent) 35%, var(--control-border));
     }
-    /* === GPT/Gemini Segmented Toggle === */
-.segmented{
-  display:inline-flex; gap:0; border:1px solid var(--border);
-  border-radius:12px; overflow:hidden; background:transparent;
-  box-shadow: var(--shadow);
-}
-.segmented button{
-  appearance:none; background:transparent; border:0; cursor:pointer;
-  padding:8px 12px; font-weight:700; color:var(--text);
-  transition: background .15s ease, color .15s ease;
-}
-.segmented button:not(.active):hover{
-  background: color-mix(in srgb, var(--accent) 10%, transparent);
-}
-.segmented button.active{
-  background: var(--accent); color:#fff;
-}
 
-
-    /* 필요 시 셀렉트 기본 외형 유지(화살표 살리기) - appearance 제거 안 함
-       만약 커스텀 화살표 쓰고 싶으면 아래 주석 해제
-    */
-    /*
-    select{
-      appearance: none;
-      padding-right: 2.2rem;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%238b93a7'><path d='M7 10l5 5 5-5z'/></svg>");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      background-size: 12px 12px;
+    /* 모델 선택 토글 */
+    .segmented{
+      display:inline-flex; gap:0; border:1px solid var(--border);
+      border-radius:12px; overflow:hidden; background:transparent; box-shadow: var(--shadow);
     }
-    */
-
+    .segmented button{
+      appearance:none; background:transparent; border:0; cursor:pointer;
+      padding:8px 12px; font-weight:700; color:var(--text);
+      transition: background .15s ease, color .15s ease;
+    }
+    .segmented button:not(.active):hover{ background: color-mix(in srgb, var(--accent) 10%, transparent); }
+    .segmented button.active{ background: var(--accent); color:#fff; }
   </style>
 </head>
-<!-- ... <head>와 스타일은 기존 그대로 ... -->
+
 <body>
-  <!-- 헤더는 main 바깥에 두어도 되지만, 기존 구조 유지 -->
   <div class="main">
     <header class="site-header">
       <div class="inner">
         <a class="brand" href="/">
           <span class="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 5.5C4 4.12 5.34 3 7 3h10c1.66 0 3 1.12 3 2.5v7c0 1.38-1.34 2.5-3 2.5H11l-3.6 3.1c-.52.45-1.4.09-1.4-.55V15H7c-1.66 0-3-1.12-3-2.5v-7Z"></path>
-            </svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.12 5.34 3 7 3h10c1.66 0 3 1.12 3 2.5v7c0 1.38-1.34 2.5-3 2.5H11l-3.6 3.1c-.52.45-1.4.09-1.4-.55V15H7c-1.66 0-3-1.12-3-2.5v-7Z"></path></svg>
           </span>
           <span class="brand-title">착하게 말해요</span>
         </a>
 
         <div class="header-actions" style="display:flex; align-items:center; gap:8px; min-width:0;">
-          <!-- 다크/라이트 토글 -->
           <button id="themeToggle" class="theme-toggle">🌙 다크/라이트</button>
           <a class="btn ghost" href="{{ url_for('feedback') }}">피드백</a>
-
           {% if session.get('user') %}
-            <!-- 로그인 상태: 기록보기 + 사용자 이메일 + 로그아웃 -->
             <a class="btn ghost" href="{{ url_for('user_history') }}">기록보기</a>
             <span class="small" title="{{ session.get('user').user_id }}"
                   style="max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; opacity:.8;">
@@ -228,16 +181,11 @@
             </span>
             <a class="btn ghost" href="{{ url_for('auth.logout') }}">로그아웃</a>
           {% else %}
-            <!-- 비로그인 상태: 로그인 버튼만 -->
             <a class="btn ghost" href="{{ url_for('auth.login_page') }}">로그인</a>
           {% endif %}
         </div>
       </div>
     </header>
-
-
-    <!-- 이하 본문/폼 부분은 기존 그대로 -->
-    <!-- ... -->
 
     <form id="polishForm" class="stack" method="post" action="/">
       <!-- 1층: 입력 -->
@@ -247,16 +195,16 @@
         <textarea id="input_text" name="input_text" placeholder="예) 왜 이렇게 늦게 보내세요? 다음부턴 제때 보내세요.">{{ input_text or "" }}</textarea>
       </section>
 
-      <!-- 2층: 카테고리 & 말투 (여러 개 추가/삭제 가능) -->
+      <!-- 2층: 카테고리 & 말투 (자동 추가) -->
       <section class="card">
-        <h3>카테고리 & 말투 설정 (복수 추가 / 칩 클릭 제거)</h3>
+        <h3>카테고리 & 말투 설정 (선택 시 자동 추가)</h3>
 
         <div class="row cols-2">
           <!-- 카테고리 -->
           <div>
-            <label class="small" for="categorySelect">카테고리 선택 후 ‘추가’</label>
+            <label class="small" for="categorySelect">카테고리 선택</label>
             <div class="input-group">
-              <select id="categorySelect">
+              <select id="categorySelect" aria-label="카테고리 선택">
                 <option value="" disabled selected>카테고리 선택…</option>
                 <option value="general">일반</option>
                 <option value="work">업무</option>
@@ -270,18 +218,16 @@
                 <option value="report/approval">보고/결제</option>
                 <option value="feedback">피드백</option>
               </select>
-              <button type="button" class="btn" id="addCategoryBtn">추가</button>
             </div>
             <div class="chipbox" id="categoryChips" aria-live="polite"></div>
-            <!-- 서버로 전달될 hidden inputs 컨테이너 -->
             <div id="categoryHidden"></div>
           </div>
 
           <!-- 말투 -->
           <div>
-            <label class="small" for="toneSelect">말투 선택 후 ‘추가’</label>
+            <label class="small" for="toneSelect">말투 선택</label>
             <div class="input-group">
-              <select id="toneSelect">
+              <select id="toneSelect" aria-label="말투 선택">
                 <option value="" disabled selected>말투 선택…</option>
                 <option value="soft">부드럽게</option>
                 <option value="polite">정중하게</option>
@@ -294,15 +240,13 @@
                 <option value="clearly">명확하게</option>
                 <option value="without_emotion">감정 없이(중립)</option>
               </select>
-              <button type="button" class="btn" id="addToneBtn">추가</button>
             </div>
             <div class="chipbox" id="toneChips" aria-live="polite"></div>
-            <!-- 서버로 전달될 hidden inputs 컨테이너 -->
             <div id="toneHidden"></div>
           </div>
         </div>
 
-        <!-- ✅ 옵션들: 존댓말 / 완충문·인사 / 이모지 -->
+        <!-- 옵션 -->
         <div class="checkbox-group">
           <label class="checkbox-item">
             <input type="checkbox" id="honorific" name="honorific" value="on" {% if honorific_checked %}checked{% endif %}>
@@ -324,20 +268,6 @@
           <button type="button" id="clearAll" class="btn ghost">전체 초기화</button>
         </div>
       </section>
-    <!-- Provider 선택 (기본: Gemini) -->
-<input type="hidden" id="providerInput" name="provider" value="gemini">
-
-<div class="toolbar" style="margin:0 0 12px 0; justify-content:flex-end;">
-  <div class="segmented" role="tablist" aria-label="모델 선택">
-    <button type="button" class="provider-btn" data-value="openai" role="tab" aria-selected="false">
-      GPT
-    </button>
-      <button type="button" class="provider-btn" data-value="claude" role="tab" aria-selected="false">
-      CLAUDE
-    </button>
-  </div>
-</div>
-
 
       <!-- 3층: 출력 -->
       <section class="card">
@@ -347,23 +277,22 @@
           <span class="small">※ 원하는 결과가 나오지 않을수도 있습니다</span>
           <span class="spacer"></span>
           <button type="button" class="btn secondary" id="copyOutputBtn" aria-label="출력 내용 복사">복사</button>
-          <button type="submit" class="btn">변역하기</button>
+          <button type="submit" class="btn">변환하기</button>
         </div>
       </section>
     </form>
   </div>
 
-  <!-- 공용 푸터: 페이지 맨 아래(</body> 직전) -->
-<footer style="margin:24px auto; max-width:1100px; padding:0 16px; opacity:.85;">
-  <div style="border-top:1px solid var(--border); padding-top:12px; display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end;">
-    <a href="/terms" class="small" style="text-decoration:none; color:var(--muted);">이용약관</a>
-    <span class="small" style="color:var(--muted);">·</span>
-    <a href="/privacy" class="small" style="text-decoration:none; color:var(--muted);">개인정보 처리방침</a>
-    <span class="small" style="color:var(--muted);">·</span>
-    <a href="/disclaimer" class="small" style="text-decoration:none; color:var(--muted);">면책 고지</a>
-  </div>
-</footer>
-
+  <!-- 푸터 -->
+  <footer style="margin:24px auto; max-width:1100px; padding:0 16px; opacity:.85;">
+    <div style="border-top:1px solid var(--border); padding-top:12px; display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end;">
+      <a href="/terms" class="small" style="text-decoration:none; color:var(--muted);">이용약관</a>
+      <span class="small" style="color:var(--muted);">·</span>
+      <a href="/privacy" class="small" style="text-decoration:none; color:var(--muted);">개인정보 처리방침</a>
+      <span class="small" style="color:var(--muted);">·</span>
+      <a href="/disclaimer" class="small" style="text-decoration:none; color:var(--muted);">면책 고지</a>
+    </div>
+  </footer>
 
   <script>
     // --- 테마 토글 ---
@@ -423,7 +352,7 @@
       });
       document.getElementById('categorySelect').selectedIndex = 0;
       document.getElementById('toneSelect').selectedIndex = 0;
-      // ✅ 체크박스도 해제
+      // 체크박스도 해제
       ['honorific','opener','emoji'].forEach(id=>{
         const el = document.getElementById(id);
         if (el) el.checked = false;
@@ -439,10 +368,11 @@
       const cHidden = document.getElementById('categoryHidden');
       const tHidden = document.getElementById('toneHidden');
 
-      document.getElementById('addCategoryBtn').addEventListener('click', ()=>{
+      // ✅ 선택 즉시 자동 추가
+      cSel.addEventListener('change', ()=>{
         addItem(cSel, cChips, cHidden, 'category', 'categories');
       });
-      document.getElementById('addToneBtn').addEventListener('click', ()=>{
+      tSel.addEventListener('change', ()=>{
         addItem(tSel, tChips, tHidden, 'tone', 'tones');
       });
 
@@ -461,7 +391,7 @@
       document.getElementById('clearAll').addEventListener('click', clearAll);
     })();
 
-    // --- ✅ 서버에서 전달된 선택 값 복원 ---
+    // --- 서버에서 전달된 선택 값 복원 ---
     (function restoreFromServer(){
       const preCats  = JSON.parse('{{ selected_categories | tojson | safe }}');
       const preTones = JSON.parse('{{ selected_tones | tojson | safe }}');
@@ -498,69 +428,38 @@
       });
     })();
 
-  // === GPT / Gemini 토글 ===
-  (function providerToggle(){
-    const hidden = document.getElementById('providerInput');
-    const buttons = Array.from(document.querySelectorAll('.provider-btn'));
+    // --- 출력 복사 버튼 ---
+    (function copyOutputButton(){
+      const btn = document.getElementById('copyOutputBtn');
+      if (!btn) return;
+      btn.addEventListener('click', async () => {
+        const target = document.getElementById('output_text');
+        if (!target) return;
 
-    // 초기값: localStorage > hidden.value 순으로 복원
-    const saved = localStorage.getItem('provider') || hidden.value || 'gemini';
-    setProvider(saved);
+        const text = target.innerText ?? target.textContent ?? '';
+        const labelOrig = btn.textContent;
 
-    buttons.forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        setProvider(btn.dataset.value);
-      });
-    });
-
-    function setProvider(val){
-      buttons.forEach(b=>{
-        const on = (b.dataset.value === val);
-        b.classList.toggle('active', on);
-        b.setAttribute('aria-selected', on ? 'true' : 'false');
-      });
-      hidden.value = val;
-      localStorage.setItem('provider', val);
-    }
-  })();
-    // === 출력 복사 버튼 ===
-  (function copyOutputButton(){
-    const btn = document.getElementById('copyOutputBtn');
-    if (!btn) return;
-    btn.addEventListener('click', async () => {
-      const target = document.getElementById('output_text');
-      if (!target) return;
-
-      const text = target.innerText ?? target.textContent ?? '';
-      const labelOrig = btn.textContent;
-
-      // Clipboard API 우선, 실패 시 execCommand 폴백
-      try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(text);
-        } else {
-          const range = document.createRange();
-          range.selectNodeContents(target);
-          const sel = window.getSelection();
-          sel.removeAllRanges();
-          sel.addRange(range);
-          document.execCommand('copy');
-          sel.removeAllRanges();
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            const range = document.createRange();
+            range.selectNodeContents(target);
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            document.execCommand('copy');
+            sel.removeAllRanges();
+          }
+          btn.textContent = '복사됨!';
+          btn.disabled = true;
+          setTimeout(() => { btn.textContent = labelOrig; btn.disabled = false; }, 1200);
+        } catch (e) {
+          btn.textContent = '복사 실패';
+          setTimeout(() => { btn.textContent = labelOrig; }, 1200);
         }
-
-        btn.textContent = '복사됨!';
-        btn.disabled = true;
-        setTimeout(() => {
-          btn.textContent = labelOrig;
-          btn.disabled = false;
-        }, 1200);
-      } catch (e) {
-        // 실패 시 버튼 라벨로 에러 피드백
-        btn.textContent = '복사 실패';
-        setTimeout(() => { btn.textContent = labelOrig; }, 1200);
-      }
-    });
-  })();
+      });
+    })();
   </script>
 </body>
 </html>

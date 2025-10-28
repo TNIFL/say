@@ -42,7 +42,7 @@ def call_claude(system_prompt, final_user_prompt) -> Tuple[str, Dict[str, Any]]:
         print("[Claude][Error] ANTIHROPIC_API_KEY is empty")
         return "", {"provider": "claude", "model": None}
 
-    model = "claude-sonnet-4-5-20250929"  # 최신 안정 모델로 변경 권장
+    model = "claude-haiku-4-5-20251001"  # 최신 안정 모델로 변경 권장
 
     usage_data = None
     error_message = ""  # output_text에 저장할 에러 메시지 초기화
