@@ -198,6 +198,9 @@
         <div class="header-actions" style="display:flex; align-items:center; gap:8px; min-width:0;">
           <button id="themeToggle" class="theme-toggle">🌙 다크/라이트</button>
           <a class="btn ghost" href="{{ url_for('feedback') }}">피드백</a>
+        <!-- 헤더 액션 끝부분에 추가 -->
+          <a class="btn ghost" href="{{ url_for('subscribe_page') if false else '/subscribe' }}">구독</a>
+
           {% if session.get('user') %}
             <a class="btn ghost" href="{{ url_for('user_history') }}">기록보기</a>
             <span class="small" title="{{ session.get('user').user_id }}"

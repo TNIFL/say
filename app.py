@@ -447,6 +447,35 @@ def create_app():
     def disclaimer():
         return render_template("disclaimer.html")
 
+    # ===== 구독/가격 페이지 =====
+    @app.route("/subscribe", methods=["GET"])
+    def subscribe_page():
+        # templates/subscribe.html (캔버스에 만들어둔 파일명) 렌더
+        return render_template("subscribe.html")
+
+    # 가격 페이지 별칭 (선택): /pricing → /subscribe
+    @app.route("/pricing", methods=["GET"])
+    def pricing_alias():
+        return redirect(url_for("subscribe_page"))
+
+    # 결제 체크아웃 진입 (스텁)
+    # 추후 결제 연동 전까지 404 방지를 위해 임시 페이지/문구 반환
+    @app.route("/subscribe/checkout", methods=["GET"])
+    def subscribe_checkout():
+        # 결제 연동 시: return render_template("checkout.html")
+        return (
+            "<!doctype html><meta charset='utf-8'>"
+            "<style>body{font-family:system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR;"
+            "background:#0f1115;color:#e9edf3;display:grid;place-items:center;height:100vh;margin:0}</style>"
+            "<div style='text-align:center'>"
+            "<h1 style='margin:0 0 8px'>결제 체크아웃 준비중</h1>"
+            "<p style='opacity:.8'>곧 결제 모듈이 연결됩니다.<br>"
+            "<a href='/' style='color:#91f2c3;text-decoration:none'>메인으로 돌아가기</a></p>"
+            "</div>",
+            200,
+            {"Content-Type": "text/html; charset=utf-8"},
+        )
+
     return app
 
 

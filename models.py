@@ -73,3 +73,6 @@ class Feedback(db.Model):
 
     resolved = db.Column(db.Boolean, default=False, nullable=False)         # 처리 여부(추후 관리자용)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False, index=True)
+
+
+
