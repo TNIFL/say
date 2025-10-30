@@ -47,7 +47,7 @@ def create_app():
                 "chrome-extension://*",  # 개발 단계 (운영에선 확장 ID로 좁히기)
                 "http://127.0.0.1:*",  # 로컬 프론트(있다면)
                 "http://localhost:*",
-                "https://say-production.up.railway.app/"  # 운영 프론트
+                "https://www.lexinoa.com/"  # 운영 프론트
             ],
             "methods": ["POST"],
             "allow_headers": ["Content-Type"]
