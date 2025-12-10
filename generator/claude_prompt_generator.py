@@ -6,8 +6,9 @@ from typing import Tuple, Dict, Any
 load_dotenv()
 
 import anthropic
-
+#빠른 모델
 #claude-haiku-4-5-20251001
+#깊게 생각하는 모델
 #claude-sonnet-4-5-20250929
 
 def _extract_usage(resp) -> Dict[str, Any]:
@@ -42,13 +43,12 @@ def call_claude(system_prompt, final_user_prompt) -> Tuple[str, Dict[str, Any]]:
         print("[Claude][Error] ANTIHROPIC_API_KEY is empty")
         return "", {"provider": "claude", "model": None}
 
-    model = "claude-haiku-4-5-20251001"  # 최신 안정 모델로 변경 권장
+    model = "claude-sonnet-4-5-20250929"  # 최신 안정 모델로 변경 권장
 
     usage_data = None
     error_message = ""  # output_text에 저장할 에러 메시지 초기화
     try:
         print(f"[Claude] model={model}")
-
         # 🌟 2. messages.create의 인자 위치 수정 (max_tokens를 최상위로)
         message = client.messages.create(
             model=model,
@@ -70,6 +70,7 @@ def call_claude(system_prompt, final_user_prompt) -> Tuple[str, Dict[str, Any]]:
         usage_data = _extract_usage(message)
 
         print(f"[Claude] 1st call OK")
+        print(text)
         return text, {
             "provider": "claude",
             "model": model,

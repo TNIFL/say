@@ -5,7 +5,7 @@ from openai import OpenAI
 
 def gpt_generator(system_prompt, final_user_prompt):
     """OpenAI GPT 모델로 문장 다듬기"""
-
+    print("gpt 로 실행입니다.")
     client = OpenAI(api_key=os.getenv("GPT_API_KEY"))
     model = os.getenv("OPENAI_MODEL", "gpt-4.1")
 

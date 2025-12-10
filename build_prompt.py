@@ -50,3 +50,4 @@ def build_prompt(
     """.strip()
 
     return system_prompt, final_user_prompt
+

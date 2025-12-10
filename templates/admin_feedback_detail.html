@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}어드민 · 피드백 상세{% endblock %}
+
+{% block head_extra %}
+<style>
+    .wrap{ max-width:900px; margin:24px auto; padding:16px; display:grid; gap:16px; }
+    .card{ background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:16px; }
+    .row{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .btn.primary{ background:var(--accent); color:#fff; }
+    .muted{ color:var(--muted); }
+    textarea, input{ width:100%; background:transparent; color:var(--text); border:1px solid var(--border); border-radius:12px; padding:10px; }
+    .pill{ display:inline-block; padding:2px 8px; border-radius:999px; border:1px solid var(--border); font-size:12px; }
+    .pill-ok{ color:#22c55e; border-color:#22c55e; }
+    .pill-no{ color:#ef4444; border-color:#ef4444; }
+</style>
+{% endblock %}
+
+{% block content %}
+  <div class="wrap">
+    <div class="row" style="justify-content:space-between;">
+      <h2 style="margin:0;">피드백 상세 #{{ item.id if item else '—' }}</h2>
+      {% if request.args.get('saved') %}
+        <span class="pill pill-ok">저장됨</span>
+      {% endif %}
+    </div>
+
+    {% if error %}
+      <section class="card">{{ error }}</section>
+    {% else %}
+      <section class="card">
+        <div class="row" style="justify-content:space-between;">
+          <div>
+            <div><strong>작성일</strong> · <span class="muted">{{ (item.created_at or '').strftime('%Y-%m-%d %H:%M') if item.created_at else '' }}</span></div>
+            <div><strong>카테고리</strong> · {{ item.category or '-' }}</div>
+            <div><strong>작성자</strong> · {{ item.user_id or '(익명)' }} {% if item.email %}<span class="muted">· {{ item.email }}</span>{% endif %}</div>
+            <div><strong>페이지</strong> · <a class="muted" href="{{ item.page or '#' }}" target="_blank" rel="noopener">{{ item.page or '-' }}</a></div>
+          </div>
+          <div>
+            {% if item.admin_reply %}
+              <span class="pill pill-ok">답변완료</span>
+              {% if item.replied_at %}
+                <div class="muted" style="margin-top:6px;">{{ item.replied_at.astimezone().strftime('%Y-%m-%d %H:%M') }}</div>
+              {% endif %}
+            {% else %}
+              <span class="pill pill-no">대기</span>
+            {% endif %}
+          </div>
+        </div>
+        <div style="height:10px"></div>
+        <div><strong>문의/피드백 내용</strong></div>
+        <div style="white-space:pre-wrap; border:1px solid var(--border); border-radius:12px; padding:10px;">{{ item.message }}</div>
+      </section>
+
+      <section class="card">
+        <form method="post" action="{{ url_for('admin_feedback_reply', fid=item.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <h3 style="margin:0;">관리자 답변</h3>
+          <div style="height:8px"></div>
+          <textarea name="admin_reply" rows="7" placeholder="관리자 답변을 입력하세요. 비워서 저장하면 답변이 제거됩니다.">{{ item.admin_reply or '' }}</textarea>
+          <div style="display:flex; gap:8px; margin-top:10px;">
+            <button type="submit" class="btn primary">저장</button>
+            <a class="btn" href="/admin/feedback">목록으로</a>
+          </div>
+        </form>
+      </section>
+    {% endif %}
+  </div>
+{% endblock %}

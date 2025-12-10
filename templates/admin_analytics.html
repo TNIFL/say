@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}어드민 대시보드{% endblock %}
+
+{% block head_extra %}
+<style>
+    .wrap{ max-width:1100px; margin:24px auto; padding:16px; display:grid; gap:16px; }
+    .grid{ display:grid; gap:12px; grid-template-columns:repeat(3, 1fr); }
+    .card{ background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:16px; }
+    .card h3{ margin:0 0 8px 0; font-size:15px; color:#cfd6e6; }
+    .kpi{ font-size:28px; font-weight:800; }
+    .muted{ color:var(--muted); font-size:12px; }
+    .section{ display:grid; gap:12px; }
+    .chartbox{ background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:16px; min-height:240px; }
+    .empty{ color:var(--muted); padding:24px 0; text-align:center; }
+    .filters{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .filters input, .filters select{ background:transparent; color:var(--text); border:1px solid var(--border); border-radius:10px; padding:8px 10px; }
+</style>
+{% endblock %}
+
+{% block content %}
+  <div class="wrap">
+    <h2 style="margin:0;">어드민 대시보드</h2>
+    <div class="nav" style="display:flex; gap:8px;">
+      <a href="{{ url_for('admin_analytics_page') }}" class="btn" style="background:var(--accent); color:#fff; border-color:transparent;">방문자 수</a>
+      <a href="{{ url_for('admin_usage_page') }}" class="btn">사용량 수</a>
+      <a href="{{ url_for('admin_feedback_page') }}" class="btn">문의/피드백</a>
+    </div>
+
+    <!-- 상단 KPI -->
+    <section class="grid" aria-label="핵심 지표">
+      <div class="card">
+        <h3>오늘 방문</h3>
+        <div class="kpi" id="kpi_today">—</div>
+        <div class="muted" id="kpi_today_note"></div>
+      </div>
+      <div class="card">
+        <h3>이번 주 방문</h3>
+        <div class="kpi" id="kpi_week">—</div>
+        <div class="muted" id="kpi_week_note"></div>
+      </div>
+      <div class="card">
+        <h3>이번 달 방문</h3>
+        <div class="kpi" id="kpi_month">—</div>
+        <div class="muted" id="kpi_month_note"></div>
+      </div>
+    </section>
+
+    <!-- 필터 -->
+    <section class="card section" aria-label="필터">
+      <div class="filters">
+        <label class="muted">기간</label>
+        <input type="date" id="f_from" />
+        <span class="muted">~</span>
+        <input type="date" id="f_to" />
+        <label class="muted" style="margin-left:8px;">경로</label>
+        <select id="f_path">
+          <option value="">전체</option>
+          <option value="/">/</option>
+          <option value="/login">/login</option>
+          <option value="/signup">/signup</option>
+          <option value="/subscribe">/subscribe</option>
+          <option value="/history">/history</option>
+        </select>
+
+        <label class="muted" style="margin-left:8px;">유저</label>
+        <input type="text" id="f_user" placeholder="user_id 또는 email" />
+        <button class="btn" id="btn_apply">적용</button>
+        <button class="btn" id="btn_reset">초기화</button>
+      </div>
+      <div class="muted">※ 필터는 아래 “방문 시계열”에만 반영됩니다. 상단 KPI는 전체 기준입니다.</div>
+    </section>
+
+    <!-- 시계열 -->
+    <section class="card section" aria-label="방문 시계열">
+      <h3 style="margin:0;">최근 방문 추이</h3>
+      <div class="chartbox" id="series_box"><div class="empty">불러오는 중…</div></div>
+    </section>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/admin_analytics.js') }}" defer></script>
+{% endblock %}

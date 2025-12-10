@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}어드민 · 피드백{% endblock %}
+
+{% block head_extra %}
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <style>
+    .wrap{ max-width:1100px; margin:24px auto; padding:16px; display:grid; gap:16px; }
+    .card{ background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:16px; }
+    .row{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    input, select{ background:transparent; color:var(--text); border:1px solid var(--border); border-radius:10px; padding:8px 10px; }
+    .table{ width:100%; border-collapse:collapse; }
+    .table th, .table td{ padding:8px; border-bottom:1px solid var(--border); vertical-align:top; }
+    .muted{ color:var(--muted); }
+    .pill{ display:inline-block; padding:2px 8px; border-radius:999px; border:1px solid var(--border); font-size:12px; }
+    .pill-ok{ color:#22c55e; border-color:#22c55e; }
+    .pill-no{ color:#ef4444; border-color:#ef4444; }
+    .empty{ color:var(--muted); padding:24px 0; text-align:center; }
+    .pag{ display:flex; gap:8px; justify-content:flex-end; align-items:center; }
+    .table { table-layout: fixed; }
+    tr[data-row-id] { transition: background .35s; }
+    tr.flash-ok   { background: rgba(34,197,94,.12); }
+    tr.flash-no   { background: rgba(239,68,68,.10); }
+    .row-link { cursor: pointer; }
+    .row-link:hover { background: rgba(255,255,255,.04); }
+    .btn.sm { padding:6px 8px; font-size:12px; }
+    td.actions { white-space: normal; }
+    td.actions .btn { margin-right:6px; margin-bottom:6px; }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="wrap">
+    <div class="row" style="justify-content:space-between;">
+      <h2 style="margin:0;">피드백 관리</h2>
+      <div class="row">
+        <a class="btn" href="/admin/analytics">방문자 대시보드</a>
+        <a class="btn" href="/admin/usage">사용량 대시보드</a>
+        <a class="btn" href="/mypage">마이페이지</a>
+      </div>
+    </div>
+
+    <!-- 필터 -->
+    <section class="card">
+      <div class="row">
+        <select id="f_category">
+          <option value="">전체 카테고리</option>
+          <option value="general">general</option>
+          <option value="bug">bug</option>
+          <option value="ux">ux</option>
+          <option value="idea">idea</option>
+          <option value="other">other</option>
+        </select>
+
+        <select id="f_resolved">
+          <option value="">전체 상태</option>
+          <option value="false">미해결 </option>
+          <option value="true">해결</option>
+        </select>
+
+        <input type="text" id="f_q" placeholder="이메일/유저/내용 검색" />
+        <button class="btn" id="btn_apply">적용</button>
+        <button class="btn" id="btn_reset">초기화</button>
+
+        <span class="muted" id="count_label" style="margin-left:auto;"></span>
+      </div>
+    </section>
+
+    <!-- 목록 -->
+    <section class="card">
+      <div id="list_box"><div class="empty">불러오는 중…</div></div>
+      <div class="pag" style="margin-top:10px;">
+        <button class="btn" id="prev_btn">이전</button>
+        <span class="muted" id="page_label"></span>
+        <button class="btn" id="next_btn">다음</button>
+      </div>
+    </section>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/admin_feedback.js') }}" defer></script>
+{% endblock %}

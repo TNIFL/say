@@ -21,6 +21,9 @@ instance/
 # Env/Secrets
 .env
 *.env
+.env.local
+.env.production
+
 
 # Node (혹시 있을 경우)
 node_modules/

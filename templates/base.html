@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}Lexinoa{% endblock %} - AI 문장 교정</title>
+  <meta name="description" content="{% block description %}AI가 이메일, 보고서, 메시지를 상황에 맞는 자연스러운 문장으로 교정합니다.{% endblock %}">
+  <meta name="color-scheme" content="dark light">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/mainpage.css') }}">
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+  <div class="main">
+    <header class="site-header">
+      <div class="inner">
+        <a class="brand" href="/">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.12 5.34 3 7 3h10c1.66 0 3 1.12 3 2.5v7c0 1.38-1.34 2.5-3 2.5H11l-3.6 3.1c-.52.45-1.4.09-1.4-.55V15H7c-1.66 0-3-1.12-3-2.5v-7Z"></path></svg>
+          </span>
+          <span class="brand-title">Lexinoa</span>
+        </a>
+
+        <div class="header-actions" style="display:flex; align-items:center; gap:8px; min-width:0;">
+          {% if g.is_admin %}
+            <a class="btn ghost" href="/admin/analytics">어드민 분석</a>
+          {% endif %}
+          <button id="themeToggle" class="theme-toggle">🌙 다크/라이트</button>
+          <a class="btn ghost" href="{{ url_for('summarize_page') }}">요약·정리</a>
+          <a class="btn ghost" href="{{ url_for('feedback') }}">피드백</a>
+          <a class="btn ghost" href="{{ url_for('subscribe_page') }}">구독</a>
+
+          {% if session.get('user') %}
+            <a class="btn ghost" href="{{ url_for('user_history') }}">기록보기</a>
+            <a class="btn ghost" href="{{ url_for('mypage_overview') if false else '/mypage' }}">마이페이지</a>
+            <span class="small" style="max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; opacity:.8;" title="{{ session.get('user').user_id }}">
+              {{ session.get('user').user_id }}
+            </span>
+            <a class="btn ghost" href="{{ url_for('auth.logout') }}">로그아웃</a>
+          {% else %}
+            <a class="btn ghost" href="{{ url_for('auth.login_page') }}">로그인</a>
+          {% endif %}
+        </div>
+      </div>
+    </header>
+
+    {% block content %}{% endblock %}
+  </div>
+
+  <footer style="margin:24px auto; max-width:1100px; padding:0 16px; opacity:.85;">
+    <div style="border-top:1px solid var(--border); padding-top:12px; display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end;">
+      <a href="/terms" class="small" style="text-decoration:none; color:var(--muted);">이용약관</a>
+      <span class="small" style="color:var(--muted);">·</span>
+      <a href="/privacy" class="small" style="text-decoration:none; color:var(--muted);">개인정보 처리방침</a>
+      <span class="small" style="color:var(--muted);">·</span>
+      <a href="/disclaimer" class="small" style="text-decoration:none; color:var(--muted);">면책 고지</a>
+    </div>
+  </footer>
+
+  {# 공통 JS 파일들 #}
+  <script src="{{ url_for('static', filename='js/theme-toggle.js') }}" defer></script>
+  
+  {# 페이지별 추가 스크립트 #}
+  {% block scripts %}{% endblock %}
+</body>
+</html>

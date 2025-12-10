@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Lexinoa · 결제 체크아웃{% endblock %}
+
+{% block head_extra %}
+  <style>
+    .wrap{max-width:760px;margin:40px auto;padding:16px}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px}
+    .row{display:grid;gap:12px}
+    .btn{appearance:none;border:none;cursor:pointer;padding:12px 16px;border-radius:12px;
+         font-weight:800;background:var(--accent);color:#fff;min-height:40px}
+    .ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
+    .muted{color:var(--muted)}
+    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    a{color:#91f2c3;text-decoration:none}
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="wrap">
+    <header>
+      <div>🔐 <strong>Lexinoa Pro 결제</strong></div>
+      <div><a href="/subscribe">← 가격으로 돌아가기</a></div>
+    </header>
+
+    <div class="card row">
+      <div>
+        <h2 style="margin:0 0 6px">Pro 월 구독 결제</h2>
+        <p class="muted" style="margin:0">카드를 등록하면 첫 결제가 즉시 진행되고, 다음달 같은 날에 자동 청구돼요.</p>
+      </div>
+      <div>
+        <button id="btn-start" class="btn">카드 등록하고 결제 진행</button>
+        <button id="btn-cancel" class="btn ghost" onclick="history.back()">취소</button>
+      </div>
+      <p id="hint" class="muted" style="margin:0;display:none"></p>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <!-- 토스 위젯 -->
+  <script src="https://js.tosspayments.com/v1"></script>
+  <script nonce="{{ csp_nonce }}">
+    const $btn = document.getElementById('btn-start');
+    const $hint = document.getElementById('hint');
+
+    async function startCheckout() {
+      $btn.disabled = true;
+      const original = $btn.textContent;
+      $btn.textContent = '준비중…';
+
+      try {
+        // 서버에서 clientKey / successUrl / customerKey 받아오기
+        const res = await fetch('/api/toss/checkout/start', {
+          method: 'POST',
+          credentials: 'include',
+          headers: {'Content-Type': 'application/json'}
+        });
+
+        if (res.status === 401) {
+          alert('로그인이 필요합니다.');
+          location.href = '/login?next=/subscribe/checkout';
+          return;
+        }
+        if (res.status === 403) {
+          alert('이메일 인증 후 결제할 수 있습니다.');
+          location.href = '/verify/require?next=/subscribe/checkout';
+          return;
+        }
+
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || '시작할 수 없습니다.');
+
+        const toss = TossPayments(data.clientKey);
+        await toss.requestBillingAuth('CARD', {
+          customerKey: data.customerKey,
+          successUrl: data.successUrl,
+          failUrl: data.failUrl
+        });
+        // 위젯이 자체 리다이렉트 함
+      } catch (e) {
+        console.error(e);
+        $hint.style.display = 'block';
+        $hint.textContent = '결제를 시작할 수 없습니다. 잠시 후 다시 시도해 주세요.';
+        $btn.textContent = original;
+        $btn.disabled = false;
+      }
+    }
+
+    $btn.addEventListener('click', startCheckout);
+  </script>
+{% endblock %}

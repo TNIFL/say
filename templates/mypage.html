@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block title %}마이페이지 | Lexinoa{% endblock %}
+
+{% block head_extra %}
+  <style>
+    .container { max-width: 1100px; margin: 24px auto; padding: 16px; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    @media (max-width: 980px){ .grid-2 { grid-template-columns:1fr; } }
+    .kv { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .badge { display:inline-block; padding:2px 10px; border-radius:999px; border:1px solid var(--border); font-size:.8rem; opacity:.9; }
+    .badge-free  { color:#3b82f6; border-color:#3b82f6; }
+    .badge-pro   { color:#22c55e; border-color:#22c55e; }
+    .table { width:100%; border-collapse:collapse; }
+    .table th, .table td { padding:8px; border-bottom:1px solid var(--border);}
+    .muted { color: var(--muted); }
+    .hint { border-left:3px solid var(--border); padding-left:10px; }
+    .mini { font-size:.9rem; opacity:.9; }
+    .bar { width:100%; height:10px; background:transparent; border:1px solid var(--border); border-radius:999px; overflow:hidden; }
+    .bar > span { display:block; height:100%; width:0%; background:var(--accent); transition:width .3s ease; }
+    .status-green {
+      color: #22c55e; /* soft green */
+      font-weight: 500;
+    }
+
+    .status-red {
+      color: #ef4444; /* soft red */
+      font-weight: 500;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+      <h1 style="margin: 8px 0 12px;">마이페이지</h1>
+
+      <!-- 계정 정보 -->
+      <section class="card">
+        <h3>계정</h3>
+        <div class="kv">
+          <div><strong>{{ user.email }}</strong></div>
+          <div class="muted mini">(User ID: {{ user.user_id }})</div>
+          <div class="spacer"></div>
+          <div>
+            {% if tier == 'pro' %}<span class="badge badge-pro">PRO</span>
+            {% else %}<span class="badge badge-free">FREE</span>{% endif %}
+          </div>
+        </div>
+        <div class="muted" style="margin-top:6px;">
+          이메일 인증:
+          {% if user.email_verified %}
+            <span class="status-green">완료</span>
+          {% else %}
+            <span class="status-red">미완료</span>
+          {% endif %}
+        </div>
+
+        {% if not user.email_verified %}
+        <form action="/verify/send" method="post" style="margin-top:10px;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="next" value="/mypage">
+          <button type="submit" class="btn small">인증 메일 보내기</button>
+          <span class="small muted">구독 이용 전 인증이 필요합니다.</span>
+        </form>
+        {% endif %}
+      </section>
+
+      <br>
+
+      <!-- 사용량 (공통: 심플 진행바만) -->
+      <section class="card">
+        <h3>이번 달 사용량</h3>
+        <div class="kv">
+          <div>사용: <strong>{{ used }}</strong> / {{ limit }} 회</div>
+          <div class="spacer"></div>
+          <div class="muted mini">남은: {{ remaining }} 회 · 등급: {{ tier|upper }}</div>
+        </div>
+        <div class="bar" style="margin-top:8px;">
+          {% set ratio = (used / limit * 100) if limit else 0 %}
+          <span style="width: {{ '%0.1f'|format(ratio if ratio < 100 else 100) }}%;"></span>
+        </div>
+      </section>
+
+      <br>
+      <!-- 이곳에 어드민의 답변이 들어감 -->
+      <section class="card">
+      <h3>내 문의 / 피드백</h3>
+      {% if my_feedbacks %}
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width:110px">작성일</th>
+              <th>내용</th>
+              <th style="width:110px">상태</th>
+              <th>관리자 답변</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for f in my_feedbacks %}
+            <tr>
+              <td class="small">{{ (f.created_at or '').strftime('%Y-%m-%d %H:%M') if f.created_at else '' }}</td>
+              <td>{{ f.message }}</td>
+              <td>
+                {% if f.admin_reply %}
+                  <span class="badge" style="color:#22c55e;border-color:#22c55e;">답변완료</span>
+                {% else %}
+                  <span class="badge" style="color:#ef4444;border-color:#ef4444;">대기</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if f.admin_reply %}
+                  <div style="white-space:pre-wrap">{{ f.admin_reply }}</div>
+                  {% if f.replied_at %}
+                    <div class="small muted" style="margin-top:4px;">{{ f.replied_at.astimezone().strftime('%Y-%m-%d %H:%M') }}</div>
+                  {% endif %}
+                {% else %}
+                  <span class="muted small">아직 답변이 등록되지 않았습니다.</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <div class="muted">등록한 피드백이 없습니다.</div>
+      {% endif %}
+    </section>
+    <br>
+
+      <!-- 최근 방문 (5개) -->
+      <section class="card">
+        <h3>최근 방문</h3>
+        {% if visits %}
+          <ul class="small" style="margin:0; padding-left:16px;">
+            {% for v in visits %}
+              <li>
+                {{ (v.created_at or '').astimezone().strftime('%m/%d %H:%M') if v.created_at else '' }}
+                · <span class="muted">{{ v.path }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <div class="muted">기록이 없습니다.</div>
+        {% endif %}
+      </section>
+
+      <br>
+
+      <!-- 구독 / 결제 요약 (공통) -->
+      <section class="card">
+        <h3>구독 / 결제</h3>
+        {% if active_sub %}
+          <p>상태: <strong>{{ active_sub.status }}</strong>
+             · 플랜: {{ active_sub.plan_name }}
+             · 다음 결제: {{ active_sub.next_billing_at or '—' }}</p>
+        {% else %}
+          <p class="muted">활성 구독이 없습니다.</p>
+          <a class="btn small" href="{{ url_for('subscribe_page') }}">구독 알아보기</a>
+        {% endif %}
+
+        {% if payments %}
+          <div style="height:8px"></div>
+          <table class="table">
+            <thead><tr><th>시각</th><th>금액</th><th>통화</th><th>상태</th></tr></thead>
+            <tbody>
+              {% for p in payments %}
+              <tr>
+                <td>{{ p.created_at }}</td>
+                <td>{{ p.amount }}</td>
+                <td>{{ p.currency }}</td>
+                <td>{{ p.status }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+      </section>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    // 헤더 테마 동기화만 유지
+    (function(){
+      const saved = localStorage.getItem("theme") || "dark";
+      if (saved === "light") document.body.classList.add("light");
+    })();
+  </script>
+{% endblock %}

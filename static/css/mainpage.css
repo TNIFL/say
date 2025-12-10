@@ -1,0 +1,281 @@
+:root {
+--bg:#12151b;         /* 약간 밝게 */
+--panel:#1a1f27;
+--text:#e8ecf2;
+--muted:#99a1b6;
+--border:#2b3142;
+--accent:#3b82f6;
+--shadow:0 8px 24px rgba(0,0,0,.25);
+}
+
+body.light {
+--bg:#f3f5f9;         /* 완전 흰색 대신 은은한 회백색 */
+--panel:#ffffff;
+--text:#1b1e25;
+--muted:#6f7380;
+--border:#d5d7df;
+--accent:#2563eb;
+--shadow:0 4px 12px rgba(0,0,0,.1);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+margin:0; background:var(--bg); color:var(--text);
+font:14px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,Apple SD Gothic Neo,Arial,sans-serif;
+transition:background .3s, color .3s;
+}
+html, body, .card, .btn, .site-header, textarea, select, input, .chip, .output {
+transition:
+background-color 0.6s ease,
+color 0.6s ease,
+border-color 0.6s ease,
+box-shadow 0.6s ease;
+}
+
+.main{max-width:1100px; margin:24px auto; padding:16px}
+.stack{display:grid; gap:16px}
+.card{
+background:var(--panel); border:1px solid var(--border);
+border-radius:16px; padding:16px; box-shadow:var(--shadow);
+transition:background .3s, border-color .3s;
+}
+.card h3{margin:0 0 10px 0}
+.small{color:var(--muted); font-size:12px}
+.hint{border-left:3px solid var(--border); padding-left:10px}
+
+.row{display:grid; gap:12px}
+.row.cols-2{grid-template-columns:1fr 1fr}
+@media (max-width:880px){ .row.cols-2{grid-template-columns:1fr} }
+
+textarea, select, input[type="text"]{
+width:100%; background:transparent; color:var(--text);
+border:1px solid var(--border); border-radius:12px; padding:12px; outline:none;
+transition:border-color .2s, background .3s, color .3s;
+}
+textarea{min-height:180px; resize:vertical}
+
+.toolbar{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+.spacer{flex:1}
+.btn{
+appearance:none; border:none; cursor:pointer; padding:10px 14px;
+border-radius:12px; font-weight:700; background:var(--accent); color:#fff;
+transition:.15s transform ease, .15s opacity;
+}
+.btn.secondary{background:none; border:1px solid var(--border); color:var(--text)}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent; border:1px solid var(--border); color:var(--text)}
+
+/* 멀티 선택 / 칩 */
+.chipbox{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px}
+.chip{
+display:inline-flex; align-items:center; gap:8px;
+background:transparent; border:1px solid var(--accent); color:var(--text);
+padding:6px 10px; border-radius:999px; cursor:pointer; user-select:none;
+}
+.chip .x{font-weight:700; opacity:.8}
+.input-group{display:flex; gap:8px; align-items:center}
+.input-group > *:first-child{flex:1}
+
+.output{
+min-height:180px; white-space:pre-wrap; word-break:break-word;
+background:transparent; border:1px solid var(--border);
+border-radius:12px; padding:12px;
+}
+
+.theme-toggle{cursor:pointer; background:none; border:1px solid var(--border);
+color:var(--text); padding:8px 12px; border-radius:12px; font-size:13px}
+
+.checkbox-group{
+display:flex; flex-wrap:wrap; gap:16px; margin-top:10px;
+font-size:13px; color:var(--text); align-items:center;
+}
+.checkbox-item{display:inline-flex; align-items:center; gap:8px}
+.checkbox-item input{transform:scale(1.2);}
+
+/* 헤더 */
+.site-header{
+position: sticky; top:0; z-index:50;
+backdrop-filter: blur(10px);
+background: color-mix(in srgb, var(--bg) 88%, transparent);
+border-bottom: 1px solid var(--border);
+}
+.site-header .inner{
+max-width:1100px; margin:0 auto; padding:10px 16px;
+display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.brand{ display:inline-flex; align-items:center; gap:10px; text-decoration:none; color:var(--text); }
+.brand-mark{
+width:28px; height:28px; border-radius:10px; display:inline-grid; place-items:center;
+background: linear-gradient(135deg, var(--accent), #91f2c3);
+box-shadow: 0 6px 16px rgba(0,0,0,.20), inset 0 0 0 1px rgba(255,255,255,.12);
+}
+.brand-mark svg{ width:16px; height:16px; fill:#0b1020 }
+.brand-title{
+font-weight:800; letter-spacing:.2px;
+background: linear-gradient(90deg, var(--accent), #91f2c3);
+-webkit-background-clip:text; background-clip:text; color:transparent; font-size:16px;
+}
+.header-actions{ display:flex; align-items:center; gap:8px }
+
+/* 브라우저 컨트롤 힌트 */
+body { color-scheme: dark; }
+body.light { color-scheme: light; }
+
+/* 폼 컨트롤 토큰 */
+:root{
+--control-bg: #10141c; --control-bg-focus: #151b26;
+--control-text: var(--text); --control-border: var(--border);
+--control-placeholder: color-mix(in srgb, var(--text) 45%, transparent);
+}
+body.light{
+--control-bg: #ffffff; --control-bg-focus: #f4f7fb;
+--control-text: #1a1c22; --control-border: #d6d8e0;
+--control-placeholder: #9aa0ae;
+}
+
+select, textarea, input[type="text"]{
+background-color: var(--control-bg);
+color: var(--control-text);
+border: 1px solid var(--control-border);
+border-radius: 12px;
+padding: 12px;
+outline: none;
+transition: border-color .15s ease, background-color .15s ease, color .15s ease;
+}
+input::placeholder, textarea::placeholder{ color: var(--control-placeholder); }
+select:focus, textarea:focus, input[type="text"]:focus{
+background-color: var(--control-bg-focus);
+border-color: var(--accent);
+outline: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
+outline-offset: 1px;
+}
+select option{ background: var(--panel); color: var(--text); }
+select:hover, textarea:hover, input[type="text"]:hover{
+border-color: color-mix(in srgb, var(--accent) 35%, var(--control-border));
+}
+
+/* 모델 선택 토글 */
+.segmented{
+display:inline-flex; gap:0; border:1px solid var(--border);
+border-radius:12px; overflow:hidden; background:transparent; box-shadow: var(--shadow);
+}
+.segmented button{
+appearance:none; background:transparent; border:0; cursor:pointer;
+padding:8px 12px; font-weight:700; color:var(--text);
+transition: background .15s ease, color .15s ease;
+}
+.segmented button:not(.active):hover{ background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.segmented button.active{ background: var(--accent); color:#fff; }
+/* 버튼 로딩 상태 */
+.btn .spinner {
+display: none;
+width: 16px; height: 16px;
+border: 2px solid currentColor;
+border-right-color: transparent;
+border-radius: 50%;
+animation: nice-spin .8s linear infinite;
+vertical-align: -2px;
+margin-right: 8px;
+}
+.btn.loading .spinner { display: inline-block; }
+.btn.loading .btn-label { opacity: .0; }  /* 텍스트 숨김(필요시 제거) */
+
+@keyframes nice-spin {
+to { transform: rotate(360deg); }
+}
+
+/* 비활성화된 상태 시각 피드백(선택 사항) */
+.btn[disabled] {
+opacity: .7;
+cursor: not-allowed;
+}
+/* ===========================
+템플릿 바 / 버튼 통합 스타일
+=========================== */
+.template-toolbar {
+display: flex;
+align-items: center;
+gap: 8px;
+flex-wrap: wrap;
+justify-content: flex-end;
+margin-bottom: 6px;
+}
+
+/* Select Box */
+.template-select {
+min-width: 220px;
+max-width: 300px;
+padding: 6px 10px;
+border-radius: 8px;
+border: 1px solid var(--border);
+background: var(--panel);
+color: var(--text);
+font-size: 0.95rem;
+transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.template-select:focus {
+outline: none;
+border-color: var(--accent);
+background: color-mix(in srgb, var(--panel) 92%, var(--accent) 8%);
+}
+
+/* Buttons */
+.btn.small {
+font-size: 0.9rem;
+padding: 6px 12px;
+border-radius: 8px;
+cursor: pointer;
+transition: all 0.2s ease;
+border: 1px solid transparent;
+background: var(--accent);
+color: #fff;
+}
+.btn.small:hover {
+transform: translateY(-1px);
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+.btn.small.ghost {
+background: transparent;
+border: 1px solid var(--border);
+color: var(--text);
+}
+.btn.small.ghost:hover {
+border-color: var(--accent);
+color: var(--accent);
+}
+.btn.small.accent {
+background: var(--accent);
+color: #fff;
+}
+
+/* Badge Styles */
+.template-badge {
+font-size: 0.85rem;
+padding: 4px 10px;
+border-radius: 999px;
+border: 1px dashed var(--border);
+opacity: 0.85;
+}
+.badge-locked {
+color: #ef4444;
+border-color: #ef4444;
+}
+.badge-pro {
+color: #22c55e;
+border-color: #22c55e;
+}
+
+/* 다크/라이트 대비 강화 */
+body.light .template-select {
+background: #fff;
+color: #111;
+border-color: #ccc;
+}
+body.light .btn.small.ghost {
+color: #222;
+border-color: #bbb;
+}
+body.light .btn.small.ghost:hover {
+border-color: #3b82f6;
+color: #3b82f6;
+}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}어드민 · 사용량 분석{% endblock %}
+
+{% block head_extra %}
+<style>
+    .wrap{ max-width:1100px; margin:24px auto; padding:16px; display:grid; gap:16px; }
+    .grid{ display:grid; gap:12px; grid-template-columns:repeat(3, 1fr); }
+    .card{ background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:16px; }
+    .card h3{ margin:0 0 8px 0; font-size:15px; color:#cfd6e6; }
+    .kpi{ font-size:28px; font-weight:800; }
+    .muted{ color:var(--muted); font-size:12px; }
+    .chartbox{ background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:16px; min-height:240px; }
+    .empty{ color:var(--muted); padding:24px 0; text-align:center; }
+    .period-switcher{ display: flex; gap: 8px; }
+    .period-switcher .btn.active { background: var(--accent); color: #fff; border-color: transparent; }
+</style>
+{% endblock %}
+
+{% block content %}
+  <div class="wrap">
+    <h2 style="margin:0;">어드민 대시보드</h2>
+    <div class="nav" style="display:flex; gap:8px;">
+      <a href="{{ url_for('admin_analytics_page') }}" class="btn">방문자 수</a>
+      <a href="{{ url_for('admin_usage_page') }}" class="btn" style="background:var(--accent); color:#fff; border-color:transparent;">사용량 수</a>
+      <a href="{{ url_for('admin_feedback_page') }}" class="btn">문의/피드백</a>
+    </div>
+
+    <h3 style="margin:16px 0 0 0;">사용량 수</h3>
+    <section class="grid" aria-label="사용량 지표">
+      <div class="card">
+        <h3>오늘 사용량</h3>
+        <div class="kpi" id="kpi_usage_today">—</div>
+      </div>
+      <div class="card">
+        <h3>이번 주 사용량</h3>
+        <div class="kpi" id="kpi_usage_week">—</div>
+      </div>
+      <div class="card">
+        <h3>이번 달 사용량</h3>
+        <div class="kpi" id="kpi_usage_month">—</div>
+      </div>
+    </section>
+
+    <section class="card section" aria-label="사용량 시계열">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <h3 style="margin:0;">사용량 추이 그래프</h3>
+        <div class="period-switcher" id="period-switcher">
+            <button class="btn small" data-period="today">오늘</button>
+            <button class="btn small" data-period="week">이번 주</button>
+            <button class="btn small active" data-period="month">이번 달</button>
+        </div>
+      </div>
+      <div class="chartbox" id="usage_chart_box" style="margin-top:12px;"><div class="empty">불러오는 중…</div></div>
+    </section>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/admin_usage.js') }}" defer></script>
+{% endblock %}

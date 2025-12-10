@@ -1,231 +1,78 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <title>Lexinoa - 문장 다듬기 | 말투 교정</title>
-  <meta name="description" content="AI가 이메일, 보고서, 카카오톡 메시지까지 더 자연스럽고 정중한 문장으로 바꿔줍니다. Lexinoa는 상황별 맞춤 어투를 실시간으로 제안하는 커뮤니케이션 보조 서비스입니다.">
-  <meta name="color-scheme" content="dark light">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root{
-      --bg:#0f1115; --panel:#171a21; --text:#e9edf3; --muted:#8b93a7;
-      --border:#232837; --accent:#3b82f6; --shadow:0 8px 24px rgba(0,0,0,.25);
-    }
-    body.light{
-      --bg:#f7f9fc; --panel:#ffffff; --text:#1a1c22; --muted:#6f7380;
-      --border:#d6d8e0; --accent:#2563eb; --shadow:0 4px 12px rgba(0,0,0,.1);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; background:var(--bg); color:var(--text);
-      font:14px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,Apple SD Gothic Neo,Arial,sans-serif;
-      transition:background .3s, color .3s;
-    }
+{% extends "base.html" %}
 
-    .main{max-width:1100px; margin:24px auto; padding:16px}
-    .stack{display:grid; gap:16px}
-    .card{
-      background:var(--panel); border:1px solid var(--border);
-      border-radius:16px; padding:16px; box-shadow:var(--shadow);
-      transition:background .3s, border-color .3s;
-    }
-    .card h3{margin:0 0 10px 0}
-    .small{color:var(--muted); font-size:12px}
-    .hint{border-left:3px solid var(--border); padding-left:10px}
+{% block title %}Lexinoa - 문장 다듬기 | 말투 교정{% endblock %}
+{% block description %}AI가 이메일, 보고서, 카카오톡 메시지까지 더 자연스럽고 정중한 문장으로 바꿔줍니다. Lexinoa는 상황별 맞춤 어투를 실시간으로 제안하는 커뮤니케이션 보조 서비스입니다.{% endblock %}
 
-    .row{display:grid; gap:12px}
-    .row.cols-2{grid-template-columns:1fr 1fr}
-    @media (max-width:880px){ .row.cols-2{grid-template-columns:1fr} }
+{% block head_extra %}
+  {# --- 광고 제어값 (app.py에서 내려옴) --- #}
+  {# ADS_PROVIDER: 'adsense' | 'kakao' | 'naver' ... #}
+  {# ADSENSE_CLIENT: 'ca-pub-xxxx'  #}
+  {% set _client_id = ADSENSE_CLIENT|default('', true) %}
+  {% set _show_ads = SHOW_ADS and g.show_ads_here and ADS_PROVIDER == 'adsense' and _client_id %}
 
-    textarea, select, input[type="text"]{
-      width:100%; background:transparent; color:var(--text);
-      border:1px solid var(--border); border-radius:12px; padding:12px; outline:none;
-      transition:border-color .2s, background .3s, color .3s;
-    }
-    textarea{min-height:180px; resize:vertical}
+  {# AdSense 로더 스크립트 #}
+  {% if _show_ads %}
+    <script async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ _client_id }}"
+      crossorigin="anonymous" nonce="{{ csp_nonce }}"></script>
+  {% endif %}
+{% endblock %}
 
-    .toolbar{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
-    .spacer{flex:1}
-    .btn{
-      appearance:none; border:none; cursor:pointer; padding:10px 14px;
-      border-radius:12px; font-weight:700; background:var(--accent); color:#fff;
-      transition:.15s transform ease, .15s opacity;
-    }
-    .btn.secondary{background:none; border:1px solid var(--border); color:var(--text)}
-    .btn:active{transform:translateY(1px)}
-    .btn.ghost{background:transparent; border:1px solid var(--border); color:var(--text)}
-
-    /* 멀티 선택 / 칩 */
-    .chipbox{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px}
-    .chip{
-      display:inline-flex; align-items:center; gap:8px;
-      background:transparent; border:1px solid var(--accent); color:var(--text);
-      padding:6px 10px; border-radius:999px; cursor:pointer; user-select:none;
-    }
-    .chip .x{font-weight:700; opacity:.8}
-    .input-group{display:flex; gap:8px; align-items:center}
-    .input-group > *:first-child{flex:1}
-
-    .output{
-      min-height:180px; white-space:pre-wrap; word-break:break-word;
-      background:transparent; border:1px solid var(--border);
-      border-radius:12px; padding:12px;
-    }
-
-    .theme-toggle{cursor:pointer; background:none; border:1px solid var(--border);
-      color:var(--text); padding:8px 12px; border-radius:12px; font-size:13px}
-
-    .checkbox-group{
-      display:flex; flex-wrap:wrap; gap:16px; margin-top:10px;
-      font-size:13px; color:var(--text); align-items:center;
-    }
-    .checkbox-item{display:inline-flex; align-items:center; gap:8px}
-    .checkbox-item input{transform:scale(1.2);}
-
-    /* 헤더 */
-    .site-header{
-      position: sticky; top:0; z-index:50;
-      backdrop-filter: blur(10px);
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
-      border-bottom: 1px solid var(--border);
-    }
-    .site-header .inner{
-      max-width:1100px; margin:0 auto; padding:10px 16px;
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-    }
-    .brand{ display:inline-flex; align-items:center; gap:10px; text-decoration:none; color:var(--text); }
-    .brand-mark{
-      width:28px; height:28px; border-radius:10px; display:inline-grid; place-items:center;
-      background: linear-gradient(135deg, var(--accent), #91f2c3);
-      box-shadow: 0 6px 16px rgba(0,0,0,.20), inset 0 0 0 1px rgba(255,255,255,.12);
-    }
-    .brand-mark svg{ width:16px; height:16px; fill:#0b1020 }
-    .brand-title{
-      font-weight:800; letter-spacing:.2px;
-      background: linear-gradient(90deg, var(--accent), #91f2c3);
-      -webkit-background-clip:text; background-clip:text; color:transparent; font-size:16px;
-    }
-    .header-actions{ display:flex; align-items:center; gap:8px }
-
-    /* 브라우저 컨트롤 힌트 */
-    body { color-scheme: dark; }
-    body.light { color-scheme: light; }
-
-    /* 폼 컨트롤 토큰 */
-    :root{
-      --control-bg: #10141c; --control-bg-focus: #151b26;
-      --control-text: var(--text); --control-border: var(--border);
-      --control-placeholder: color-mix(in srgb, var(--text) 45%, transparent);
-    }
-    body.light{
-      --control-bg: #ffffff; --control-bg-focus: #f4f7fb;
-      --control-text: #1a1c22; --control-border: #d6d8e0;
-      --control-placeholder: #9aa0ae;
-    }
-
-    select, textarea, input[type="text"]{
-      background-color: var(--control-bg);
-      color: var(--control-text);
-      border: 1px solid var(--control-border);
-      border-radius: 12px;
-      padding: 12px;
-      outline: none;
-      transition: border-color .15s ease, background-color .15s ease, color .15s ease;
-    }
-    input::placeholder, textarea::placeholder{ color: var(--control-placeholder); }
-    select:focus, textarea:focus, input[type="text"]:focus{
-      background-color: var(--control-bg-focus);
-      border-color: var(--accent);
-      outline: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
-      outline-offset: 1px;
-    }
-    select option{ background: var(--panel); color: var(--text); }
-    select:hover, textarea:hover, input[type="text"]:hover{
-      border-color: color-mix(in srgb, var(--accent) 35%, var(--control-border));
-    }
-
-    /* 모델 선택 토글 */
-    .segmented{
-      display:inline-flex; gap:0; border:1px solid var(--border);
-      border-radius:12px; overflow:hidden; background:transparent; box-shadow: var(--shadow);
-    }
-    .segmented button{
-      appearance:none; background:transparent; border:0; cursor:pointer;
-      padding:8px 12px; font-weight:700; color:var(--text);
-      transition: background .15s ease, color .15s ease;
-    }
-    .segmented button:not(.active):hover{ background: color-mix(in srgb, var(--accent) 10%, transparent); }
-    .segmented button.active{ background: var(--accent); color:#fff; }
-    /* 버튼 로딩 상태 */
-    .btn .spinner {
-      display: none;
-      width: 16px; height: 16px;
-      border: 2px solid currentColor;
-      border-right-color: transparent;
-      border-radius: 50%;
-      animation: nice-spin .8s linear infinite;
-      vertical-align: -2px;
-      margin-right: 8px;
-    }
-    .btn.loading .spinner { display: inline-block; }
-    .btn.loading .btn-label { opacity: .0; }  /* 텍스트 숨김(필요시 제거) */
-
-    @keyframes nice-spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* 비활성화된 상태 시각 피드백(선택 사항) */
-    .btn[disabled] {
-      opacity: .7;
-      cursor: not-allowed;
-    }
-
-  </style>
-</head>
-
-<body>
-  <div class="main">
-    <header class="site-header">
-      <div class="inner">
-        <a class="brand" href="/">
-          <span class="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.12 5.34 3 7 3h10c1.66 0 3 1.12 3 2.5v7c0 1.38-1.34 2.5-3 2.5H11l-3.6 3.1c-.52.45-1.4.09-1.4-.55V15H7c-1.66 0-3-1.12-3-2.5v-7Z"></path></svg>
-          </span>
-          <span class="brand-title">Lexinoa</span>
-        </a>
-
-        <div class="header-actions" style="display:flex; align-items:center; gap:8px; min-width:0;">
-          <button id="themeToggle" class="theme-toggle">🌙 다크/라이트</button>
-          <a class="btn ghost" href="{{ url_for('feedback') }}">피드백</a>
-        <!-- 헤더 액션 끝부분에 추가 -->
-          <a class="btn ghost" href="{{ url_for('subscribe_page') if false else '/subscribe' }}">구독</a>
-
-          {% if session.get('user') %}
-            <a class="btn ghost" href="{{ url_for('user_history') }}">기록보기</a>
-            <span class="small" title="{{ session.get('user').user_id }}"
-                  style="max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; opacity:.8;">
-              {{ session.get('user').user_id }}
-            </span>
-            <a class="btn ghost" href="{{ url_for('auth.logout') }}">로그아웃</a>
-          {% else %}
-            <a class="btn ghost" href="{{ url_for('auth.login_page') }}">로그인</a>
-          {% endif %}
-        </div>
-      </div>
-    </header>
+{% block content %}
+    {# ---------- 광고 1: 헤더 아래 반응형 배너 ---------- #}
+    {% include "_ads.html" %}
+    {% if _show_ads %}
+      {% from "_ads.html" import display_responsive, in_article %}
+      {{ display_responsive("1234567890", _client_id) }}
+    {% endif %}
 
     <form id="polishForm" class="stack" method="post" action="/">
-      <!-- 1층: 입력 -->
+      <div id="bootstrap"
+           data-selected-categories='{{ selected_categories|tojson|safe }}'
+           data-selected-tones='{{ selected_tones|tojson|safe }}'
+           data-honorific='{{ 'true' if honorific_checked else 'false' }}'
+           data-opener='{{ 'true' if opener_checked else 'false' }}'
+           data-emoji='{{ 'true' if emoji_checked else 'false' }}'
+           data-is-pro='{{ 'true' if (is_pro|default(False)) else 'false' }}'></div>
+
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <!-- 입력 -->
       <section class="card">
         <h3>입력</h3>
         <p class="small hint">전달할 문장을 아래에 입력하세요.</p>
         <textarea id="input_text" name="input_text" placeholder="예) 왜 이렇게 늦게 보내세요? 다음부턴 제때 보내세요.">{{ input_text or "" }}</textarea>
       </section>
+      <input type="hidden" name="provider" value="claude">
 
-      <!-- 2층: 카테고리 & 말투 (자동 추가) -->
+      <!-- 카테고리 & 말투 -->
       <section class="card">
-        <h3>카테고리 & 말투 설정 (선택 시 자동 추가)</h3>
+        <div class="section-header">
+          <h3>카테고리 & 말투 설정 (선택 시 자동 추가)</h3>
+          <div class="toolbar-right">
+            {% if is_pro %}
+              <span class="template-badge badge-pro">Pro</span>&nbsp;
+              <select id="templateSelect" class="template-select" aria-label="템플릿 선택">
+                <option value="" selected>템플릿 선택…</option>
+              </select>
+              <button type="button" class="btn small secondary" id="btnTemplateAdd">템플릿 추가</button>
+              <button type="button" class="btn ghost small" id="btnTemplateDelete">템플릿 삭제</button>
+              <span class="spacer"></span>
+              <button type="button" class="btn ghost small" id="resetTemplateBtn" style="margin-left:auto;">초기화</button>
+            {% else %}
+              <span class="template-badge badge-locked">🔒 Pro 전용</span>
+              <select id="templateSelect" class="template-select" aria-label="템플릿 선택">
+                <option value="" selected>템플릿 선택...</option>
+                <option>템플릿을 저장해서 </option>
+                <option>상황에 맞게 사용할 수 있습니다.</option>
+                <option>예) 업무, 정중하게, 존댓말 선택</option>
+              </select>
+              <a class="btn small" href="{{ url_for('subscribe_page') }}">구독하기</a>
+              <span class="spacer"></span>
+              <button type="button" class="btn ghost small" id="resetTemplateBtn" style="margin-left:auto;">초기화</button>
+            {% endif %}
+          </div>
+        </div>
 
         <div class="row cols-2">
           <!-- 카테고리 -->
@@ -237,17 +84,16 @@
                 <option value="general">일반</option>
                 <option value="work">업무</option>
                 <option value="support">고객응대</option>
-                <option value="community">커뮤니티</option>
                 <option value="apology">사과</option>
                 <option value="inquiry">문의</option>
                 <option value="thanks">감사</option>
                 <option value="request">요청</option>
-                <option value="guidence">안내</option>
+<option value="guidance">안내</option>
                 <option value="report/approval">보고/결제</option>
                 <option value="feedback">피드백</option>
               </select>
             </div>
-            <div class="chipbox" id="categoryChips" aria-live="polite"></div>
+            <div class="chipbox" id="categoryChips"></div>
             <div id="categoryHidden"></div>
           </div>
 
@@ -269,23 +115,23 @@
                 <option value="without_emotion">감정 없이(중립)</option>
               </select>
             </div>
-            <div class="chipbox" id="toneChips" aria-live="polite"></div>
+            <div class="chipbox" id="toneChips"></div>
             <div id="toneHidden"></div>
           </div>
         </div>
 
-        <!-- 옵션 -->
+        <!-- 체크박스 -->
         <div class="checkbox-group">
           <label class="checkbox-item">
-            <input type="checkbox" id="honorific" name="honorific" value="on" {% if honorific_checked %}checked{% endif %}>
+            <input type="checkbox" id="honorific" name="honorific_checked" value="on" {% if honorific_checked %}checked{% endif %}>
             <span>존댓말 유지</span>
           </label>
           <label class="checkbox-item">
-            <input type="checkbox" id="opener" name="opener" value="on" {% if opener_checked %}checked{% endif %}>
+            <input type="checkbox" id="opener" name="opener_checked" value="on" {% if opener_checked %}checked{% endif %}>
             <span>완충문·인사 추가</span>
           </label>
           <label class="checkbox-item">
-            <input type="checkbox" id="emoji" name="emoji" value="on" {% if emoji_checked %}checked{% endif %}>
+            <input type="checkbox" id="emoji" name="emoji_checked" value="on" {% if emoji_checked %}checked{% endif %}>
             <span>이모지 허용 🙂</span>
           </label>
         </div>
@@ -293,224 +139,133 @@
         <div class="toolbar" style="margin-top:8px;">
           <span class="small">선택한 칩을 클릭하면 제거됩니다.</span>
           <span class="spacer"></span>
-          <button type="button" id="clearAll" class="btn ghost">전체 초기화</button>
+          <button type="submit" class="btn" id="submitBtn">
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="btn-label">번역하기</span>
+          </button>
         </div>
+
+        {% if not is_pro %}
+        <p class="lock-note muted" style="margin-top:8px;">※ 템플릿 저장·불러오기는 구독(Pro)에서 사용할 수 있습니다.</p>
+        {% endif %}
       </section>
 
-      <!-- 3층: 출력 -->
+      <!-- 출력 -->
       <section class="card">
         <h3>출력</h3>
+        <div id="usageInfo" style="font-size:0.9rem; opacity:0.75; color:var(--muted); margin-right:4px;"></div>
         <div id="output_text" class="output">{{ output_text or "서버에서 처리된 결과가 여기에 표시됩니다." }}</div>
         <div class="toolbar" style="margin-top:8px;">
-          <span class="small">※ 원하는 결과가 나오지 않을수도 있습니다</span>
+          <span class="small">※ 원하는 결과가 나오지 않을 수도 있습니다</span>
           <span class="spacer"></span>
-          <button type="button" class="btn secondary" id="copyOutputBtn" aria-label="출력 내용 복사">복사</button>
-            <button type="submit" class="btn" id="submitBtn" aria-busy="false">
-              <span class="spinner" aria-hidden="true"></span>
-              <span class="btn-label">변역하기</span>
-            </button>
         </div>
       </section>
     </form>
+
+    {# ---------- 광고 2: 본문 중간 인아티클 ---------- #}
+    {% if _show_ads %}
+      {{ in_article("0987654321", _client_id) }}
+    {% endif %}
+
+    {# ---------- 광고 3: 푸터 위 반응형 ---------- #}
+    {% if _show_ads %}
+      {{ display_responsive("1122334455", _client_id) }}
+    {% endif %}
+
+  {# ---------- Pro 전용 템플릿 다이얼로그 ---------- #}
+  {% if is_pro %}
+  <dialog id="tplDialog" class="tpl-dialog">
+    <form method="dialog" class="tpl-dialog-inner">
+      <header class="tpl-dialog-header">
+        <h3>템플릿 저장</h3>
+        <button type="button" id="tplClose" class="btn ghost small" aria-label="닫기">✕</button>
+      </header>
+
+      <div class="tpl-dialog-body">
+        <div class="field">
+          <label for="tplTitle">템플릿 이름</label>
+          <input type="text" id="tplTitle" placeholder="예) 업무·정중·존댓말" />
+        </div>
+
+        <div class="field">
+          <label for="tplCategory">카테고리</label>
+          <select id="tplCategory">
+            <option value="">선택 안 함</option>
+            <option value="general">일반</option>
+            <option value="work">업무</option>
+            <option value="support">고객응대</option>
+            <option value="apology">사과</option>
+            <option value="inquiry">문의</option>
+            <option value="thanks">감사</option>
+            <option value="request">요청</option>
+            <option value="guidence">안내</option>
+            <option value="report/approval">보고/결제</option>
+            <option value="feedback">피드백</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="tplTone">말투</label>
+          <select id="tplTone">
+            <option value="">선택 안 함</option>
+            <option value="soft">부드럽게</option>
+            <option value="polite">정중하게</option>
+            <option value="concise">간결하게</option>
+            <option value="report">보고서체</option>
+            <option value="friendly">친근하게</option>
+            <option value="warmly">따듯하게</option>
+            <option value="calmly">차분하게</option>
+            <option value="formally">격식있게</option>
+            <option value="clearly">명확하게</option>
+            <option value="without_emotion">감정 없이(중립)</option>
+          </select>
+        </div>
+
+        <div class="field checkbox-group">
+          <label>
+            <input type="checkbox" id="tplHonorific" />
+            <span>존댓말 유지</span>
+          </label>
+          <label>
+            <input type="checkbox" id="tplOpener" />
+            <span>완충문·인사 추가</span>
+          </label>
+          <label>
+            <input type="checkbox" id="tplEmoji" />
+            <span>이모지 허용 🙂</span>
+          </label>
+        </div>
+      </div>
+
+      <footer class="tpl-dialog-footer">
+        <button type="button" class="btn ghost small" id="tplCancel">취소</button>
+        <button type="button" class="btn small" id="tplSave">저장</button>
+      </footer>
+    </form>
+  </dialog>
+  {% endif %}
+
+  <div id="cookie-banner" style="position:fixed; left:16px; right:16px; bottom:16px; padding:10px; background:#111; color:#fff; border-radius:10px; display:none; z-index:9999;">
+    이 사이트는 서비스 제공 및 광고를 위해 쿠키를 사용할 수 있습니다.
+    <a href="/privacy" style="color:#8ec5ff;">자세히</a>
+    <button id="cookie-accept" class="btn" style="margin-left:8px; padding:6px 10px; border-radius:8px; background:#3b82f6; color:#fff; border:0;">동의</button>
   </div>
+{% endblock %}
 
-  <!-- 푸터 -->
-  <footer style="margin:24px auto; max-width:1100px; padding:0 16px; opacity:.85;">
-    <div style="border-top:1px solid var(--border); padding-top:12px; display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end;">
-      <a href="/terms" class="small" style="text-decoration:none; color:var(--muted);">이용약관</a>
-      <span class="small" style="color:var(--muted);">·</span>
-      <a href="/privacy" class="small" style="text-decoration:none; color:var(--muted);">개인정보 처리방침</a>
-      <span class="small" style="color:var(--muted);">·</span>
-      <a href="/disclaimer" class="small" style="text-decoration:none; color:var(--muted);">면책 고지</a>
-    </div>
-  </footer>
-
-  <script>
-    // --- 테마 토글 ---
-    (function themeToggle(){
-      const btn = document.getElementById('themeToggle');
-      const saved = localStorage.getItem('theme') || 'dark';
-      if (saved === 'light') document.body.classList.add('light');
-      btn.addEventListener('click', ()=>{
-        document.body.classList.toggle('light');
-        localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
-      });
-    })();
-
-    // --- 칩 유틸 ---
-    function createChip(text, value, group, hiddenContainer, inputName){
-      if (document.querySelector(`.${group}-chip[data-value="${CSS.escape(value)}"]`)) return;
-      const chip = document.createElement('button');
-      chip.type = 'button';
-      chip.className = `chip ${group}-chip`;
-      chip.dataset.value = value;
-      chip.textContent = text + ' ';
-      const x = document.createElement('span');
-      x.className = 'x';
-      x.textContent = '×';
-      chip.appendChild(x);
-
-      const hid = document.createElement('input');
-      hid.type = 'hidden';
-      hid.name = inputName;      // 예: categories, tones
-      hid.value = value;
-      hid.dataset.value = value;
-
-      return { chip, hid };
-    }
-
-    function addItem(selectEl, chipsBoxEl, hiddenBoxEl, group, inputName){
-      const opt = selectEl.options[selectEl.selectedIndex];
-      if (!opt || !opt.value) return;
-      const made = createChip(opt.text, opt.value, group, hiddenBoxEl, inputName) || {};
-      if (!made.chip || !made.hid) return;
-      chipsBoxEl.appendChild(made.chip);
-      hiddenBoxEl.appendChild(made.hid);
-      selectEl.selectedIndex = 0;
-    }
-
-    function removeItem(value, group, chipsBoxEl, hiddenBoxEl){
-      const chip = chipsBoxEl.querySelector(`.${group}-chip[data-value="${CSS.escape(value)}"]`);
-      const hid  = hiddenBoxEl.querySelector(`input[data-value="${CSS.escape(value)}"]`);
-      if (chip) chip.remove();
-      if (hid) hid.remove();
-    }
-
-    function clearAll(){
-      ['categoryChips','toneChips','categoryHidden','toneHidden'].forEach(id=>{
-        const el = document.getElementById(id);
-        if (el) el.innerHTML = '';
-      });
-      document.getElementById('categorySelect').selectedIndex = 0;
-      document.getElementById('toneSelect').selectedIndex = 0;
-      // 체크박스도 해제
-      ['honorific','opener','emoji'].forEach(id=>{
-        const el = document.getElementById(id);
-        if (el) el.checked = false;
-      });
-    }
-
-    // --- 초기 바인딩 ---
-    (function bind(){
-      const cSel = document.getElementById('categorySelect');
-      const tSel = document.getElementById('toneSelect');
-      const cChips = document.getElementById('categoryChips');
-      const tChips = document.getElementById('toneChips');
-      const cHidden = document.getElementById('categoryHidden');
-      const tHidden = document.getElementById('toneHidden');
-
-      // ✅ 선택 즉시 자동 추가
-      cSel.addEventListener('change', ()=>{
-        addItem(cSel, cChips, cHidden, 'category', 'categories');
-      });
-      tSel.addEventListener('change', ()=>{
-        addItem(tSel, tChips, tHidden, 'tone', 'tones');
-      });
-
-      // 칩 클릭 제거 (이벤트 위임)
-      cChips.addEventListener('click', (e)=>{
-        const btn = e.target.closest('.category-chip');
-        if (!btn) return;
-        removeItem(btn.dataset.value, 'category', cChips, cHidden);
-      });
-      tChips.addEventListener('click', (e)=>{
-        const btn = e.target.closest('.tone-chip');
-        if (!btn) return;
-        removeItem(btn.dataset.value, 'tone', tChips, tHidden);
-      });
-
-      document.getElementById('clearAll').addEventListener('click', clearAll);
-    })();
-
-    // --- 서버에서 전달된 선택 값 복원 ---
-    (function restoreFromServer(){
-      const preCats  = JSON.parse('{{ selected_categories | tojson | safe }}');
-      const preTones = JSON.parse('{{ selected_tones | tojson | safe }}');
-      const honorificChecked = JSON.parse('{{ 'true' if honorific_checked else 'false' }}');
-      const openerChecked    = JSON.parse('{{ 'true' if opener_checked else 'false' }}');
-      const emojiChecked     = JSON.parse('{{ 'true' if emoji_checked else 'false' }}');
-
-      const cSel = document.getElementById('categorySelect');
-      const tSel = document.getElementById('toneSelect');
-      const cChips = document.getElementById('categoryChips');
-      const tChips = document.getElementById('toneChips');
-      const cHidden = document.getElementById('categoryHidden');
-      const tHidden = document.getElementById('toneHidden');
-
-      // 체크박스 복원
-      document.getElementById('honorific').checked = honorificChecked;
-      document.getElementById('opener').checked = openerChecked;
-      document.getElementById('emoji').checked = emojiChecked;
-
-      // 카테고리 칩 복원
-      preCats.forEach(val => {
-        const opt = Array.from(cSel.options).find(o => o.value === val);
-        if (!opt) return;
-        const made = createChip(opt.text, val, 'category', cHidden, 'categories');
-        if (made) { cChips.appendChild(made.chip); cHidden.appendChild(made.hid); }
-      });
-
-      // 말투 칩 복원
-      preTones.forEach(val => {
-        const opt = Array.from(tSel.options).find(o => o.value === val);
-        if (!opt) return;
-        const made = createChip(opt.text, val, 'tone', tHidden, 'tones');
-        if (made) { tChips.appendChild(made.chip); tHidden.appendChild(made.hid); }
-      });
-    })();
-
-    // --- 출력 복사 버튼 ---
-    (function copyOutputButton(){
-      const btn = document.getElementById('copyOutputBtn');
-      if (!btn) return;
-      btn.addEventListener('click', async () => {
-        const target = document.getElementById('output_text');
-        if (!target) return;
-
-        const text = target.innerText ?? target.textContent ?? '';
-        const labelOrig = btn.textContent;
-
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(text);
-          } else {
-            const range = document.createRange();
-            range.selectNodeContents(target);
-            const sel = window.getSelection();
-            sel.removeAllRanges();
-            sel.addRange(range);
-            document.execCommand('copy');
-            sel.removeAllRanges();
-          }
-          btn.textContent = '복사됨!';
-          btn.disabled = true;
-          setTimeout(() => { btn.textContent = labelOrig; btn.disabled = false; }, 1200);
-        } catch (e) {
-          btn.textContent = '복사 실패';
-          setTimeout(() => { btn.textContent = labelOrig; }, 1200);
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/mainpage.js') }}" defer></script>
+  <script nonce="{{ csp_nonce }}">
+    (function(){
+      try {
+        const key = "lexinoa_cookie_ok_v1";
+        if (!localStorage.getItem(key)) {
+          document.getElementById("cookie-banner").style.display = "block";
         }
-      });
+        document.getElementById("cookie-accept").addEventListener("click", function(){
+          localStorage.setItem(key, "1");
+          document.getElementById("cookie-banner").style.display = "none";
+        });
+      } catch(e) {}
     })();
-    // --- 제출 시 스피너 표시 & 중복 클릭 방지 ---
-    (function attachSubmitSpinner(){
-      const form = document.getElementById('polishForm');
-      const btn  = document.getElementById('submitBtn');
-      if (!form || !btn) return;
-
-      form.addEventListener('submit', () => {
-        // flicker 방지로 80ms 딜레이 후 표시 (원하면 제거)
-        setTimeout(() => {
-          btn.classList.add('loading');
-          btn.setAttribute('aria-busy', 'true');
-          btn.disabled = true;
-        }, 80);
-      });
-
-      // 만약 일부 브라우저에서 같은 페이지 내 네비게이션 없이 에러가 나면 복구가 필요할 수 있어요.
-      // AJAX 전환 시에는 응답 도착 시 아래처럼 원복:
-      // btn.classList.remove('loading'); btn.setAttribute('aria-busy','false'); btn.disabled = false;
-    })();
-
   </script>
-</body>
-</html>
+{% endblock %}
