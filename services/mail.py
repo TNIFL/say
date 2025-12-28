@@ -27,7 +27,7 @@ def _send_resend_email_sync(*, to_email: str, subject: str, text: str) -> bool:
     - False: 실패(네트워크/인증/검증/레이트리밋 등)
     """
     api_key = os.getenv("RESEND_API_KEY")
-    from_email = os.getenv("MAIL_FROM", "Lexinoa <no-reply@lexinoa.com>")
+    from_email = os.getenv("MAIL_FROM", "Lexinoa <onboarding@resend.dev>")
 
     if not api_key:
         print("[MAIL][ERROR] RESEND_API_KEY is missing")
