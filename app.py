@@ -61,4 +61,8 @@ def create_app():
                 print("[400 DEBUG] logging failed:", e)
         return resp
 
+    @app.get("/health")
+    def health():
+        return {"ok": True}, 200
+
     return app
