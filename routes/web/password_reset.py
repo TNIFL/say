@@ -1,4 +1,4 @@
-from flask import request, render_template, url_for, redirect, Blueprint
+from flask import request, render_template, url_for, redirect, Blueprint, current_app
 from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy import func
 
@@ -8,13 +8,35 @@ from auth.entitlements import get_current_user
 from core.extensions import csrf, limiter
 
 from domain.models import db, User
-from services.mail import _send_email_reset_link_sync, create_email_verify_token, _send_email_verify_link_sync, \
-    verify_email_token
-from services.password_reset import create_password_reset_token, verify_password_reset_token, \
-    consume_password_reset_token
+from services.mail import (
+    _send_email_reset_link_sync,
+    create_email_verify_token,
+    _send_email_verify_link_sync,
+    verify_email_token,
+)
+from services.password_reset import (
+    create_password_reset_token,
+    verify_password_reset_token,
+    consume_password_reset_token,
+)
 from services.recaptcha import verify_recaptcha_v2
 
 password_reset_bp = Blueprint("password_reset", __name__)
+
+
+def _sleep_min_elapsed(start: float, min_seconds: float = 1.5) -> None:
+    elapsed = time.perf_counter() - start
+    if elapsed < min_seconds:
+        time.sleep(min_seconds - elapsed)
+
+
+def _get_reset_ttl_seconds() -> int:
+    # env는 문자열이므로 int로 변환 + 기본값 제공
+    raw = os.getenv("RESET_TOKEN_TTL_SECONDS", "1800")
+    try:
+        return int(raw)
+    except ValueError:
+        return 1800
 
 
 # 비밀번호 재설정
@@ -27,9 +49,7 @@ def forgot_password():
         recaptcha_response = request.form.get("g-recaptcha-response")
 
         if not verify_recaptcha_v2(recaptcha_response, request.remote_addr):
-            elapsed = time.perf_counter() - start
-            if elapsed < 1.5:
-                time.sleep(1.5 - elapsed)
+            _sleep_min_elapsed(start)
             return render_template(
                 "forgot.html",
                 error="자동 등록 방지를 통과하지 못했습니다.",
@@ -38,9 +58,7 @@ def forgot_password():
             )
 
         if not email:
-            elapsed = time.perf_counter() - start
-            if elapsed < 1.5:
-                time.sleep(1.5 - elapsed)
+            _sleep_min_elapsed(start)
             return render_template(
                 "forgot.html",
                 error="이메일을 입력해 주세요.",
@@ -48,19 +66,21 @@ def forgot_password():
                 recaptcha_site_key=os.getenv("RECAPTCHA_SITE_KEY"),
             )
 
-
         user = User.query.filter(func.lower(User.email) == email).first()
         if user:
-            raw = create_password_reset_token(
-                user, ttl_seconds=os.getenv("RESET_TOKEN_TTL_SECONDS")
-            )
-            link = url_for("reset_password", token=raw, _external=True)
-            # Check if email sending was successful
-            if not _send_email_reset_link_sync(user.email, link):
-                # If email sending failed, return an error message
-                elapsed = time.perf_counter() - start
-                if elapsed < 1.5:
-                    time.sleep(1.5 - elapsed)
+            ttl = _get_reset_ttl_seconds()
+            raw = create_password_reset_token(user, ttl_seconds=ttl)
+
+            link = url_for("password_reset.reset_password", token=raw, _external=True)
+
+            try:
+                ok = _send_email_reset_link_sync(user.email, link)
+                current_app.logger.info("[MAIL reset] called email=%s ok=%s", user.email, ok)
+                if not ok:
+                    raise RuntimeError("send returned false")
+            except Exception as e:
+                current_app.logger.exception("[MAIL reset] failed email=%s err=%r", user.email, e)
+                _sleep_min_elapsed(start)
                 return render_template(
                     "forgot.html",
                     error="비밀번호 재설정 이메일 전송에 실패했습니다. 잠시 후 다시 시도해 주세요.",
@@ -68,10 +88,8 @@ def forgot_password():
                     recaptcha_site_key=os.getenv("RECAPTCHA_SITE_KEY"),
                 )
 
-        elapsed = time.perf_counter() - start
-        if elapsed < 1.5:
-            time.sleep(1.5 - elapsed)
-
+        # 사용자 존재 여부와 무관하게 동일 메시지(계정 존재 유무 유추 방지)
+        _sleep_min_elapsed(start)
         return render_template(
             "forgot.html",
             message="입력하신 주소로 안내 메일을 보냈습니다. (수신함/스팸함 확인)",
@@ -79,6 +97,7 @@ def forgot_password():
         )
 
     return render_template("forgot.html", recaptcha_site_key=os.getenv("RECAPTCHA_SITE_KEY"))
+
 
 @password_reset_bp.route("/reset/<token>", methods=["GET", "POST"])
 def reset_password(token):
@@ -112,16 +131,24 @@ def reset_password(token):
 
     return redirect(url_for("auth.login_page") + "?reset=ok")
 
-# (A) 인증 안내 페이지 + 전송 버튼
+
+# (A) 인증 안내 페이지
 @password_reset_bp.route("/verify/require", methods=["GET"])
 def verify_require():
     user = get_current_user()
     if not user:
         return redirect(url_for("auth.login_page"))
+
     if user.email_verified:
-        nxt = request.args.get("next") or url_for("mypage_overview") if False else "/me"
+        nxt = request.args.get("next") or "/me"
         return redirect(nxt)
-    return render_template("verify_notice.html", email=user.email, next=request.args.get("next") or "")
+
+    return render_template(
+        "verify_notice.html",
+        email=user.email,
+        next=request.args.get("next") or "",
+    )
+
 
 # (B) 인증 메일 보내기 (POST)
 @csrf.exempt
@@ -130,13 +157,35 @@ def verify_send():
     user = get_current_user()
     if not user:
         return redirect(url_for("auth.login_page"))
+
     if user.email_verified:
         return redirect(request.args.get("next") or "/me")
 
     token = create_email_verify_token(user)
     link = url_for("password_reset.verify_confirm", token=token, _external=True)
-    _send_email_verify_link_sync(user.email, link)
-    return render_template("verify_notice.html", email=user.email, sent=True, next=request.args.get("next") or "")
+
+    try:
+        ok = _send_email_verify_link_sync(user.email, link)
+        current_app.logger.info("[MAIL verify] called email=%s ok=%s", user.email, ok)
+        if not ok:
+            raise RuntimeError("send returned false")
+    except Exception as e:
+        current_app.logger.exception("[MAIL verify] failed email=%s err=%r", user.email, e)
+        return render_template(
+            "verify_notice.html",
+            email=user.email,
+            sent=False,
+            error="인증 메일 전송에 실패했습니다. 잠시 후 다시 시도해 주세요.",
+            next=request.args.get("next") or "",
+        ), 500
+
+    return render_template(
+        "verify_notice.html",
+        email=user.email,
+        sent=True,
+        next=request.args.get("next") or "",
+    )
+
 
 # (C) 인증 완료 콜백
 @password_reset_bp.route("/verify/<token>", methods=["GET"])
