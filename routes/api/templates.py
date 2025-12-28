@@ -19,6 +19,8 @@ def api_user_templates():
     user = get_current_user()
     if not user:
         return _json_err("login_required", status=401)
+    tier = resolve_tier()
+    print("[TIER] resolve_tier() =", tier, "user_id=", user.user_id, "email=", user.email)
     if resolve_tier() != "pro":
         return _json_err("pro_required", status=403)
 

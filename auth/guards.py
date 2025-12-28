@@ -14,7 +14,10 @@ def resolve_tier():
     user = get_current_user()
     if not user:
         return "guest"
+    if getattr(user, "is_admin", False):
+        return "pro"
     return "pro" if has_active_subscription(user) else "free"
+
 
 
 def outputs_for_tier():
