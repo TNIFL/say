@@ -76,17 +76,23 @@ def origin_allowed():
     ext_origins = cfg.get("EXT_ORIGINS") or []
     ext_ids = cfg.get("EXTENSION_IDS") or []
 
+    # ---- debug (필요하면 잠깐 켜고 나중에 제거) ----
+    # print("[ORIGIN] origin=", origin, "ref=", ref, "this=", this)
+
     # Chrome extension
     if origin.startswith("chrome-extension://"):
-        return origin in {f"chrome-extension://{i}" for i in ext_ids}
+        ok = origin in {f"chrome-extension://{i}" for i in ext_ids}
+        # print("[ORIGIN] chrome ok=", ok)
+        return ok
 
     allowed = set(o.rstrip("/") for o in api_allowed_origins if o)
     allowed.add(this)
     allowed.update(o.rstrip("/") for o in ext_origins if o)
 
+    # Origin 헤더 없는 same-origin 케이스 처리
     if not origin:
-        # same-origin fetch (Origin 생략 케이스)
-        if ref and ref.startswith(this + "/"):
+        # Referer가 same-origin이면 허용
+        if ref and (ref.startswith(this + "/") or ref == this):
             return True
         # 개발환경 완화
         if current_app.config.get("ENV") == "development":
@@ -99,18 +105,23 @@ def origin_allowed():
     # Referer는 보조 신호
     if ref:
         for a in allowed:
-            if a and ref.startswith(a + "/"):
+            if a and (ref.startswith(a + "/") or ref == a):
                 return True
 
     return False
 
 
 
+
 def origin_guard():
     if request.path.startswith("/api/"):
+        # 표시용/기본 API는 예외 처리 (필요시 추가)
+        if request.path == "/api/usage":
+            return None
         if not origin_allowed():
             abort(403)
     return None
+
 
 def register_hooks(app):
     app.before_request(load_user)

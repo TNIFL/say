@@ -22,6 +22,9 @@ def api_usage_status():
     - 로그인: 월간 window + scope
     - 게스트: 일간 window + scope
     """
+    print("[USAGE][HEADERS] Origin=", request.headers.get("Origin"))
+    print("[USAGE][HEADERS] Host=", request.headers.get("Host"), "XFH=", request.headers.get("X-Forwarded-Host"),
+          "XFP=", request.headers.get("X-Forwarded-Proto"))
 
     def _json_resp(payload, set_aid=None, status=200):
         resp = make_response(jsonify(payload), status)
