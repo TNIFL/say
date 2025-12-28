@@ -4,201 +4,79 @@
 
 {% block head_extra %}
 <style>
-.policy-content h2{font-size:1.5em; margin-top:30px; border-bottom:1px solid var(--border); padding-bottom:5px; color:var(--accent);}
-.policy-content h3{font-size:1.1em; margin-top:20px; color:var(--text);}
-.policy-content p, .policy-content li{margin-bottom:12px; font-size:14px; line-height:1.8;}
-.policy-content ul{list-style:disc; padding-left:20px;}
-.policy-content li{margin-left:5px;}
-.policy-content strong{font-weight:700;}
-.policy-content table{width:100%; border-collapse:collapse; margin:15px 0;}
-.policy-content th, .policy-content td{border:1px solid var(--border); padding:10px; text-align:left; font-size:13px;}
-.policy-content th{background: color-mix(in srgb, var(--panel) 80%, var(--border)); font-weight: 600;}
+.policy-content h2{font-size:1.5em;margin-top:30px;border-bottom:1px solid var(--border);padding-bottom:5px;color:var(--accent);}
+.policy-content h3{font-size:1.1em;margin-top:20px;color:var(--text);}
+.policy-content p,.policy-content li{margin-bottom:12px;font-size:14px;line-height:1.8;}
+.policy-content ul{list-style:disc;padding-left:20px;}
+.policy-content table{width:100%;border-collapse:collapse;margin:15px 0;}
+.policy-content th,.policy-content td{border:1px solid var(--border);padding:10px;font-size:13px;}
+.policy-content th{background:color-mix(in srgb,var(--panel) 80%,var(--border));}
 </style>
 {% endblock %}
 
 {% block content %}
-    <section class="card" style="margin:24px auto;">
-      <h1 style="font-size:1.8em; margin-bottom:10px;">Lexinoa 개인정보 처리방침</h1>
-      <p class="small" style="margin-bottom:20px;">시행일: 2025년 11월 15일</p>
+<section class="card" style="margin:24px auto;">
+  <h1 style="font-size:1.8em;margin-bottom:10px;">Lexinoa 개인정보 처리방침</h1>
+  <p class="small" style="margin-bottom:20px;">시행일: 2025년 1월 1일</p>
 
-      <div class="policy-content">
-        <p>
-        Lexinoa(이하 회사)는 이용자의 개인정보 보호를 중요하게 생각하며, 「개인정보 보호법」 등 관련 법령을 준수하고 있습니다. 이 처리방침을 통해 회원이 제공하는 개인정보가 어떤 용도와 방식으로 이용되고 있는지, 보호를 위해 어떤 조치가 취해지고 있는지 알려드립니다.
-        </p>
+  <div class="policy-content">
+    <p>
+      Lexinoa(이하 “회사”)는 개인정보 보호법 등 관계 법령을 준수하며,
+      이용자의 개인정보를 안전하게 보호합니다.
+    </p>
 
-        <h2>제 1 조 (수집하는 개인정보 항목 및 수집 방법)</h2>
+    <h2>제1조 (수집하는 개인정보)</h2>
+    <table>
+      <tr>
+        <th>구분</th>
+        <th>수집 항목</th>
+        <th>목적</th>
+      </tr>
+      <tr>
+        <td>회원가입</td>
+        <td>이메일 주소, 비밀번호(암호화)</td>
+        <td>회원 식별</td>
+      </tr>
+      <tr>
+        <td>서비스 이용</td>
+        <td>IP 주소, 접속 로그, 이용 기록</td>
+        <td>보안 및 품질 개선</td>
+      </tr>
+      <tr>
+        <td>결제 이용</td>
+        <td>결제 기록</td>
+        <td>요금 정산</td>
+      </tr>
+    </table>
 
-        <h3>1. 수집 항목</h3>
-        <p>회사는 회원가입, 서비스 이용, 유료 서비스 결제 등의 과정에서 다음과 같은 개인정보를 수집합니다.</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>구분</th>
-                    <th>수집 항목</th>
-                    <th>수집 목적</th>
-                    <th>보유 기간</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>회원 가입 시</td>
-                    <td>ID, 이메일 주소, 비밀번호</td>
-                    <td>회원 식별, 서비스 이용 의사 확인, 고객 서비스 제공</td>
-                    <td>회원 탈퇴 시 또는 <br>관계 법령에 따라</td>
-                </tr>
-                <tr>
-                    <td>유료 서비스 이용 시</td>
-                    <td>결제 정보 (신용카드 정보, 계좌 정보 등), <br>결제 기록</td>
-                    <td>요금 결제 및 정산, 환불 처리</td>
-                    <td>대금 완제 및 <br>관계 법령에 따라</td>
-                </tr>
-                <tr>
-                    <td>서비스 이용 시</td>
-                    <td>IP 주소, 방문 기록, 서비스 이용 기록, <br>기기 정보(OS, 브라우저 종류)</td>
-                    <td>서비스 품질 개선, 부정 이용 방지, <br>통계 분석</td>
-                    <td>3년 (통신비밀보호법)</td>
-                </tr>
-            </tbody>
-        </table>
+    <p><strong>※ 신용카드 번호 등 결제 정보는 결제 대행사가 직접 처리하며 회사는 저장하지 않습니다.</strong></p>
 
-        <h3>2. 수집 방법</h3>
-        <ul>
-            <li>회원가입 및 서비스 이용 과정에서 이용자가 직접 입력하는 방식으로 수집</li>
-            <li>유료 서비스 이용 시 결제 대행사를 통한 정보 수집</li>
-            <li>서비스 이용 과정에서 자동으로 생성되어 수집 (로그 기록, 쿠키 등)</li>
-        </ul>
+    <h2>제2조 (보유 및 이용 기간)</h2>
+    <p>
+      회원 탈퇴 시 개인정보는 즉시 파기되며,
+      법령에 따라 보관이 필요한 정보는 해당 기간 동안 보관됩니다.
+    </p>
 
-        <h2>제 2 조 (개인정보의 처리 목적)</h2>
+    <h2>제3조 (개인정보 처리 위탁)</h2>
+    <table>
+      <tr>
+        <th>수탁업체</th>
+        <th>위탁 내용</th>
+      </tr>
+      <tr>
+        <td>나이스페이먼츠㈜</td>
+        <td>결제 처리</td>
+      </tr>
+      <tr>
+        <td>클라우드 서비스 제공업체</td>
+        <td>서버 운영</td>
+      </tr>
+    </table>
 
-        <p>회사는 수집한 개인정보를 다음의 목적을 위해 활용합니다.</p>
-        <ul>
-            <li>서비스 제공에 관한 계약 이행 및 요금 정산: 콘텐츠 제공, 유료 서비스 및 구독에 대한 요금 결제, 환불, 채권 추심 등</li>
-            <li>회원 관리: 회원제 서비스 이용에 따른 본인 확인, 개인 식별, 부정 이용 방지 및 비인가 사용 방지, 불만 처리 등 민원 처리, 고지사항 전달</li>
-            <li>마케팅 및 광고에 활용 (선택 동의 시): 신규 서비스(제품) 개발 및 맞춤 서비스 제공, 이벤트 및 광고성 정보 제공 및 참여 기회 제공, 접속 빈도 파악 등</li>
-        </ul>
-
-        <h2>제 3 조 (개인정보의 보유 및 이용 기간)</h2>
-
-        <p>회원 정보는 원칙적으로 개인정보 수집 및 이용 목적이 달성된 후에는 지체 없이 파기합니다. 단, 관계 법령의 규정에 의하여 보존할 필요가 있는 경우 해당 법령에 따라 일정 기간 동안 회원 정보를 보관합니다.</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>법령 근거</th>
-                    <th>보존 항목</th>
-                    <th>보존 기간</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>전자상거래 등에서의 소비자 보호에 관한 법률</td>
-                    <td>계약 또는 청약철회 등에 관한 기록</td>
-                    <td>5년</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>대금 결제 및 재화 등의 공급에 관한 기록</td>
-                    <td>5년</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>소비자의 불만 또는 분쟁 처리에 관한 기록</td>
-                    <td>3년</td>
-                </tr>
-                <tr>
-                    <td>통신비밀보호법</td>
-                    <td>서비스 접속 기록(로그인 기록, IP 주소 등)</td>
-                    <td>3개월 또는 3년</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h2>제 4 조 (개인정보의 파기 절차 및 방법)</h2>
-
-        <p>1. 파기 절차: 목적이 달성된 개인정보는 내부 방침 및 기타 관련 법령에 따라 일정 기간 저장된 후 파기됩니다.</p>
-        <p>2. 파기 방법:</p>
-        <ul>
-            <li>전자적 파일 형태: 기록을 재생할 수 없는 기술적 방법(로우레벨 포맷 등)을 사용하여 삭제합니다.</li>
-            <li>종이 문서 형태: 분쇄기로 분쇄하거나 소각하여 파기합니다.</li>
-        </ul>
-
-        <h2>제 5 조 (개인정보의 제3자 제공)</h2>
-
-        <p>회사는 원칙적으로 회원의 개인정보를 제2조(개인정보의 처리 목적)에서 명시한 범위를 초과하여 이용하거나 타인에게 제공하지 않습니다. 다만, 다음의 경우에는 예외로 합니다.</p>
-        <ul>
-            <li>회원이 사전에 동의한 경우</li>
-            <li>법률에 특별한 규정이 있는 경우</li>
-        </ul>
-
-        <h2>제 6 조 (개인정보 처리의 위탁)</h2>
-
-        <p>회사는 서비스 향상을 위해 다음과 같이 개인정보 처리 업무를 외부 업체에 위탁하고 있으며, 위탁 계약 체결 시 개인정보 보호법에 따라 개인정보가 안전하게 관리되도록 감독하고 있습니다.</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>수탁업체 (위탁받는 자)</th>
-                    <th>위탁 업무 내용</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>[PG사명 입력]</td>
-                    <td>결제 및 환불 관련 업무 처리</td>
-                </tr>
-                <tr>
-                    <td>[호스팅/클라우드 사명 입력]</td>
-                    <td>서비스 운영을 위한 서버 관리 및 시스템 개발</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h2>제 7 조 (정보주체 및 법정대리인의 권리와 그 행사 방법)</h2>
-
-        <p>1. 정보주체의 권리: 회원 및 법정대리인은 언제든지 자신의 개인정보를 열람하거나 수정할 수 있으며, 회원 탈퇴를 요청하여 동의를 철회할 수 있습니다.</p>
-        <p>2. 행사 방법: 회원 본인의 ID/비밀번호를 사용하여 직접 열람 및 수정할 수 있으며, 또는 개인정보 보호 책임자에게 서면, 전화, 이메일 등을 통해 요청할 수 있습니다.</p>
-        <p>3. 회원이 개인정보 오류에 대한 정정을 요청한 경우, 정정을 완료하기 전까지 당해 개인정보를 이용하거나 제공하지 않습니다.</p>
-
-        <h2>제 8 조 (개인정보 보호책임자)</h2>
-
-        <p>회사는 개인정보 처리에 관한 업무를 총괄해서 책임지고, 불만 처리 및 피해 구제 등을 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다. 문의사항이 있으시면 아래 연락처로 문의해 주십시오.</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>구분</th>
-                    <th>성명</th>
-                    <th>직책</th>
-                    <th>연락처</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>개인정보 보호책임자</td>
-                    <td>[담당자 성명 입력]</td>
-                    <td>[담당 부서/직책 입력]</td>
-                    <td>전화: [전화번호 입력] <br> 이메일: [이메일 주소 입력]</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h2>제 9 조 (개인정보 자동 수집 장치의 설치·운영 및 거부에 관한 사항)</h2>
-
-        <p>회사는 회원에게 개별적인 맞춤 서비스를 제공하기 위해 이용정보를 저장하고 수시로 불러오는 '쿠키(cookie)'를 사용합니다.</p>
-        <ul>
-            <li>쿠키 설정 거부 방법: 회원은 사용하는 웹 브라우저의 옵션을 설정하여 모든 쿠키를 허용하거나, 쿠키 저장 시 확인을 거치거나, 모든 쿠키 저장을 거부할 수 있습니다. 다만, 쿠키 저장을 거부할 경우 일부 서비스 이용에 어려움이 있을 수 있습니다.</li>
-        </ul>
-
-        <h2>제 10 조 (개인정보 처리방침 변경)</h2>
-
-        <p>이 개인정보 처리방침은 법률 및 서비스 변경에 따라 내용이 추가, 삭제 및 수정될 수 있습니다.</p>
-        <ul>
-            <li>개인정보 처리방침이 변경될 경우, 변경된 사항을 시행 7일 전부터 서비스 화면 또는 웹사이트 공지사항을 통해 고지할 것입니다. 다만, 중요한 사항이 변경되는 경우에는 최소 30일 전에 고지합니다.</li>
-        </ul>
-
-        <h3 style="margin-top:40px;">부칙</h3>
-        <p>제 1 조 (시행일) 이 처리방침은 2024년 [날짜]부터 시행됩니다.</p>
-      </div>
-    </section>
-{% endblock %}
-
-{% block scripts %}
-  <script src="{{ url_for('static', filename='js/privacy.js') }}" defer></script>
+    <h2>제4조 (문의)</h2>
+    <p>
+      개인정보 관련 문의: <strong>lexinoakr@gmail.com</strong>
+    </p>
+  </div>
+</section>
 {% endblock %}

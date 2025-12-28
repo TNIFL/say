@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <title>Lexinoa</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+{% extends "base.html" %}
+
+{% block title %}Lexinoa{% endblock %}
+
+{% block head_extra %}
   <style>
     :root {
       --bg:#12151b;         /* 약간 밝게 */
@@ -98,98 +97,91 @@
 
     .card h3{margin:0 0 10px 0}
   </style>
-</head>
-<body>
-  <div class="main">
-    <!-- Header -->
-    <header class="site-header">
-      <div class="inner">
-        <a class="brand" href="/">
-          <span class="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 5.5C4 4.12 5.34 3 7 3h10c1.66 0 3 1.12 3 2.5v7c0 1.38-1.34 2.5-3 2.5H11l-3.6 3.1c-.52.45-1.4.09-1.4-.55V15H7c-1.66 0-3-1.12-3-2.5v-7Z"></path>
-            </svg>
-          </span>
-          <span class="brand-title">Lexinoa</span>
-        </a>
-        <div class="header-actions">
-          <button id="themeToggle" class="theme-toggle">🌙 다크/라이트</button>
-          <a class="btn ghost" href="/">메인</a>
+{% endblock %}
 
-        </div>
+{# 이 페이지는 원본처럼 "토글 + 메인"만 있는 헤더를 사용하도록 base의 header를 오버라이드 #}
+{% block header %}
+  <!-- Header -->
+  <header class="site-header">
+    <div class="inner">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 5.5C4 4.12 5.34 3 7 3h10c1.66 0 3 1.12 3 2.5v7c0 1.38-1.34 2.5-3 2.5H11l-3.6 3.1c-.52.45-1.4.09-1.4-.55V15H7c-1.66 0-3-1.12-3-2.5v-7Z"></path>
+          </svg>
+        </span>
+        <span class="brand-title">Lexinoa</span>
+      </a>
+      <div class="header-actions">
+        <button id="themeToggle" class="theme-toggle">🌙 다크/라이트</button>
+        <a class="btn ghost" href="/">메인</a>
+
       </div>
-    </header>
+    </div>
+  </header>
+{% endblock %}
 
-    <!-- History Card -->
-    <section class="card" style="margin-top:16px;">
-      <h3>내 보정 기록</h3>
-      <p class="small">최근 100건까지 표시됩니다. (로그인 사용자 전용)</p>
+{% block content %}
+  <!-- History Card -->
+  <section class="card" style="margin-top:16px;">
+    <h3>내 보정 기록</h3>
+    <p class="small">최근 100건까지 표시됩니다. (로그인 사용자 전용)</p>
 
-      {% if logs|length == 0 %}
-        <p class="small" style="margin-top:8px; color:var(--muted);">아직 기록이 없습니다.</p>
-      {% else %}
-        <div style="overflow:auto; border:1px solid var(--border); border-radius:12px; margin-top:8px;">
-          <table class="table">
-            <thead>
-              <tr>
-                <th class="nowrap">시간</th>
-                <th>입력</th>
-                <th>카테고리</th>
-                <th>톤</th>
-                <th class="nowrap">옵션</th>
-                <th>출력</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for r in logs %}
-              <tr>
-                <td class="nowrap mono">{{ r.created_at.strftime('%Y-%m-%d %H:%M') if r.created_at else '' }}</td>
-                <td class="pre">{{ r.input_text }}</td>
-                <td>
-                  <div class="chips">
-                    {% for c in r.categories or [] %}
-                      <span class="chip">{{ c }}</span>
-                    {% endfor %}
-                  </div>
-                </td>
-                <td>
-                  <div class="chips">
-                    {% for t in r.tones or [] %}
-                      <span class="chip">{{ t }}</span>
-                    {% endfor %}
-                  </div>
-                </td>
-                <td class="mono">
-                  존댓: {{ 'Y' if r.honorific else 'N' }} |
-                  인사: {{ 'Y' if r.opener else 'N' }} |
-                  이모지: {{ 'Y' if r.emoji else 'N' }}
-                </td>
-                <td class="pre">{{ r.output_text or '' }}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      {% endif %}
-
-      <div class="toolbar" style="margin-top:8px;">
-        <span class="spacer"></span>
-        <a class="btn ghost" href="/">돌아가기</a>
+    {% if logs|length == 0 %}
+      <p class="small" style="margin-top:8px; color:var(--muted);">아직 기록이 없습니다.</p>
+    {% else %}
+      <div style="overflow:auto; border:1px solid var(--border); border-radius:12px; margin-top:8px;">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="nowrap">시간</th>
+              <th>입력</th>
+              <th>카테고리</th>
+              <th>톤</th>
+              <th class="nowrap">옵션</th>
+              <th>출력</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in logs %}
+            <tr>
+              <td class="nowrap mono">{{ r.created_at.strftime('%Y-%m-%d %H:%M') if r.created_at else '' }}</td>
+              <td class="pre">{{ r.input_text }}</td>
+              <td>
+                <div class="chips">
+                  {% for c in r.categories or [] %}
+                    <span class="chip">{{ c }}</span>
+                  {% endfor %}
+                </div>
+              </td>
+              <td>
+                <div class="chips">
+                  {% for t in r.tones or [] %}
+                    <span class="chip">{{ t }}</span>
+                  {% endfor %}
+                </div>
+              </td>
+              <td class="mono">
+                존댓: {{ 'Y' if r.honorific else 'N' }} |
+                인사: {{ 'Y' if r.opener else 'N' }} |
+                이모지: {{ 'Y' if r.emoji else 'N' }}
+              </td>
+              <td class="pre">{{ r.output_text or '' }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
-    </section>
-  </div>
-<!-- 공용 푸터: 페이지 맨 아래(</body> 직전) -->
-<footer style="margin:24px auto; max-width:1100px; padding:0 16px; opacity:.85;">
-  <div style="border-top:1px solid var(--border); padding-top:12px; display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end;">
-    <a href="/terms" class="small" style="text-decoration:none; color:var(--muted);">이용약관</a>
-    <span class="small" style="color:var(--muted);">·</span>
-    <a href="/privacy" class="small" style="text-decoration:none; color:var(--muted);">개인정보 처리방침</a>
-    <span class="small" style="color:var(--muted);">·</span>
-    <a href="/disclaimer" class="small" style="text-decoration:none; color:var(--muted);">면책 고지</a>
-  </div>
-</footer>
+    {% endif %}
 
+    <div class="toolbar" style="margin-top:8px;">
+      <span class="spacer"></span>
+      <a class="btn ghost" href="/">돌아가기</a>
+    </div>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
   <script src="{{ url_for('static', filename='js/history.js') }}" defer></script>
-
-</body>
-</html>
+{% endblock %}

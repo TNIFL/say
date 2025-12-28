@@ -63,6 +63,35 @@
     select:hover, textarea:hover, input[type="text"]:hover, input[type="email"]:hover {
       border-color: color-mix(in srgb, var(--accent) 35%, var(--control-border));
     }
+
+    /* 두 컬럼 필드 정렬 고정 */
+    .two-col{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      align-items:start; /* 라벨 기준 동일 시작점 */
+    }
+    @media (max-width:880px){
+      .two-col{ grid-template-columns:1fr; }
+    }
+
+    .field{
+      display:grid;
+      gap:6px;
+    }
+
+    /* 이메일/텍스트 인풋 높이/폭 강제 통일 */
+    select, textarea, input[type="text"], input[type="email"]{
+      width:100%;
+      min-height:44px; /* 같은 높이 */
+      line-height:1.2; /* 브라우저 기본차 제거 */
+    }
+
+    #message{
+      min-height: 220px;   /* 원하는 값으로 조절 (예: 180~320px) */
+      resize: vertical;    /* 사용자가 세로로 더 늘릴 수 있게 */
+    }
+
   </style>
 {% endblock %}
 
@@ -92,16 +121,20 @@
           </select>
         </div>
 
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-          <div>
+        <div class="two-col">
+          <div class="field">
             <label class="small" for="user_id">아이디(선택)</label>
-            <input type="text" id="user_id" name="user_id" placeholder="로그인 아이디" value="{{ user_id or '' }}" />
+            <input type="text" id="user_id" name="user_id"
+                   placeholder="로그인 아이디" value="{{ user_id or '' }}" />
           </div>
-          <div>
+
+          <div class="field">
             <label class="small" for="email">이메일(선택, 답변용)</label>
-            <input type="email" id="email" name="email" placeholder="you@example.com" value="{{ email or '' }}" />
+            <input type="email" id="email" name="email"
+                   placeholder="you@example.com" value="{{ email or '' }}" />
           </div>
         </div>
+
 
         <div>
           <label class="small" for="message">내용</label>

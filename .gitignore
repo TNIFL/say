@@ -3,7 +3,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.DS_Store
+.DS_Store
 
 # Virtual env
 .venv/
@@ -14,25 +14,25 @@ ENV/
 .idea/
 .vscode/
 
-# Flask/Build
+# Flask / Runtime
 instance/
 *.log
 
-# Env/Secrets
+# Env / Secrets
 .env
 *.env
 .env.local
 .env.production
 
-
-# Node (혹시 있을 경우)
+# Node (if any)
 node_modules/
 
-# Alembic cache
+# Alembic cache only
 migrations/__pycache__/
 
+# Local / temp
 trash/
-
 users.json
 
-prompt.txt
+# ads.txt
+static/ads.txt

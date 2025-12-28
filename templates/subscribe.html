@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <title>Lexinoa</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="dark light">
-  <meta name="description" content="Lexinoa 구독 – 모두 같은 AI 성능, 사용 범위와 자동화에서 차이가 납니다. Free(월 30회), Pro(월 사실상 무제한), 비로그인(일 5회). 런칭 프로모션으로 가볍게 시작하세요.">
-    {% set force_no_ads = True %}
+{% extends "base.html" %}
+
+{% block title %}Lexinoa{% endblock %}
+{% block description %}Lexinoa 구독 – 모두 같은 성능, 사용 범위와 자동화에서 차이가 납니다. Free(월 30회), Pro(월 사실상 무제한), 비로그인(일 5회).{% endblock %}
+
+{% set force_no_ads = True %}
+
+{% block head_extra %}
   <style>
     :root {
       --bg:#12151b;         /* 약간 밝게 */
@@ -36,11 +35,11 @@
     }
     body.light{ color-scheme: light; }
     body, .card, .badge, .plan, .btn, .site-header {
-    transition: background-color 0.6s ease,
-              color 0.6s ease,
-              border-color 0.6s ease,
-              box-shadow 0.6s ease;
-}
+      transition: background-color 0.6s ease,
+                color 0.6s ease,
+                border-color 0.6s ease,
+                box-shadow 0.6s ease;
+    }
 
     .main{max-width:1100px; margin:24px auto; padding:16px}
     .stack{display:grid; gap:16px}
@@ -79,28 +78,23 @@
     .brand-title{ font-weight:800; letter-spacing:.2px; background: linear-gradient(90deg, var(--accent), #91f2c3); -webkit-background-clip:text; background-clip:text; color:transparent; font-size:16px; }
     .header-actions{ display:flex; align-items:center; gap:8px }
 
-    /* 표 */
     table{ width:100%; border-collapse:collapse; }
     th, td{ padding:12px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); text-align:left; }
     th{ background: color-mix(in srgb, var(--panel) 92%, transparent); }
 
-    /* 배지/라벨 */
     .badge{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; font-weight:700; border:1px solid var(--border); color:var(--text); background:transparent; font-size:12px }
     .badge.gold {
-  border-color:#f8e48b;
-  color:#f6e7a8;
-  background:rgba(255, 230, 150, .08);
-}
-
-    /* ✅ 라이트 모드 전용 .badge.gold 강화 */
+      border-color:#f8e48b;
+      color:#f6e7a8;
+      background:rgba(255, 230, 150, .08);
+    }
     body.light .badge.gold {
-      border-color:#e6b800;        /* 진한 골드 테두리 */
-      color:#7a5800;               /* 어두운 텍스트로 대비 확보 */
-      background:#fff5cc;          /* 은은한 노란빛 배경 */
+      border-color:#e6b800;
+      color:#7a5800;
+      background:#fff5cc;
       box-shadow:inset 0 0 0 1px rgba(0,0,0,0.05);
     }
 
-    /* 플랜 카드 */
     .plan{ position:relative; display:grid; gap:10px; padding:18px; border-radius:16px; border:1px solid var(--border); background:var(--panel); box-shadow:var(--shadow); }
     .plan.recommended{ outline:2px solid color-mix(in srgb, var(--accent) 32%, transparent); }
     .price{ font-size:28px; font-weight:900; letter-spacing:.2px }
@@ -109,13 +103,11 @@
     .list li{ display:flex; gap:10px; align-items:flex-start }
     .check{ width:18px; height:18px; display:inline-grid; place-items:center; border-radius:6px; background: color-mix(in srgb, var(--accent) 35%, transparent); border:1px solid var(--border) }
 
-    /* FAQ (아코디언) */
     .faq-item{ border:1px solid var(--border); border-radius:12px; padding:12px; background:var(--panel) }
     .faq-q{ display:flex; justify-content:space-between; align-items:center; cursor:pointer; user-select:none; }
     .faq-a{ display:none; color:var(--muted); margin-top:10px }
     .faq-item.open .faq-a{ display:block }
 
-    /* 토글 */
     .theme-toggle{cursor:pointer; background:none; border:1px solid var(--border); color:var(--text); padding:8px 12px; border-radius:12px; font-size:13px}
     .banner{padding:12px 14px;border-radius:10px;margin:0 0 12px}
     .banner.error {
@@ -128,216 +120,178 @@
       border: 1px solid #4a78c2;
       color: #d7e2ff;
     }
-
-
-
-
   </style>
-</head>
-<body>
-  <header class="site-header">
-    <div class="inner">
-      <a class="brand" href="/">
-        <span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.12 5.34 3 7 3h10c1.66 0 3 1.12 3 2.5v7c0 1.38-1.34 2.5-3 2.5H11l-3.6 3.1c-.52.45-1.4.09-1.4-.55V15H7c-1.66 0-3-1.12-3-2.5v-7Z"></path></svg>
-        </span>
-        <span class="brand-title">Lexinoa</span>
-      </a>
-      <div class="header-actions">
-        <button id="themeToggle" class="theme-toggle">🌙 다크/라이트</button>
-        <a class="btn ghost" href="{{ url_for('feedback') }}">피드백</a>
+{% endblock %}
+
+{% block content %}
+  {# subscribe.html #}
+  <br>
+  {% set pay_error = session.pop('pay_error', None) %}
+  {% if request.args.get('pay') == 'failed' and pay_error %}
+    <div class="banner error" role="alert">
+      <strong>결제 실패</strong> — {{ pay_error.message }}
+      {% if pay_error.code %}<div class="small" style="opacity:.7">코드: {{ pay_error.code }}</div>{% endif %}
+    </div>
+  {% endif %}
+  <br>
+  <!-- Hero -->
+  <section class="card" style="text-align:center; padding:28px 18px;">
+    <div class="badge gold">성능은 모두 동일 · 사용 범위와 자동화에서 차이가 납니다</div>
+    <h1 id="pageTitle" style="margin:10px 0 6px 0; font-size:28px; letter-spacing:.2px;">구독 & 가격</h1>
+    <p class="muted" style="margin:0 auto; max-width:720px">비로그인 5회/일 · Free 30회/월 · Pro 사실상 무제한(공정 이용 1,000회). 채널 자동 감지, 다국어 문화 보정, 템플릿 무제한 등 생산성 기능은 Pro에서 제공됩니다.</p>
+  </section>
+  <br>
+  <!-- Plans -->
+  <section class="row cols-3">
+    <!-- Guest -->
+    <div class="plan card">
+      <div class="badge">체험용</div>
+      <h3 style="margin:6px 0 2px">비로그인</h3>
+      <div class="price">₩0 <span class="unit">/ 하루</span></div>
+      <ul class="list">
+        <br>
+        <li><span class="check">✓</span><span>하루 5회 체험</span></li>
+        <li><span class="check">✓</span><span>로그인 없이 바로 사용</span></li>
+        <li><span class="check">✓</span><span>동일한 성능</span></li>
+        <li><span class="check">–</span><span>히스토리/템플릿 저장은 미지원</span></li>
+      </ul>
+      <div style="display:flex; gap:8px; margin-top:6px;">
+        <a class="btn secondary" href="/">지금 체험</a>
+        <a class="btn ghost" href="{{ url_for('auth.login_page') }}">로그인</a>
+      </div>
+    </div>
+
+    <!-- Free -->
+    <div class="plan card">
+      <div class="badge">기본 계정</div>
+      <h3 style="margin:6px 0 2px">Free</h3>
+      <div class="price">₩0 <span class="unit">/ 월</span></div>
+      <ul class="list">
+        <br>
+        <li><span class="check">✓</span><span>월 30회 사용</span></li>
+        <li><span class="check">✓</span><span>히스토리 7일 보관</span></li>
+        <li><span class="check">✓</span><span>동일한 성능</span></li>
+        <li><span class="check">–</span><span>채널 자동 감지/템플릿 무제한은 Pro에서</span></li>
+      </ul>
+      <div style="display:flex; gap:8px; margin-top:6px;">
         {% if session.get('user') %}
-          <a class="btn ghost" href="{{ url_for('user_history') }}">기록보기</a>
-          <a class="btn ghost" href="{{ url_for('mypage_overview') if false else '/mypage' }}">마이페이지</a>
-          <span class="small" style="max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; opacity:.8;" title="{{ session.get('user').user_id }}">{{ session.get('user').user_id }}</span>
-          <a class="btn ghost" href="{{ url_for('auth.logout') }}">로그아웃</a>
+          <a class="btn secondary" href="/">바로 사용</a>
         {% else %}
-          <a class="btn ghost" href="{{ url_for('auth.login_page') }}">로그인</a>
+          <a class="btn" href="{{ url_for('auth.signup') }}">회원가입</a>
         {% endif %}
       </div>
     </div>
-  </header>
 
-  <main class="main stack" aria-labelledby="pageTitle">
-  {# subscribe.html #}
-    {% set pay_error = session.pop('pay_error', None) %}
-    {% if request.args.get('pay') == 'failed' and pay_error %}
-      <div class="banner error" role="alert">
-        <strong>결제 실패</strong> — {{ pay_error.message }}
-        {% if pay_error.code %}<div class="small" style="opacity:.7">코드: {{ pay_error.code }}</div>{% endif %}
-      </div>
-    {% endif %}
-
-    <!-- Hero -->
-    <section class="card" style="text-align:center; padding:28px 18px;">
-      <div class="badge gold">성능은 모두 동일 · 사용 범위와 자동화에서 차이가 납니다</div>
-      <h1 id="pageTitle" style="margin:10px 0 6px 0; font-size:28px; letter-spacing:.2px;">구독 & 가격</h1>
-      <p class="muted" style="margin:0 auto; max-width:720px">비로그인 5회/일 · Free 30회/월 · Pro 사실상 무제한(공정 이용 1,000회). 채널 자동 감지, 다국어 문화 보정, 템플릿 무제한 등 생산성 기능은 Pro에서 제공됩니다.</p>
-    </section>
-
-    <!-- Plans -->
-    <section class="row cols-3">
-      <!-- Guest -->
-      <div class="plan card">
-        <div class="badge">체험용</div>
-        <h3 style="margin:6px 0 2px">비로그인</h3>
-        <div class="price">₩0 <span class="unit">/ 하루</span></div>
-        <ul class="list">
-          <br>
-          <li><span class="check">✓</span><span>하루 5회 체험</span></li>
-          <li><span class="check">✓</span><span>로그인 없이 바로 사용</span></li>
-          <li><span class="check">✓</span><span>동일한 성능</span></li>
-          <li><span class="check">–</span><span>히스토리/템플릿 저장은 미지원</span></li>
-        </ul>
-        <div style="display:flex; gap:8px; margin-top:6px;">
-          <a class="btn secondary" href="/">지금 체험</a>
-          <a class="btn ghost" href="{{ url_for('auth.login_page') }}">로그인</a>
-        </div>
-      </div>
-
-      <!-- Free -->
-      <div class="plan card">
-        <div class="badge">기본 계정</div>
-        <h3 style="margin:6px 0 2px">Free</h3>
-        <div class="price">₩0 <span class="unit">/ 월</span></div>
-        <ul class="list">
-          <br>
-          <li><span class="check">✓</span><span>월 30회 사용</span></li>
-          <li><span class="check">✓</span><span>히스토리 7일 보관</span></li>
-          <li><span class="check">✓</span><span>동일한 성능</span></li>
-          <li><span class="check">–</span><span>채널 자동 감지/템플릿 무제한은 Pro에서</span></li>
-        </ul>
-        <div style="display:flex; gap:8px; margin-top:6px;">
-          {% if session.get('user') %}
-            <a class="btn secondary" href="/">바로 사용</a>
-          {% else %}
-            <a class="btn" href="{{ url_for('signup.signup') }}">회원가입</a>
-          {% endif %}
-        </div>
-      </div>
-
-      <!-- Pro -->
-      <div class="plan card recommended">
-        <div class="badge gold">추천</div>
-        <h3 style="margin:6px 0 2px">Pro</h3>
-        <div class="price">₩4,900 <span class="unit">/ 월</span></div>
-        <ul class="list">
-          <li><span class="check">✓</span><span>사실상 무제한 (공정 이용 1,000회/월)</span></li>
-          <li><span class="check">✓</span><span>Gmail/Slack/KakaoTalk/Notion 등 <b>자동 톤 감지</b></span></li>
-          <li><span class="check">✓</span><span>한→영 변환 + <b>문화적 맥락 보정</b></span></li>
-          <li><span class="check">✓</span><span><b>템플릿 무제한</b></span></li>
-          <li><span class="check">✓</span><span>히스토리 무제한</span></li>
-          <li><span class="check">✓</span><span>광고 제거</span></li>
-        </ul>
-        <div style="display:flex; gap:8px; margin-top:6px;">
-          <a class="btn" href="/subscribe/checkout">지금 구독하기</a>
-          <a class="btn secondary" href="/">기능 먼저 보기</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Feature Highlights -->
-    <section class="card">
-      <h3 style="margin:0 0 4px">왜 Pro일까?</h3>
-      <div class="row cols-3" style="margin-top:6px;">
-        <div class="card" style="padding:14px">
-          <strong>자동 맥락 감지</strong>
-          <p class="small muted">mail/messenger/notion 등 채널에 맞는 톤을 자동 추천. 클릭 없이 바로 적용.</p>
-        </div>
-        <div class="card" style="padding:14px">
-          <strong>실시간 비교 프리뷰</strong>
-          <p class="small muted">3가지의 옵션을 동시에 제공.</p>
-        </div>
-        <div class="card" style="padding:14px">
-          <strong>템플릿 라이브러리</strong>
-          <p class="small muted">내 문장 습관을 저장·재사용. 변수 치환과 폴더로 팀 문서처럼 정리.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="card">
-        <h3 style="margin:0 0 4px">크롬 확장 기능</h3>
-        <div class="row cols-1" style="margin-top:6px;">
-            <div class="card">
-                <strong>크롬 확장 기능으로 어디서나 사용가능</strong>
-                <p class="small muted">확장 탭 에서 사용 가능하며, 원하는 문장을 드래그 해서 사용 가능합니다.</p>
-                <p class="small muted">모든 플랜이 이용 가능하지만 사용 횟수와 편의성은 기존 Lexinoa 페이지를 따릅니다.</p>
-                <p class="small muted"><a href="/subscribe">크롬 확장 추가하기</a></p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Comparison Table -->
-    <section class="card">
-      <h3 style="margin:0 0 4px">플랜 비교</h3>
-      <table aria-label="플랜 비교표">
-        <thead>
-          <tr>
-            <th>항목</th>
-            <th>비로그인</th>
-            <th>Free</th>
-            <th>Pro</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>이용 횟수</td><td>5회/일</td><td>30회/월</td><td>사실상 무제한(1,000회)/월</td></tr>
-          <tr><td>크롬 확장</td><td>가능</td><td>가능</td><td>가능</td></tr>
-          <tr><td>성능</td><td colspan="3">모두 동일</td></tr>
-          <tr><td>자동 톤 감지</td><td>—</td><td>—</td><td>자동 적용</td></tr>
-          <tr><td>다국어/문화 보정</td><td>—</td><td>—</td><td>한→영 + 문화 보정</td></tr>
-          <tr><td>템플릿</td><td>—</td><td>—</td><td>무제한</td></tr>
-          <tr><td>히스토리</td><td>—</td><td>7일</td><td>무제한 + 검색</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- FAQ -->
-    <section class="card">
-      <h3 style="margin:0 0 6px">자주 묻는 질문</h3>
-      <div class="stack">
-        <div class="faq-item">
-          <div class="faq-q"><span>Free도 Pro와 같은 성능인가요?</span><button class="btn ghost small" type="button">자세히</button></div>
-          <div class="faq-a">네. 품질은 동일합니다. Pro는 자동화·저장·다국어 등 여러 기능이 추가됩니다.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q"><span>‘사실상 무제한’은 무엇인가요?</span><button class="btn ghost small" type="button">자세히</button></div>
-          <div class="faq-a">정상적인 사용에는 제약이 없도록 설계했지만, 악용 방지를 위해 월 1,000회 수준의 공정 이용 기준을 둡니다.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q"><span>결제는 어떻게 취소하나요?</span><button class="btn ghost small" type="button">자세히</button></div>
-          <div class="faq-a">마이페이지 &gt; 구독 관리에서 언제든 해지할 수 있으며, 다음 결제일부터 과금이 중단됩니다.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q"><span>회사/팀으로도 사용할 수 있나요?</span><button class="btn ghost small" type="button">자세히</button></div>
-          <div class="faq-a">현재 팀 플랜은 계획되어있지 않으나 추후 추가 할 가능성이 있습니다. 필요 시 문의해주세요.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="card" style="text-align:center; padding:24px 16px">
-      <h3 style="margin:0 0 6px">지금 바로 Pro로 업그레이드</h3>
-      <p class="muted" style="margin:0 0 12px">동일한 성능, 더 똑똑한 흐름. 한 달 4,900원으로 시간 절약을 시작하세요.</p>
-      <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+    <!-- Pro -->
+    <div class="plan card recommended">
+      <div class="badge gold">추천</div>
+      <h3 style="margin:6px 0 2px">Pro</h3>
+      <div class="price">₩4,900 <span class="unit">/ 월</span></div>
+      <ul class="list">
+        <li><span class="check">✓</span><span>사실상 무제한 (공정 이용 1,000회/월)</span></li>
+        <li><span class="check">✓</span><span>Gmail/Slack/Naver 등 <b>자동 감지(확장 프로그램)</b></span></li>
+        <li><span class="check">✓</span><span>언어 번역 + <b>문화적 맥락 보정 / 추후 추가 예정</b></span></li>
+        <li><span class="check">✓</span><span><b>템플릿 무제한</b></span></li>
+        <li><span class="check">✓</span><span>히스토리 무제한</span></li>
+        <li><span class="check">✓</span><span>광고 제거</span></li>
+      </ul>
+      <div style="display:flex; gap:8px; margin-top:6px;">
         <a class="btn" href="/subscribe/checkout">지금 구독하기</a>
-        <a class="btn secondary" href="/">기능 먼저 사용해보기</a>
+        <a class="btn secondary" href="/">기능 먼저 보기</a>
       </div>
-    </section>
-  </main>
-
-  <!-- 푸터 -->
-  <footer style="margin:24px auto; max-width:1100px; padding:0 16px; opacity:.85;">
-    <div style="border-top:1px solid var(--border); padding-top:12px; display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end;">
-      <a href="/terms" class="small" style="text-decoration:none; color:var(--muted);">이용약관</a>
-      <span class="small" style="color:var(--muted);">·</span>
-      <a href="/privacy" class="small" style="text-decoration:none; color:var(--muted);">개인정보처리방침</a>
-      <span class="small" style="color:var(--muted);">·</span>
-      <a href="/disclaimer" class="small" style="text-decoration:none; color:var(--muted);">면책 고지</a>
     </div>
-  </footer>
-  <script src="{{ url_for('static', filename='js/theme-toggle.js') }}" defer></script>
-  <script src="{{ url_for('static', filename='js/faq.js') }}" defer></script>
-  <script nonce="{{ csp_nonce }}"></script>
+  </section>
+  <br>
+  <!-- Feature Highlights -->
+  <section class="card">
+    <h3 style="margin:0 0 4px">왜 Pro일까?</h3>
+    <div class="row cols-3" style="margin-top:6px;">
+      <div class="card" style="padding:14px">
+        <strong>자동 맥락 감지</strong>
+        <p class="small muted">mail/messenger/notion 등 채널에 맞는 톤을 자동 추천. 클릭 없이 바로 적용.</p>
+      </div>
+      <div class="card" style="padding:14px">
+        <strong>실시간 비교 프리뷰</strong>
+        <p class="small muted">3가지의 옵션을 동시에 제공.</p>
+      </div>
+      <div class="card" style="padding:14px">
+        <strong>템플릿 라이브러리</strong>
+        <p class="small muted">내 문장 습관을 저장·재사용. 변수 치환과 폴더로 팀 문서처럼 정리.</p>
+      </div>
+    </div>
+  </section>
+  <br>
+  <section class="card">
+    <h3 style="margin:0 0 4px">크롬 확장 기능</h3>
+    <div class="row cols-1" style="margin-top:6px;">
+      <div class="card">
+        <strong>크롬 확장 기능으로 어디서나 사용가능</strong>
+        <p class="small muted">확장 탭 에서 사용 가능하며, 원하는 문장을 드래그 해서 사용 가능합니다.</p>
+        <p class="small muted">모든 플랜이 이용 가능하지만 사용 횟수와 편의성은 기존 Lexinoa 페이지를 따릅니다.</p>
+        <p class="small muted"><a href="/subscribe">크롬 확장 추가하기</a></p>
+        <p class="small muted">현재 크롬 확장 프로그램 개발 중 이며, 추후 배포 예정입니다.</p>
+      </div>
+    </div>
+  </section>
+  <br>
+  <!-- Comparison Table -->
+  <section class="card">
+    <h3 style="margin:0 0 4px">플랜 비교</h3>
+    <table aria-label="플랜 비교표">
+      <thead>
+        <tr>
+          <th>항목</th>
+          <th>비로그인</th>
+          <th>Free</th>
+          <th>Pro</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>이용 횟수</td><td>5회/일</td><td>30회/월</td><td>사실상 무제한(1,000회)/월</td></tr>
+        <tr><td>크롬 확장</td><td>가능</td><td>가능</td><td>가능</td></tr>
+        <tr><td>성능</td><td colspan="3">모두 동일</td></tr>
+        <tr><td>자동 톤 감지</td><td>—</td><td>—</td><td>자동 적용</td></tr>
+        <tr><td>다국어/문화 보정</td><td>—</td><td>—</td><td>한→영 + 문화 보정</td></tr>
+        <tr><td>템플릿</td><td>—</td><td>—</td><td>무제한</td></tr>
+        <tr><td>히스토리</td><td>—</td><td>7일</td><td>무제한 + 검색</td></tr>
+      </tbody>
+    </table>
+  </section>
+  <br>
+  <!-- FAQ -->
+  <section class="card">
+    <h3 style="margin:0 0 6px">자주 묻는 질문</h3>
+    <div class="stack">
+      <div class="faq-item">
+        <div class="faq-q"><span>Free도 Pro와 같은 성능인가요?</span><button class="btn ghost small" type="button">자세히</button></div>
+        <div class="faq-a">네. 품질은 동일합니다. Pro는 자동화·저장·다국어 등 여러 기능이 추가됩니다.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>‘사실상 무제한’은 무엇인가요?</span><button class="btn ghost small" type="button">자세히</button></div>
+        <div class="faq-a">정상적인 사용에는 제약이 없도록 설계했지만, 악용 방지를 위해 월 1,000회 수준의 공정 이용 기준을 둡니다.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>결제는 어떻게 취소하나요?</span><button class="btn ghost small" type="button">자세히</button></div>
+        <div class="faq-a">마이페이지 &gt; 구독 관리에서 언제든 해지할 수 있으며, 다음 결제일부터 과금이 중단됩니다.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>회사/팀으로도 사용할 수 있나요?</span><button class="btn ghost small" type="button">자세히</button></div>
+        <div class="faq-a">현재 팀 플랜은 계획되어있지 않으나 추후 추가 할 가능성이 있습니다. 필요 시 문의해주세요.</div>
+      </div>
+    </div>
+  </section>
+  <br>
+  <!-- CTA -->
+  <section class="card" style="text-align:center; padding:24px 16px">
+    <h3 style="margin:0 0 6px">지금 바로 Pro로 업그레이드</h3>
+    <p class="muted" style="margin:0 0 12px">동일한 성능, 더 똑똑한 흐름. 한 달 4,900원으로 시간 절약을 시작하세요.</p>
+    <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+      <a class="btn" href="/subscribe/checkout">지금 구독하기</a>
+      <a class="btn secondary" href="/">기능 먼저 사용해보기</a>
+    </div>
+  </section>
+{% endblock %}
 
-</body>
-</html>
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/faq.js') }}" defer></script>
+{% endblock %}

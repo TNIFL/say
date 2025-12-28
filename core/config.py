@@ -1,0 +1,126 @@
+import os
+
+
+def _csv(v: str):
+    return [x.strip() for x in (v or "").split(",") if x.strip()]
+
+
+def _env_bool(name: str, default: bool = False) -> bool:
+    v = os.getenv(name)
+    if v is None:
+        return default
+    return v.strip().lower() in ("1", "true", "yes", "y", "on")
+
+
+# TODO:: Config 에서는 환경변수 설정만
+class Config:
+    # Flask 보안 키
+    SECRET_KEY = os.getenv("SECRET_KEY", "local-dev-secret")
+
+    ENV = os.getenv("FLASK_ENV", "production")
+
+    # DB
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "")
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        "pool_pre_ping": True,
+        "pool_recycle": 280,
+    }
+
+    # 제공자(LLM)
+    PROVIDER_DEFAULT = os.getenv("PROVIDER_DEFAULT", "claude").lower()
+
+    # Admin
+    ADMIN_ID = os.getenv("ADMIN_ID", "")
+
+    # 게스트 식별 쿠키
+    AID_COOKIE = "aid"
+    GUEST_SALT = os.getenv("GUEST_SALT")
+
+    # 비밀번호/이메일 인증(기존 유지)
+    RESET_SALT = "password-reset-v1"
+    RESET_TTL = 60 * 5
+    RESET_TOKEN_BYTES = 32
+    RESET_TOKEN_TTL_SECONDS = 60 * 5
+
+    VERIFY_SALT = "email-verify-v1"
+    VERIFY_TTL_SECONDS = 60 * 30
+
+    # reCAPTCHA
+    RECAPTCHA_SECRET = os.getenv("RECAPTCHA_SECRET_KEY")
+    RECAPTCHA_SITE_KEY = os.getenv("RECAPTCHA_SITE_KEY")
+
+    # 응답시간 평탄화
+    MIN_RESP_MS = 450
+    JITTER_MS = 200
+
+    # -------------------------
+    # CORS / Origin allowlist
+    # -------------------------
+    CORS_ORIGINS = _csv(os.getenv("CORS_ORIGINS", "https://www.lexinoa.com/"))
+    API_ALLOWED_ORIGINS = [o.rstrip("/") for o in _csv(os.getenv(
+        "API_ALLOWED_ORIGINS",
+        "https://www.lexinoa.com/,http://localhost:3000,http://127.0.0.1:3000/,http://127.0.0.1:5000/",
+    ))]
+
+    # -------------------------
+    # Chrome extension origins
+    # -------------------------
+    EXTENSION_IDS = _csv(os.getenv("EXTENSION_IDS", ""))
+    EXT_ORIGINS = [f"chrome-extension://{eid}" for eid in EXTENSION_IDS]
+
+    # -------------------------
+    # Rate limiting (Flask-Limiter 표준 키)
+    # -------------------------
+    REDIS_URL = os.getenv("REDIS_URL", "")
+    RATELIMIT_STORAGE_URI = REDIS_URL if REDIS_URL else "memory://"
+    RATELIMIT_DEFAULT = os.getenv("RATELIMIT_DEFAULT", "200 per hour")
+
+    # -------------------------
+    # Nicepay
+    # -------------------------
+    NICEPAY_API_BASE = os.getenv("NICEPAY_API_BASE", "https://api.nicepay.co.kr").rstrip("/")
+    NICEPAY_CLIENT_ID = os.getenv("NICEPAY_CLIENT_ID", "")
+    NICEPAY_SECRET_KEY = os.getenv("NICEPAY_SECRET_KEY", "")
+
+    # payments toggle 배포 전 후 이걸로 on / off
+    PAYMENTS_ENABLED = _env_bool("PAYMENTS_ENABLED", default=False)
+
+    NICEPAY_PATH_SUBSCRIBE_PAY = "/v1/subscribe/{bid}/payments"
+    NICEPAY_PATH_SUBSCRIBE_EXPIRE = "/v1/subscribe/{bid}/expire"
+    # 샌드박스/운영 도메인 스위치
+    # sandbox: https://sandbox-api.nicepay.co.kr
+    # live:    https://api.nicepay.co.kr
+    NICEPAY_API_BASE = os.getenv("NICEPAY_API_BASE", "https://sandbox-api.nicepay.co.kr").strip()
+
+
+    # -------------------------
+    # Ads
+    # -------------------------
+    ADS_ENABLED = os.getenv("ADS_ENABLED", "false").lower() in {"1", "true", "yes"}
+    ADS_PROVIDER = os.getenv("ADS_PROVIDER", "adsense")
+    ADSENSE_CLIENT = os.getenv("ADSENSE_CLIENT", "")
+    ADFIT_UNIT_ID = os.getenv("ADFIT_UNIT_ID", "")
+    NAVER_AD_UNIT = os.getenv("NAVER_AD_UNIT", "")
+    ADS_TXT = os.getenv("ADS_TXT", "")
+    APP_ADS_TXT = os.getenv("APP_ADS_TXT", "")
+
+
+    # =========================
+    #  [추가] 티어/권한/한도 정책
+    # =========================
+    TIERS = ("guest", "free", "pro")
+    FEATURES_BY_TIER = {
+        "guest": {"rewrite.single", "summarize"},  # 비로그인: 단일문장만
+        "free": {"rewrite.single", "summarize", "chrome.ext"},
+        "pro": {"*"},  # 구독: 모든 기능
+    }
+
+    LIMITS = {
+        "guest": {"daily": 5},    # 하루 5회 (scope별 한도 — rewrite / summarize 각각 5회)
+        "free": {"monthly": 30},  # 월 30회 (scope별)
+        "pro": {"monthly": 1000}, # 월 1000회 (scope별)
+    }
+
+    # 허용 스코프(서비스 키) — 여기 추가하면 확장 가능 (summarize 없앨지 고민중)
+    USAGE_SCOPES = {"rewrite", "summarize"}

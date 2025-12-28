@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Lexinoa · 결제 처리중{% endblock %}
+
+{% block content %}
+  <div class="container" style="max-width:720px;margin:40px auto;padding:16px">
+    <h2 style="margin:0 0 8px">결제 처리중…</h2>
+    <p class="muted" style="margin:0">카드 등록 정보를 확인하고 첫 결제를 진행하고 있습니다.</p>
+    <p id="msg" class="muted" style="margin-top:12px"></p>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+<script nonce="{{ csp_nonce }}">
+(async function(){
+  const bid = "{{ bid|e }}";
+  const msg = document.getElementById("msg");
+
+  if (!bid) {
+    msg.textContent = "BID가 전달되지 않았습니다. (카드등록 성공이더라도 정기결제 연결이 불가)";
+    setTimeout(()=>location.href="/subscribe/fail?reason=bid_missing", 800);
+    return;
+  }
+
+  try {
+    const res = await fetch("/api/nicepay/subscribe/complete", {
+      method: "POST",
+      credentials: "include",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ bid })
+    });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.message || data.error || "complete_failed");
+
+    msg.textContent = "구독이 활성화되었습니다. 마이페이지로 이동합니다.";
+    setTimeout(()=>location.href="/mypage", 800);
+  } catch (e) {
+    console.error(e);
+    msg.textContent = "구독 처리에 실패했습니다. 다시 시도해주세요.";
+    setTimeout(()=>location.href="/subscribe/fail?reason=complete_failed", 1000);
+  }
+})();
+</script>
+{% endblock %}

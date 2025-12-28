@@ -27,6 +27,15 @@
       color: #ef4444; /* soft red */
       font-weight: 500;
     }
+    .btn.danger{
+      border: 1px solid #ef4444;
+      color:#ef4444;
+      background: transparent;
+    }
+    .btn.danger:hover{
+      background: rgba(239,68,68,.08);
+    }
+
   </style>
 {% endblock %}
 
@@ -80,6 +89,171 @@
           <span style="width: {{ '%0.1f'|format(ratio if ratio < 100 else 100) }}%;"></span>
         </div>
       </section>
+
+      <br>
+            <!-- 이곳에 사용자의 직업, 직업 설명이 들어감 -->
+      <section class="card" id="jobCard">
+          <h3>직업 / 직업 설명</h3>
+          <p class="small">직업에 따라 자연스러운 말투와 표현 방식이 다를 수 있습니다.</p>
+          <p class="small">입력하신 직업 정보는 문장을 더 자연스럽게 순화하는 데 활용됩니다.</p>
+          <p class="small">(선택사항)</p>
+
+          {# 현재 값(없으면 빈 문자열 처리) #}
+          {% set _job = (user.user_job or '') %}
+          {% set _job_detail = (user.user_job_detail or '') %}
+          {% set has_job = (_job|trim) != '' %}
+
+          <!-- 표시 영역 (직업이 있으면 보여줌) -->
+          {% if has_job %}
+            <div class="hint" style="margin-top:10px;">
+              <div class="mini"><strong>직업</strong>: {{ _job }}</div>
+              {% if (_job_detail|trim) != '' %}
+                <div class="mini" style="margin-top:6px;"><strong>직업 설명</strong>: {{ _job_detail }}</div>
+              {% endif %}
+            </div>
+
+            <div class="toolbar" style="margin-top:10px;">
+              <button type="button" class="btn ghost small" id="jobToggleBtn">수정</button>
+              <span class="spacer"></span>
+
+              {# 삭제까지 원하면 라우트가 있어야 함. 없으면 버튼 제거하세요. #}
+              <form action="{{ url_for('mypage.mypage_delete_job') }}" method="post" style="margin:0;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" class="btn ghost small" onclick="return confirm('직업 정보를 삭제할까요?')">삭제</button>
+              </form>
+            </div>
+          {% endif %}
+
+          <!-- 입력 폼 (직업이 없으면 기본 OPEN / 있으면 기본 CLOSE) -->
+          <div id="jobFormWrap"
+               class="job-collapse {% if not has_job %}open{% endif %}"
+               style="margin-top:12px;">
+            <form id="jobForm" action="{{ url_for('mypage.mypage_update_job') }}" method="post" class="stack" style="display:grid; gap:10px;">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+              <div style="display:grid; gap:6px;">
+                <label class="small" for="user-job">직업</label>
+                <input
+                  type="text"
+                  id="user-job"
+                  name="user-job"
+                  placeholder="예: 개발자, 디자이너, 대학생, 마케터"
+                  maxlength="50"
+                  value="{% if not has_job %}{{ _job }}{% endif %}"
+                  style="width:100%;"
+                >
+                <div class="small muted">최대 50자</div>
+              </div>
+
+              <div style="display:grid; gap:6px;">
+                <label class="small" for="user-job-detail">직업 설명</label>
+                <textarea
+                  id="user-job-detail"
+                  name="user-job-detail"
+                  placeholder="본인 직업에 대해 자유롭게 설명해주세요. (100자 이내)"
+                  maxlength="100"
+                  rows="2"
+                  style="width:100%; resize:none; padding:12px; border-radius:12px; border:1px solid var(--border); background:transparent; color:var(--text);"
+                >{% if not has_job %}{{ _job_detail }}{% endif %}</textarea>
+                <div class="small muted"><span id="jobDetailCount">0</span>/100</div>
+              </div>
+
+              <div class="toolbar" style="margin-top:4px;">
+                {% if has_job %}
+                  <button type="button" class="btn ghost small" id="jobCancelBtn">닫기</button>
+                {% endif %}
+                <span class="spacer"></span>
+                <button type="submit" class="btn small" id="jobSaveBtn">
+                  <span class="btn-label">저장</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <style>
+            /* 스르륵 펼침/접힘 */
+            .job-collapse{
+              overflow:hidden;
+              max-height:0;
+              opacity:0;
+              transform: translateY(-4px);
+              transition: max-height .35s ease, opacity .25s ease, transform .25s ease;
+            }
+            .job-collapse.open{
+              max-height: 420px; /* 충분히 큰 값 */
+              opacity:1;
+              transform: translateY(0);
+            }
+
+            /* textarea 자동 높이 동작할 때 부자연스럽지 않게 */
+            #user-job-detail{
+              line-height:1.6;
+            }
+          </style>
+
+          <script nonce="{{ csp_nonce }}">
+            (function(){
+              const wrap = document.getElementById('jobFormWrap');
+              const toggleBtn = document.getElementById('jobToggleBtn');
+              const cancelBtn = document.getElementById('jobCancelBtn');
+              const form = document.getElementById('jobForm');
+              const job = document.getElementById('user-job');
+              const detail = document.getElementById('user-job-detail');
+              const countEl = document.getElementById('jobDetailCount');
+
+              if (!wrap || !form || !job || !detail) return;
+
+              // textarea 자동 높이
+              function autosize(){
+                detail.style.height = 'auto';
+                detail.style.height = Math.min(detail.scrollHeight, 220) + 'px';
+              }
+
+              // 글자 수 카운트
+              function updateCount(){
+                const v = detail.value || '';
+                if (countEl) countEl.textContent = String(v.length);
+              }
+
+              detail.addEventListener('input', () => { autosize(); updateCount(); });
+              window.addEventListener('load', () => { autosize(); updateCount(); });
+
+              // 토글 열기/닫기
+              function open(){
+                wrap.classList.add('open');
+                // 기존 값이 있는 상태에서 열 때는 입력값을 "현재 값"으로 채워주는 게 자연스럽다
+                // (서버 렌더 값 그대로 넣으면, 폼이 닫힌 상태에서 value 비워놔도 열 때 채워줄 수 있음)
+                // 단, 이미 사용자가 입력 중이면 덮어쓰지 않도록 빈 경우만.
+                if (!job.value) job.value = "{{ _job|e }}";
+                if (!detail.value) detail.value = `{{ _job_detail|e }}`;
+                autosize(); updateCount();
+                setTimeout(() => job.focus(), 60);
+              }
+              function close(){
+                wrap.classList.remove('open');
+              }
+
+              if (toggleBtn) toggleBtn.addEventListener('click', () => {
+                if (wrap.classList.contains('open')) close();
+                else open();
+              });
+              if (cancelBtn) cancelBtn.addEventListener('click', close);
+
+              // 저장 후 입력란 비우기 + 닫기:
+              // 서버가 job_saved 플래그를 내려주면(예: session.pop('job_saved')), 여기서 처리.
+              const saved = "{{ session.pop('job_saved', '') }}";
+              if (saved) {
+                job.value = '';
+                detail.value = '';
+                autosize(); updateCount();
+                // 직업이 이미 있던 사용자면 폼 닫고, 없던 사용자면(첫 등록) 폼은 닫아도 되고 유지해도 됨
+                // 여기서는 "닫는" 쪽이 자연스럽다고 보고 닫음.
+                close();
+              }
+            })();
+          </script>
+      </section>
+
 
       <br>
       <!-- 이곳에 어드민의 답변이 들어감 -->
@@ -146,44 +320,91 @@
 
       <br>
 
-      <!-- 구독 / 결제 요약 (공통) -->
-      <section class="card">
-        <h3>구독 / 결제</h3>
-        {% if active_sub %}
-          <p>상태: <strong>{{ active_sub.status }}</strong>
-             · 플랜: {{ active_sub.plan_name }}
-             · 다음 결제: {{ active_sub.next_billing_at or '—' }}</p>
-        {% else %}
-          <p class="muted">활성 구독이 없습니다.</p>
-          <a class="btn small" href="{{ url_for('subscribe_page') }}">구독 알아보기</a>
-        {% endif %}
+      <!-- 구독 / 결제 -->
+        <section class="card">
+          <h3>구독 / 결제</h3>
 
-        {% if payments %}
-          <div style="height:8px"></div>
-          <table class="table">
-            <thead><tr><th>시각</th><th>금액</th><th>통화</th><th>상태</th></tr></thead>
-            <tbody>
-              {% for p in payments %}
-              <tr>
-                <td>{{ p.created_at }}</td>
-                <td>{{ p.amount }}</td>
-                <td>{{ p.currency }}</td>
-                <td>{{ p.status }}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        {% endif %}
-      </section>
+          {% if active_sub %}
+            {# 상태 값 표준화 (모델 필드명은 프로젝트에 맞게 조정) #}
+            {% set _status = (active_sub.status or '') %}
+            {% set _plan = (active_sub.plan_name or 'Pro') %}
+            {% set _next = active_sub.next_billing_at %}
+            {% set _cancel_at_period_end = (active_sub.cancel_at_period_end if active_sub.cancel_at_period_end is not none else false) %}
+            {% set _period_end = active_sub.current_period_end if active_sub.current_period_end is not none else _next %}
+
+            <div class="kv" style="align-items:flex-start;">
+              <div style="flex:1;">
+                <div class="mini">
+                  상태:
+                  <strong>{{ _status }}</strong>
+                  · 플랜: <strong>{{ _plan }}</strong>
+                </div>
+
+                {% if _cancel_at_period_end %}
+                  <div class="muted mini" style="margin-top:6px;">
+                    해지 예약됨 — <strong>{{ _period_end or '—' }}</strong> 까지 이용 가능하며, 다음 결제부터 과금이 중단됩니다.
+                  </div>
+                {% else %}
+                  <div class="muted mini" style="margin-top:6px;">
+                    다음 결제일: <strong>{{ _next or '—' }}</strong>
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="toolbar" style="display:flex; gap:8px; justify-content:flex-end;">
+                {# 결제수단 변경 (심사 전이면 비활성/준비중) #}
+                <form action="{{ url_for('api_nicepay_pm.change_payment_method') }}" method="post" style="margin:0;">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  <button type="submit" class="btn ghost small" disabled
+                          title="나이스페이먼츠 심사 완료 후 제공됩니다.">
+                    결제수단 변경 (준비중)
+                  </button>
+                </form>
+
+                {# 구독 취소/취소철회 #}
+                {% if _cancel_at_period_end %}
+                  <form action="{{ url_for('billing.resume_subscription') }}" method="post" style="margin:0;">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn small"
+                            onclick="return confirm('해지 예약을 취소하고 구독을 계속 유지할까요?');">
+                      해지 예약 취소
+                    </button>
+                  </form>
+                {% else %}
+                  <form action="{{ url_for('billing.cancel_subscription') }}" method="post" style="margin:0;">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn danger small"
+                            onclick="return confirm('구독을 취소할까요?\n\n지금 취소해도 현재 결제 기간이 끝날 때까지 Pro를 계속 이용할 수 있으며,\n다음 결제일부터 과금이 중단됩니다.');">
+                      구독 취소
+                    </button>
+                  </form>
+                {% endif %}
+              </div>
+            </div>
+
+          {% else %}
+            <p class="muted">활성 구독이 없습니다.</p>
+            <a class="btn small" href="{{ url_for('subscribe.subscribe_page') }}">구독 알아보기</a>
+          {% endif %}
+
+          {% if payments %}
+            <div style="height:8px"></div>
+            <table class="table">
+              <thead><tr><th>시각</th><th>금액</th><th>통화</th><th>상태</th></tr></thead>
+              <tbody>
+                {% for p in payments %}
+                <tr>
+                  <td>{{ p.created_at }}</td>
+                  <td>{{ p.amount }}</td>
+                  <td>{{ p.currency }}</td>
+                  <td>{{ p.status }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% endif %}
+        </section>
+
     </div>
 {% endblock %}
 
-{% block scripts %}
-  <script>
-    // 헤더 테마 동기화만 유지
-    (function(){
-      const saved = localStorage.getItem("theme") || "dark";
-      if (saved === "light") document.body.classList.add("light");
-    })();
-  </script>
-{% endblock %}

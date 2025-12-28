@@ -6,13 +6,13 @@
 <div class="main" style="max-width:720px; margin:24px auto; padding:16px;">
   <div class="card">
     {% if ok %}
-      <h3>✅ 인증 완료</h3>
+      <h3>인증 완료</h3>
       <p>{{ message }}</p>
       <a class="btn" href="/subscribe">구독 페이지로 이동</a>
       <span class="spacer"></span>
       <a class="btn secondary" href="/me">마이페이지</a>
     {% else %}
-      <h3>❌ 인증 실패</h3>
+      <h3>인증 실패</h3>
       <p>{{ message }}</p>
       <a class="btn" href="/verify/require">다시 보내기</a>
       <span class="spacer"></span>

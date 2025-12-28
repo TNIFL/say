@@ -22,15 +22,15 @@
 
         <div class="header-actions" style="display:flex; align-items:center; gap:8px; min-width:0;">
           {% if g.is_admin %}
-            <a class="btn ghost" href="/admin/analytics">어드민 분석</a>
+          <a class="btn ghost" href="{{ url_for('admin.admin_analytics_page') }}">어드민 분석</a>
           {% endif %}
           <button id="themeToggle" class="theme-toggle">🌙 다크/라이트</button>
-          <a class="btn ghost" href="{{ url_for('summarize_page') }}">요약·정리</a>
-          <a class="btn ghost" href="{{ url_for('feedback') }}">피드백</a>
-          <a class="btn ghost" href="{{ url_for('subscribe_page') }}">구독</a>
+          {# <a class="btn ghost" href="{{ url_for('summarize.summarize_page') }}">요약·정리</a> #}
+          <a class="btn ghost" href="{{ url_for('feedback.feedback') }}">피드백</a>
+          <a class="btn ghost" href="{{ url_for('subscribe.subscribe_page') }}">구독</a>
 
           {% if session.get('user') %}
-            <a class="btn ghost" href="{{ url_for('user_history') }}">기록보기</a>
+            <a class="btn ghost" href="{{ url_for('history.user_history') }}">기록보기</a>
             <a class="btn ghost" href="{{ url_for('mypage_overview') if false else '/mypage' }}">마이페이지</a>
             <span class="small" style="max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; opacity:.8;" title="{{ session.get('user').user_id }}">
               {{ session.get('user').user_id }}

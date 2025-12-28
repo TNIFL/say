@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}Lexinoa - 문장 다듬기 | 말투 교정{% endblock %}
-{% block description %}AI가 이메일, 보고서, 카카오톡 메시지까지 더 자연스럽고 정중한 문장으로 바꿔줍니다. Lexinoa는 상황별 맞춤 어투를 실시간으로 제안하는 커뮤니케이션 보조 서비스입니다.{% endblock %}
+{% block description %}이메일, 보고서, 카카오톡 메시지까지 더 자연스럽고 정중한 문장으로 바꿔줍니다. Lexinoa는 상황별 맞춤 어투를 실시간으로 제안하는 커뮤니케이션 보조 서비스입니다.{% endblock %}
 
 {% block head_extra %}
   {# --- 광고 제어값 (app.py에서 내려옴) --- #}
@@ -67,7 +67,7 @@
                 <option>상황에 맞게 사용할 수 있습니다.</option>
                 <option>예) 업무, 정중하게, 존댓말 선택</option>
               </select>
-              <a class="btn small" href="{{ url_for('subscribe_page') }}">구독하기</a>
+              <a class="btn small" href="{{ url_for('subscribe.subscribe_page') }}">구독하기</a>
               <span class="spacer"></span>
               <button type="button" class="btn ghost small" id="resetTemplateBtn" style="margin-left:auto;">초기화</button>
             {% endif %}
@@ -139,6 +139,7 @@
         <div class="toolbar" style="margin-top:8px;">
           <span class="small">선택한 칩을 클릭하면 제거됩니다.</span>
           <span class="spacer"></span>
+          <p class="small hint">단축키: ⌘/Ctrl + Enter</p>
           <button type="submit" class="btn" id="submitBtn">
             <span class="spinner" aria-hidden="true"></span>
             <span class="btn-label">번역하기</span>
@@ -255,6 +256,28 @@
 {% block scripts %}
   <script src="{{ url_for('static', filename='js/mainpage.js') }}" defer></script>
   <script nonce="{{ csp_nonce }}">
+    // 단축키: Cmd/Ctrl + Enter (입력창에 포커스 있을 때만)
+    document.addEventListener("keydown", (e) => {
+      const isCmdEnter = (e.metaKey || e.ctrlKey) && e.key === "Enter";
+      if (!isCmdEnter) return;
+
+      // 입력창에 포커스 있을 때만
+      if (document.activeElement?.id !== "input_text") return;
+
+      e.preventDefault();
+
+      const input = document.getElementById("input_text");
+      const text = (input?.value || "").trim();
+      if (!text) {
+        alert("사용자 입력이 없습니다.");
+        return;
+      }
+
+      // submit 이벤트를 정상적으로 발생시켜 기존 submit 핸들러(fetch)가 실행되게 함
+      document.getElementById("polishForm")?.requestSubmit?.();
+    });
+
+
     (function(){
       try {
         const key = "lexinoa_cookie_ok_v1";

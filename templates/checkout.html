@@ -19,42 +19,78 @@
 {% block content %}
   <div class="wrap">
     <header>
-      <div>🔐 <strong>Lexinoa Pro 결제</strong></div>
+      <div><strong>Lexinoa Pro 결제</strong></div>
       <div><a href="/subscribe">← 가격으로 돌아가기</a></div>
     </header>
 
     <div class="card row">
       <div>
         <h2 style="margin:0 0 6px">Pro 월 구독 결제</h2>
-        <p class="muted" style="margin:0">카드를 등록하면 첫 결제가 즉시 진행되고, 다음달 같은 날에 자동 청구돼요.</p>
+        <p class="muted" style="margin:0">
+          카드를 한 번만 등록하면, 이후 매달 자동으로 결제가 진행됩니다.
+        </p>
+        <p class="muted" style="margin:0">
+           현재 구독 기능을 준비 중입니다. 조금만 기다려주세요.
+        </p>
       </div>
+
       <div>
         <button id="btn-start" class="btn">카드 등록하고 결제 진행</button>
-        <button id="btn-cancel" class="btn ghost" onclick="history.back()">취소</button>
+        <button class="btn ghost" onclick="history.back()">취소</button>
       </div>
+
       <p id="hint" class="muted" style="margin:0;display:none"></p>
     </div>
   </div>
 {% endblock %}
 
 {% block scripts %}
-  <!-- 토스 위젯 -->
-  <script src="https://js.tosspayments.com/v1"></script>
+  <!-- NICEPAY 결제창 JS (v1) -->
+  <script src="https://pay.nicepay.co.kr/v1/js/"></script>
+
   <script nonce="{{ csp_nonce }}">
+    const CSRF_TOKEN = "{{ csrf_token() }}";
     const $btn = document.getElementById('btn-start');
     const $hint = document.getElementById('hint');
 
+    function showHint(msg){
+      $hint.style.display = 'block';
+      $hint.textContent = msg;
+    }
+
+    function resetBtn(original){
+      $btn.textContent = original;
+      $btn.disabled = false;
+    }
+
+    function fnError(err){
+      console.error("[nicepay] fnError:", err);
+      showHint("결제창 오류: " + (err?.msg || err?.resultMsg || err?.errorMsg || err?.message || "unknown"));
+      resetBtn("카드 등록하고 결제 진행");
+    }
+
+    function fnCancel(){
+      console.log("[nicepay] cancel");
+      showHint("결제가 취소되었습니다.");
+      resetBtn("카드 등록하고 결제 진행");
+    }
+
     async function startCheckout() {
-      $btn.disabled = true;
       const original = $btn.textContent;
+      $btn.disabled = true;
       $btn.textContent = '준비중…';
+      $hint.style.display = 'none';
+      $hint.textContent = '';
 
       try {
-        // 서버에서 clientKey / successUrl / customerKey 받아오기
-        const res = await fetch('/api/toss/checkout/start', {
+        const res = await fetch('/api/nicepay/subscribe/start', {
           method: 'POST',
           credentials: 'include',
-          headers: {'Content-Type': 'application/json'}
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': CSRF_TOKEN,
+          },
+          body: JSON.stringify({})
         });
 
         if (res.status === 401) {
@@ -63,27 +99,44 @@
           return;
         }
         if (res.status === 403) {
-          alert('이메일 인증 후 결제할 수 있습니다.');
-          location.href = '/verify/require?next=/subscribe/checkout';
+          alert('결제를 진행할 수 없습니다.');
+          location.href = '/subscribe';
           return;
         }
 
         const data = await res.json();
-        if (!data.ok) throw new Error(data.error || '시작할 수 없습니다.');
+        console.log("[nicepay/start] response:", data);
 
-        const toss = TossPayments(data.clientKey);
-        await toss.requestBillingAuth('CARD', {
-          customerKey: data.customerKey,
-          successUrl: data.successUrl,
-          failUrl: data.failUrl
-        });
-        // 위젯이 자체 리다이렉트 함
+        if (!data.ok) {
+          throw new Error(data.error || 'start_failed');
+        }
+
+        // Server 승인 모델: 결제창 인증 성공 시 returnUrl로 POST가 전송됨.
+        // 따라서 fnSuccess에서 뭘 하지 말고(return에서 서버가 승인+빌키발급),
+        // 오류/취소만 처리.
+        const payload = {
+          clientId: data.clientId,
+          method: data.method || 'card',
+          orderId: data.orderId,
+          amount: Number(data.amount),
+          goodsName: data.goodsName,
+          returnUrl: data.returnUrl,
+          fnError: fnError,
+          fnCancel: fnCancel,
+        };
+
+        console.log("[nicepay/requestPay] payload:", payload);
+
+        if (!window.AUTHNICE || typeof AUTHNICE.requestPay !== 'function') {
+          throw new Error("NICEPAY_JS_SDK_NOT_LOADED");
+        }
+
+        AUTHNICE.requestPay(payload);
+
       } catch (e) {
-        console.error(e);
-        $hint.style.display = 'block';
-        $hint.textContent = '결제를 시작할 수 없습니다. 잠시 후 다시 시도해 주세요.';
-        $btn.textContent = original;
-        $btn.disabled = false;
+        console.error("[checkout] startCheckout error:", e);
+        showHint('결제를 시작할 수 없습니다. 콘솔 로그를 확인해 주세요.');
+        resetBtn(original);
       }
     }
 
