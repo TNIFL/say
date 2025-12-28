@@ -396,7 +396,7 @@ function initTemplates() {
 
       await loadTemplates();
       closeDlg();
-      alert("✅ 템플릿이 저장되었습니다.");
+      alert("템플릿이 저장되었습니다.");
     } catch (err) {
       console.error("템플릿 저장 오류:", err);
       alert("네트워크 오류가 발생했습니다.");
@@ -501,7 +501,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const inputText = (input?.value || "").trim();
 
-      // ✅ 입력이 없으면: 스피너/disabled 절대 하지 않음
+      // 입력이 없으면: 스피너/disabled 절대 하지 않음
       if (!inputText) {
         alert("사용자 입력이 없습니다.");
         return;

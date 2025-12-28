@@ -4,12 +4,16 @@ from cookie.cookie import set_guest_cookie, ensure_guest_cookie
 from core.extensions import csrf
 from core.hooks import origin_allowed
 from core.http_utils import nocache
-from domain.models import Subscription, db, Usage, GuestUsage as GuestUsage
+from domain.models import db, Usage, GuestUsage as GuestUsage
 from domain.policies import LIMITS
 from domain.schema import USAGE_SCOPES
 from utils.time_utils import _utcnow, _month_window, _day_window
 
 from sqlalchemy import func
+
+# 티어 판단은 resolve_tier로 통일 (admin -> pro 포함)
+from auth.guards import resolve_tier
+
 api_usage_bp = Blueprint("api_usage", __name__)
 
 
@@ -18,13 +22,20 @@ api_usage_bp = Blueprint("api_usage", __name__)
 @api_usage_bp.route("/api/usage", methods=["GET"])
 def api_usage_status():
     """
-      scope-aware 사용량 조회
+    scope-aware 사용량 조회
     - 로그인: 월간 window + scope
     - 게스트: 일간 window + scope
     """
+    # 디버그 출력(필요하면 유지, 나중에 제거 가능)
     print("[USAGE][HEADERS] Origin=", request.headers.get("Origin"))
-    print("[USAGE][HEADERS] Host=", request.headers.get("Host"), "XFH=", request.headers.get("X-Forwarded-Host"),
-          "XFP=", request.headers.get("X-Forwarded-Proto"))
+    print(
+        "[USAGE][HEADERS] Host=",
+        request.headers.get("Host"),
+        "XFH=",
+        request.headers.get("X-Forwarded-Host"),
+        "XFP=",
+        request.headers.get("X-Forwarded-Proto"),
+    )
 
     def _json_resp(payload, set_aid=None, status=200):
         resp = make_response(jsonify(payload), status)
@@ -35,13 +46,14 @@ def api_usage_status():
             set_guest_cookie(resp, set_aid)
         return resp
 
+    # Origin guard (기존 유지)
     try:
         if "_origin_allowed" in globals() and not origin_allowed():
             return _json_resp({"error": "forbidden_origin"}, status=403)
     except Exception:
         pass
 
-    #  scope 파라미터 (기본 rewrite)
+    # scope 파라미터 (기본 rewrite)
     scope = (request.args.get("scope") or "rewrite").strip().lower()
     if scope not in USAGE_SCOPES:
         scope = "rewrite"
@@ -51,11 +63,14 @@ def api_usage_status():
     uid = sess.get("user_id")
     if uid:
         try:
-            sub = Subscription.query.filter_by(user_id=uid, status="active").first()
-            tier = "pro" if sub else "free"
+            # admin 포함 pro 판정
+            tier = resolve_tier()
+            # 로그인 분기인데 guest가 나오면 free로 취급
+            if tier == "guest":
+                tier = "free"
+
             limit = LIMITS["pro"]["monthly"] if tier == "pro" else LIMITS["free"]["monthly"]
 
-            #  Usage.window_start는 Date — 범위 조회 사용
             now = _utcnow()
             month_start, month_end = _month_window(now)
 
@@ -64,14 +79,17 @@ def api_usage_status():
                 .filter(
                     Usage.user_id == uid,
                     Usage.tier == tier,
-                    Usage.scope == scope,  # scope 필터
+                    Usage.scope == scope,
                     Usage.window_start >= month_start,
                     Usage.window_start < month_end,
                 )
                 .scalar()
             )
+
+            print("[USAGE] uid=", uid, "tier=", tier, "scope=", scope, "used=", int(used or 0), "limit=", int(limit))
             return _json_resp({"used": int(used or 0), "limit": int(limit), "tier": tier, "scope": scope})
-        except Exception:
+        except Exception as e:
+            print("[USAGE][ERROR]", repr(e))
             return _json_resp({"used": 0, "limit": LIMITS["free"]["monthly"], "tier": "free", "scope": scope})
 
     # ----- 게스트 -----
@@ -87,7 +105,7 @@ def api_usage_status():
             db.session.query(func.coalesce(func.sum(GuestUsage.count), 0))
             .filter(
                 GuestUsage.guest_key == aid,
-                GuestUsage.scope == scope,  # scope 필터
+                GuestUsage.scope == scope,
                 GuestUsage.window_start >= day_start,
                 GuestUsage.window_start < day_end,
             )
@@ -96,7 +114,8 @@ def api_usage_status():
 
         return _json_resp(
             {"used": int(used or 0), "limit": int(limit), "tier": tier, "scope": scope},
-            set_aid=aid if need_set else None
+            set_aid=aid if need_set else None,
         )
-    except Exception:
+    except Exception as e:
+        print("[USAGE][GUEST_ERROR]", repr(e))
         return _json_resp({"used": 0, "limit": LIMITS["guest"]["daily"], "tier": "guest", "scope": scope})

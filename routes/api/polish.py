@@ -1,5 +1,5 @@
 # -------------------- 라우트 --------------------
-from auth.guards import require_feature, outputs_for_tier
+from auth.guards import require_feature, outputs_for_tier, resolve_tier
 from auth.quota import enforce_quota
 from core.extensions import csrf, limiter
 
@@ -26,6 +26,8 @@ api_polish_bp = Blueprint("api_polish", __name__)
 @require_feature("rewrite.single")  # 기능 권한
 @enforce_quota("rewrite")  # scope=rewrite
 def api_polish():
+    print("[POLISH] uid=", (session.get("user") or {}).get("user_id"), "tier=", resolve_tier(), "scope=rewrite")
+
     start_t = time.perf_counter()
     if not origin_allowed():
         _sleep_floor(start_t)
