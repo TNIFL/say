@@ -91,7 +91,7 @@ def signup():
 
         # --- 가입 즉시 로그인 처리 ---
         session["user"] = {"user_id": user_id, "email": email}
-        return redirect(url_for("polish"))
+        return redirect(url_for("rewrite.polish"))
     except Exception as e:
         db.session.rollback()
         return render_template("signup.html", error=f"회원가입 중 오류가 발생했습니다: {e}")
