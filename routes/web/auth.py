@@ -5,6 +5,9 @@ from domain.models import User, db
 from security.security import require_safe_input
 from domain.schema import login_schema, signup_schema
 from werkzeug.security import generate_password_hash
+from sqlalchemy import func
+from sqlalchemy.exc import IntegrityError
+
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -77,10 +80,16 @@ def signup():
     if not agree:
         return render_template("signup.html", error="이용약관에 동의해 주세요.", user_id=user_id, email=email)
 
-    # --- 중복 이메일 체크 ---
-    existing_user = User.query.filter_by(email=email).first()
-    if existing_user:
-        return render_template("signup.html", error="이미 가입된 이메일입니다.", user_id=user_id, email=email)
+    # --- 중복 체크 (UX용: 빠른 피드백) ---
+    # 이메일: 대소문자 무시
+    existing_email = User.query.filter(func.lower(User.email) == email).first()
+    if existing_email:
+        return render_template("signup.html", error="이미 가입된 이메일입니다.", user_id=user_id, email=email), 409
+
+    # 아이디: 정확히 일치
+    existing_id = User.query.filter_by(user_id=user_id).first()
+    if existing_id:
+        return render_template("signup.html", error="이미 사용 중인 아이디입니다.", user_id=user_id, email=email), 409
 
     try:
         # --- 비밀번호 해시 + DB 저장 ---
@@ -92,6 +101,23 @@ def signup():
         # --- 가입 즉시 로그인 처리 ---
         session["user"] = {"user_id": user_id, "email": email}
         return redirect(url_for("rewrite.polish"))
-    except Exception as e:
+
+    except IntegrityError:
+        # 유니크 충돌(레이스 컨디션 등) 대비: 사용자에게는 일반화 메시지
         db.session.rollback()
-        return render_template("signup.html", error=f"회원가입 중 오류가 발생했습니다: {e}")
+        return render_template(
+            "signup.html",
+            error="이미 사용 중인 아이디 또는 이메일입니다.",
+            user_id=user_id,
+            email=email,
+        ), 409
+
+    except Exception:
+        # 내부 정보 노출 금지
+        db.session.rollback()
+        return render_template(
+            "signup.html",
+            error="회원가입 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
+            user_id=user_id,
+            email=email,
+        ), 500
