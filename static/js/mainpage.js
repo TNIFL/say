@@ -482,7 +482,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 템플릿
   initTemplates();
 
-  // ✅ submit 핸들러(단 하나)
+  // submit 핸들러(단 하나)
   const form = document.getElementById("polishForm");
   const btn  = document.getElementById("submitBtn");
   if (form && btn) {

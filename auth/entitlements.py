@@ -17,16 +17,25 @@ from datetime import datetime
 # TODO:: 어드민 계정인데 Guest 로 불러와지는 경우가 있음
 # TODO:: flask 의 전역공간인 g 에 현재 유저 티어를 정확하게 저장 시켜야함
 def load_current_user():
-    """
-    세션에서 user_id를 읽어 DB의 User 객체를 반환.
-    (별도의 로그인 로직은 기존 auth_bp가 담당)
-    """
     sess = session.get("user") or {}
     uid = sess.get("user_id")
+
     if not uid:
         g.current_user = None
+        print("[AUTH][load_current_user] no session user")
         return None
-    g.current_user = User.query.filter_by(user_id=uid).first()
+
+    user = User.query.filter_by(user_id=uid).first()
+    g.current_user = user
+
+    print(
+        "[AUTH][load_current_user]",
+        "uid=", uid,
+        "found=", bool(user),
+        "email=", getattr(user, "email", None)
+    )
+    return user
+
 
 
 # 조회 할 때 사용

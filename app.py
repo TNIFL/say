@@ -5,6 +5,7 @@ from flask import Flask, redirect, Blueprint, current_app
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 import routes
+from auth.entitlements import load_current_user
 from core.config import Config
 from core.context import init_context_processors
 from core.extensions import init_extensions
@@ -36,6 +37,10 @@ def create_app():
     app.config["SESSION_COOKIE_SECURE"] = (app.config.get("ENV") != "development")
 
     app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1)
+
+    @app.before_request
+    def _load_user_global():
+        load_current_user()
 
     routes.register_routes(app)
     register_hooks(app)
