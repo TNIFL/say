@@ -63,8 +63,8 @@ def create_app():
         return resp
 
     # 로그에서 DB URL 확인
-    print("[DB] SQLALCHEMY_DATABASE_URI=", app.config.get("SQLALCHEMY_DATABASE_URI"))
-    print("[DB] DATABASE_URL env exists?", "DATABASE_URL" in os.environ)
+    # print("[DB] SQLALCHEMY_DATABASE_URI=", app.config.get("SQLALCHEMY_DATABASE_URI"))
+    # print("[DB] DATABASE_URL env exists?", "DATABASE_URL" in os.environ)
     @app.get("/health")
     def health():
         return {"ok": True}, 200
