@@ -1,6 +1,7 @@
+import os
 from datetime import timedelta
 import socket
-from flask import Flask, redirect, Blueprint
+from flask import Flask, redirect, Blueprint, current_app
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 import routes
@@ -60,6 +61,11 @@ def create_app():
             except Exception as e:
                 print("[400 DEBUG] logging failed:", e)
         return resp
+
+    # 로그에서 DB URL 확인
+    db_uri = current_app.config.get("SQLALCHEMY_DATABASE_URI")
+    current_app.logger.info(f"[DB] SQLALCHEMY_DATABASE_URI={db_uri}")
+    current_app.logger.info(f"[DB] DATABASE_URL env exists? {'DATABASE_URL' in os.environ}")
 
     @app.get("/health")
     def health():
