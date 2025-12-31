@@ -17,11 +17,17 @@ def api_user_templates():
         return _json_err("forbidden_origin", status=403)
 
     user = get_current_user()
+
+    # 게스트는 템플릿 기능 자체가 없으므로: GET은 빈 목록으로 응답
+    if request.method == "GET" and not user:
+        return _json_ok({"items": []}, status=200)
+
+    # POST는 로그인 필요
     if not user:
         return _json_err("login_required", status=401)
+
     tier = resolve_tier()
-    print("[TIER] resolve_tier() =", tier, "user_id=", user.user_id, "email=", user.email)
-    if resolve_tier() != "pro":
+    if tier != "pro":
         return _json_err("pro_required", status=403)
 
     if request.method == "GET":
@@ -32,6 +38,7 @@ def api_user_templates():
         )
         return _json_ok({"items": [r.to_dict() for r in rows]})
 
+    # POST create
     data = request.get_json(silent=True) or {}
     title = (data.get("title") or "").strip()
     category = (data.get("category") or "").strip() or None
@@ -57,6 +64,7 @@ def api_user_templates():
     return _json_ok({"item": tpl.to_dict()}, status=200)
 
 
+
 @csrf.exempt
 @limiter.limit("60/minute")
 @api_user_templates_bp.route("/api/user_templates/<int:tpl_id>", methods=["DELETE"])
@@ -67,6 +75,7 @@ def api_user_templates_delete(tpl_id):
     user = get_current_user()
     if not user:
         return _json_err("login_required", status=401)
+
     if resolve_tier() != "pro":
         return _json_err("pro_required", status=403)
 
