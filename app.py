@@ -1,7 +1,7 @@
 import os
 from datetime import timedelta
 import socket
-from flask import Flask, redirect, Blueprint, current_app
+from flask import Flask, Response
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 import routes
@@ -78,5 +78,12 @@ def create_app():
     @app.route("/ads.txt")
     def ads_txt():
         return app.send_static_file("ads.txt")
+
+    @app.route("/robots.txt")
+    def robots_txt():
+        return Response(
+            "User-agent: *\nDisallow:\n",
+            mimetype="text/plain"
+        )
 
     return app
