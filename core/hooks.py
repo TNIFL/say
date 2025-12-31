@@ -114,13 +114,30 @@ def origin_allowed():
 
 
 def origin_guard():
-    if request.path.startswith("/api/"):
-        # 표시용/기본 API는 예외 처리 (필요시 추가)
-        if request.path == "/api/usage":
-            return None
-        if not origin_allowed():
-            abort(403)
+    path = request.path or ""
+
+    if not path.startswith("/api/"):
+        return None
+
+    # 표시용/기본 API 예외
+    if path == "/api/usage":
+        return None
+
+    # 로그인된 사용자 요청은 Origin 검사 생략
+    if getattr(g, "current_user", None):
+        return None
+
+    # 세션 기반 로그인도 허용
+    sess = session.get("user") or {}
+    if sess.get("user_id"):
+        return None
+
+    # 익명 API 요청만 Origin 검사
+    if not origin_allowed():
+        abort(403)
+
     return None
+
 
 
 def register_hooks(app):

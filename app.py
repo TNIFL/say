@@ -74,4 +74,9 @@ def create_app():
     def health():
         return {"ok": True}, 200
 
+
+    @app.route("/ads.txt")
+    def ads_txt():
+        return app.send_static_file("ads.txt")
+
     return app

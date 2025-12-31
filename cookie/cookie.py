@@ -1,5 +1,4 @@
-import secrets
-
+import secrets, os
 
 from flask import request
 from flask import current_app
@@ -8,8 +7,16 @@ from itsdangerous import URLSafeSerializer
 GUEST_SALT = "guest-key-v1"
 
 
+def _secret_key() -> str:
+    key = current_app.config.get("SECRET_KEY") or os.getenv("SECRET_KEY")
+    if not key:
+        # 운영에서 조용히 dev-secret로 떨어지는 것을 금지
+        raise RuntimeError("SECRET_KEY is missing. Refusing to start with insecure default.")
+    return key
+
+
 def guest_serializer(secret_key: str):
-    return URLSafeSerializer(secret_key=secret_key or "dev-secret", salt=GUEST_SALT)
+    return URLSafeSerializer(secret_key=_secret_key(), salt=GUEST_SALT)
 
 
 def ensure_guest_cookie():

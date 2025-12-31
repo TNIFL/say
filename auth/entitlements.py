@@ -22,7 +22,7 @@ def load_current_user():
 
     if not uid:
         g.current_user = None
-        print("[AUTH][load_current_user] no session user")
+        print("[AUTH][load_current_user] guest")
         return None
 
     user = User.query.filter_by(user_id=uid).first()

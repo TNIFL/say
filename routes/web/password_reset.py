@@ -1,4 +1,4 @@
-from flask import request, render_template, url_for, redirect, Blueprint, current_app
+from flask import request, render_template, url_for, redirect, Blueprint, current_app, session
 from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy import func
 
@@ -143,32 +143,50 @@ def verify_require():
         nxt = request.args.get("next") or "/me"
         return redirect(nxt)
 
-    return render_template(
-        "verify_notice.html",
-        email=user.email,
-        next=request.args.get("next") or "",
-    )
+    # 첫 진입이면 자동 발송(세션 플래그로 중복 방지)
+    # 사용자가 새로고침/뒤로가기해도 계속 발송 폭주하지 않도록 함
+    sent_flag = session.get("_verify_mail_sent")
+    if not sent_flag:
+        token = create_email_verify_token(user)
+        link = url_for("password_reset.verify_confirm", token=token, _external=True)
+        ok = _send_email_verify_link_sync(user.email, link)
+        session["_verify_mail_sent"] = True
+        return render_template(
+            "verify_notice.html",
+            email=user.email,
+            sent=bool(ok),
+            next=request.args.get("next") or "",
+        )
+
+    return render_template("verify_notice.html", email=user.email, next=request.args.get("next") or "")
 
 
 # (B) 인증 메일 보내기 (POST)
-@csrf.exempt
 @password_reset_bp.route("/verify/send", methods=["POST"])
+@limiter.limit("3 per minute")
 def verify_send():
     user = get_current_user()
     if not user:
         return redirect(url_for("auth.login_page"))
 
     if user.email_verified:
-        return redirect(request.args.get("next") or "/me")
+        return redirect(request.args.get("next") or "/mypage")
 
     token = create_email_verify_token(user)
     link = url_for("password_reset.verify_confirm", token=token, _external=True)
 
     try:
         ok = _send_email_verify_link_sync(user.email, link)
-        current_app.logger.info("[MAIL verify] called email=%s ok=%s", user.email, ok)
         if not ok:
-            raise RuntimeError("send returned false")
+            return render_template(
+                "verify_notice.html",
+                email=user.email,
+                sent=False,
+                next=request.args.get("next") or ""
+            ), 200
+
+        return render_template("verify_notice.html", email=user.email, sent=True, next=request.args.get("next") or "")
+
     except Exception as e:
         current_app.logger.exception("[MAIL verify] failed email=%s err=%r", user.email, e)
         return render_template(
@@ -199,5 +217,11 @@ def verify_confirm(token):
         user.email_verified = True
         db.session.add(user)
         db.session.commit()
+
+    # 인증 완료 시 로그인 세션 생성
+    session.clear()
+    session["user"] = {"user_id": user.user_id, "email": user.email}
+
+    session.pop("_verify_mail_sent", None)
 
     return render_template("verify_result.html", ok=True, message="이메일 인증이 완료되었습니다.")

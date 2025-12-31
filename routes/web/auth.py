@@ -8,6 +8,7 @@ from werkzeug.security import generate_password_hash
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
 
+from services.mail import create_email_verify_token, _send_email_verify_link_sync
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -68,25 +69,25 @@ def signup():
 
     # --- 추가 수동 검증 ---
     if not user_id:
-        return render_template("signup.html", error="아이디를 입력해주세요.", user_id=user_id, email=email)
+        return render_template("signup.html", error="아이디를 입력해주세요.", user_id=user_id, email=email), 400
     if not email or not password:
-        return render_template("signup.html", error="이메일과 비밀번호를 입력해 주세요.", user_id=user_id, email=email)
+        return render_template("signup.html", error="이메일과 비밀번호를 입력해 주세요.", user_id=user_id, email=email), 400
     if "@" not in email:
-        return render_template("signup.html", error="올바른 이메일 형식이 아닙니다.", user_id=user_id, email=email)
+        return render_template("signup.html", error="올바른 이메일 형식이 아닙니다.", user_id=user_id, email=email), 400
+    if len(user_id) < 6:
+        return render_template("signup.html", error="아이디는 6자 이상이어야 합니다.", user_id=user_id, email=email), 400
     if len(password) < 8:
-        return render_template("signup.html", error="비밀번호는 8자 이상이어야 합니다.", user_id=user_id, email=email)
+        return render_template("signup.html", error="비밀번호는 8자 이상이어야 합니다.", user_id=user_id, email=email), 400
     if password != confirm:
-        return render_template("signup.html", error="비밀번호 확인이 일치하지 않습니다.", user_id=user_id, email=email)
+        return render_template("signup.html", error="비밀번호 확인이 일치하지 않습니다.", user_id=user_id, email=email), 400
     if not agree:
-        return render_template("signup.html", error="이용약관에 동의해 주세요.", user_id=user_id, email=email)
+        return render_template("signup.html", error="이용약관에 동의해 주세요.", user_id=user_id, email=email), 400
 
-    # --- 중복 체크 (UX용: 빠른 피드백) ---
-    # 이메일: 대소문자 무시
+    # --- 중복 체크 (UX용) ---
     existing_email = User.query.filter(func.lower(User.email) == email).first()
     if existing_email:
         return render_template("signup.html", error="이미 가입된 이메일입니다.", user_id=user_id, email=email), 409
 
-    # 아이디: 정확히 일치
     existing_id = User.query.filter_by(user_id=user_id).first()
     if existing_id:
         return render_template("signup.html", error="이미 사용 중인 아이디입니다.", user_id=user_id, email=email), 409
@@ -94,16 +95,30 @@ def signup():
     try:
         # --- 비밀번호 해시 + DB 저장 ---
         hashed_pw = generate_password_hash(password, method="pbkdf2:sha256", salt_length=16)
-        new_user = User(user_id=user_id, email=email, password_hash=hashed_pw)
+        new_user = User(
+            user_id=user_id,
+            email=email,
+            password_hash=hashed_pw,
+            is_active=True,
+            is_admin=False,
+            email_verified=False,  # 옵션1 핵심
+        )
         db.session.add(new_user)
         db.session.commit()
 
-        # --- 가입 즉시 로그인 처리 ---
-        session["user"] = {"user_id": user_id, "email": email}
-        return redirect(url_for("rewrite.polish"))
+        # 인증메일 발송
+        token = create_email_verify_token(new_user)
+        link = url_for("password_reset.verify_confirm", token=token, _external=True)
+        ok = _send_email_verify_link_sync(new_user.email, link)
+
+        # 가입 완료로 보지 않고, 안내 페이지로 이동 (로그인 세션 생성 X)
+        return render_template(
+            "signup_verify_pending.html",
+            email=new_user.email,
+            sent=bool(ok),
+        ), 200
 
     except IntegrityError:
-        # 유니크 충돌(레이스 컨디션 등) 대비: 사용자에게는 일반화 메시지
         db.session.rollback()
         return render_template(
             "signup.html",
@@ -113,7 +128,6 @@ def signup():
         ), 409
 
     except Exception:
-        # 내부 정보 노출 금지
         db.session.rollback()
         return render_template(
             "signup.html",

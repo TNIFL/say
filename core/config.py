@@ -97,14 +97,31 @@ class Config:
     # -------------------------
     # Ads
     # -------------------------
-    ADS_ENABLED = os.getenv("ADS_ENABLED", "false").lower() in {"1", "true", "yes"}
-    ADS_PROVIDER = os.getenv("ADS_PROVIDER", "adsense")
-    ADSENSE_CLIENT = os.getenv("ADSENSE_CLIENT", "")
-    ADFIT_UNIT_ID = os.getenv("ADFIT_UNIT_ID", "")
-    NAVER_AD_UNIT = os.getenv("NAVER_AD_UNIT", "")
-    ADS_TXT = os.getenv("ADS_TXT", "")
-    APP_ADS_TXT = os.getenv("APP_ADS_TXT", "")
+    ADS_ENABLED = _env_bool("ADS_ENABLED", False)
+    # Provider는 ADS_ENABLED일 때만 의미 있음
+    ADS_PROVIDER = os.getenv("ADS_PROVIDER", "").strip().lower() if ADS_ENABLED else ""
+    # --- AdSense ---
+    ADSENSE_CLIENT = os.getenv("ADSENSE_CLIENT", "").strip()
+    # --- Kakao AdFit ---
+    ADFIT_UNIT_ID = os.getenv("ADFIT_UNIT_ID", "").strip()
+    # --- Naver ---
+    NAVER_AD_UNIT = os.getenv("NAVER_AD_UNIT", "").strip()
+    # --- ads.txt ---
+    ADS_TXT = os.getenv("ADS_TXT", "").strip()
+    APP_ADS_TXT = os.getenv("APP_ADS_TXT", "").strip()
+    # -------------------------
+    # Sanity check (fail-safe)
+    # -------------------------
+    if ADS_ENABLED:
+        if ADS_PROVIDER == "adsense" and not ADSENSE_CLIENT:
+            # client 없으면 자동 비활성화 (운영 안전)
+            ADS_ENABLED = False
+        elif ADS_PROVIDER == "kakao" and not ADFIT_UNIT_ID:
+            ADS_ENABLED = False
+        elif ADS_PROVIDER == "naver" and not NAVER_AD_UNIT:
+            ADS_ENABLED = False
 
+    print("[ADS CONFIG]", ADS_ENABLED, ADS_PROVIDER, ADSENSE_CLIENT)
 
     # =========================
     #  [추가] 티어/권한/한도 정책

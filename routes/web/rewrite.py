@@ -37,7 +37,6 @@ def polish():
     user = User.query.filter_by(user_id=uid).first() if uid else None
     user_job = (user.user_job or "") if user else ""
     user_job_detail = (user.user_job_detail or "") if user else ""
-    print("polish 진입")
     if g.safe_input:
         data = g.safe_input
         input_text = (data.get("input_text") or "").strip()
@@ -71,7 +70,6 @@ def polish():
 
     outputs = _ensure_exact_count(outputs, outputs_for_tier())
     output_text = outputs[0] if outputs else ""
-    print(resolve_tier())
     return render_template(
         "mainpage.html",
         input_text=input_text,

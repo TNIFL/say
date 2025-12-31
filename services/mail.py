@@ -1,7 +1,5 @@
 import os
-import json
-import urllib.request
-import urllib.error
+import smtplib
 from email.message import EmailMessage
 from threading import Thread
 
@@ -12,60 +10,67 @@ from domain.models import User
 from services.auth_tokens import _verify_serializer
 
 
-RESEND_API_URL = "https://api.resend.com/emails"
-
-
 def _base_url() -> str:
     # 배포 환경에서 외부 링크 만들 때 사용 (없으면 현재 요청 host가 아니라 여기 값으로 고정 가능)
     return (os.getenv("APP_BASE_URL") or "").rstrip("/")
 
 
-def _send_resend_email_sync(*, to_email: str, subject: str, text: str) -> bool:
+def _get_env(name: str, default: str | None = None) -> str:
+    v = os.getenv(name, default)
+    if not v:
+        raise RuntimeError(f"Missing env var: {name}")
+    return v
+
+
+def _send_ses_smtp_email_sync(*, to_email: str, subject: str, text: str) -> bool:
     """
-    Resend HTTP API로 메일 발송.
-    - True: 요청 성공(Resend가 2xx 반환)
-    - False: 실패(네트워크/인증/검증/레이트리밋 등)
+    Amazon SES SMTP로 텍스트 이메일 발송.
+    필수 환경변수:
+      - SES_SMTP_HOST (예: email-smtp.ap-northeast-2.amazonaws.com)
+      - SES_SMTP_PORT (예: 587)
+      - SES_SMTP_USERNAME
+      - SES_SMTP_PASSWORD
+      - MAIL_FROM (예: no-reply@lexinoa.com)
+
+    주의:
+      - SES Sandbox면 To 주소가 SES에서 Verified된 이메일이어야 함.
+      - MAIL_FROM 도메인(lexinoa.com)은 SES에서 Verified 되어 있어야 함.
     """
-    api_key = os.getenv("RESEND_API_KEY")
-    from_email = os.getenv("MAIL_FROM", "Lexinoa <onboarding@resend.dev>")
-
-    if not api_key:
-        print("[MAIL][ERROR] RESEND_API_KEY is missing")
-        return False
-
-    payload = {
-        "from": from_email,
-        "to": [to_email],
-        "subject": subject,
-        "text": text,
-    }
-
-    data = json.dumps(payload).encode("utf-8")
-    req = urllib.request.Request(
-        RESEND_API_URL,
-        data=data,
-        method="POST",
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-        },
-    )
-
     try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            body = resp.read().decode("utf-8", errors="replace")
-            # 2xx면 성공 취급
-            if 200 <= resp.status < 300:
-                print(f"[MAIL][RESEND] ok status={resp.status} to={to_email}")
-                return True
-            print(f"[MAIL][RESEND][ERROR] status={resp.status} body={body}")
-            return False
-    except urllib.error.HTTPError as e:
-        body = e.read().decode("utf-8", errors="replace") if hasattr(e, "read") else ""
-        print(f"[MAIL][RESEND][HTTPError] code={e.code} body={body}")
+        host = _get_env("SES_SMTP_HOST")
+        port = int(_get_env("SES_SMTP_PORT", "587"))
+        username = _get_env("SES_SMTP_USERNAME")
+        password = _get_env("SES_SMTP_PASSWORD")
+        from_email = _get_env("MAIL_FROM")
+
+        msg = EmailMessage()
+        msg["Subject"] = subject
+        msg["From"] = from_email
+        msg["To"] = to_email
+        msg.set_content(text)
+
+        # SES SMTP: STARTTLS 권장 (587)
+        with smtplib.SMTP(host, port, timeout=10) as server:
+            server.ehlo()
+            server.starttls()
+            server.ehlo()
+            server.login(username, password)
+            server.send_message(msg)
+
+        print(f"[MAIL][SES_SMTP] ok to={to_email}")
+        return True
+
+    except smtplib.SMTPAuthenticationError as e:
+        # 아이디/비번 오류, 또는 리전/호스트 불일치 시 자주 발생
+        print("[MAIL][SES_SMTP][AUTH_ERROR]", repr(e))
         return False
+
+    except smtplib.SMTPException as e:
+        print("[MAIL][SES_SMTP][SMTP_ERROR]", repr(e))
+        return False
+
     except Exception as e:
-        print("[MAIL][RESEND][ERROR]", repr(e))
+        print("[MAIL][SES_SMTP][ERROR]", repr(e))
         return False
 
 
@@ -73,7 +78,7 @@ def _send_resend_email_sync(*, to_email: str, subject: str, text: str) -> bool:
 def _send_email_reset_link_sync(email: str, link: str) -> bool:
     subject = "[Lexinoa] 비밀번호 재설정 링크"
     text = f"아래 링크로 접속하여 비밀번호를 재설정하세요 (5분 유효)\n{link}"
-    ok = _send_resend_email_sync(to_email=email, subject=subject, text=text)
+    ok = _send_ses_smtp_email_sync(to_email=email, subject=subject, text=text)
     if ok:
         print(f"[PASSWORD RESET] To: {email}\nLink: {link}\n")
     return ok
@@ -87,7 +92,7 @@ def send_email_reset_link_async(email: str, link: str) -> None:
 def _send_email_verify_link_sync(email: str, link: str) -> bool:
     subject = "[Lexinoa] 이메일 인증 링크"
     text = f"아래 링크에서 이메일 인증을 완료해 주세요. (30분 유효)\n{link}"
-    ok = _send_resend_email_sync(to_email=email, subject=subject, text=text)
+    ok = _send_ses_smtp_email_sync(to_email=email, subject=subject, text=text)
     if ok:
         print(f"[EMAIL VERIFY] To: {email}\nLink: {link}\n")
     return ok
