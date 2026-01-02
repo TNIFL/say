@@ -56,7 +56,7 @@ def call_gemini(system_prompt, final_user_prompt) -> Tuple[str, Dict[str, Any]]:
 
         # 2. generate_content 메서드에 system_instruction을 직접 전달
         resp = client.models.generate_content(
-            system_instruction=system_prompt,  # 👈 여기에 system_prompt 문자열을 넣습니다.
+            system_instruction=system_prompt,  # 여기에 system_prompt 문자열을 넣습니다.
             model=model,
             contents=[
                 {
@@ -64,7 +64,7 @@ def call_gemini(system_prompt, final_user_prompt) -> Tuple[str, Dict[str, Any]]:
                     "parts": [{"text": final_user_prompt}]
                 }
             ],
-            config=config  # 👈 config 객체는 다른 설정값만 전달
+            config=config  # config 객체는 다른 설정값만 전달
         )
         text = (getattr(resp, "text", "") or "").strip()
         print("[Gemini] 1st call OK")

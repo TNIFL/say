@@ -28,13 +28,23 @@ def create_app():
         "SECURITY: 환경변수 SECRET_KEY를 강력한 값으로 설정하세요."
 
     # 쿠키 기본 설정
+    is_dev = (app.config.get("ENV") == "development")
+
+    # 확장 프로그램(크롬 extension)에서 credentials: "include" 로 세션 쿠키가 붙으려면
+    # 프로덕션에서는 SameSite=None + Secure 가 사실상 필수
     app.config.update(
         SESSION_COOKIE_HTTPONLY=True,
-        SESSION_COOKIE_SAMESITE="Lax",
         PERMANENT_SESSION_LIFETIME=timedelta(days=30),
     )
-    # dev/prod 분기
-    app.config["SESSION_COOKIE_SECURE"] = (app.config.get("ENV") != "development")
+
+    if is_dev:
+        # 로컬 개발에서는 https가 아니므로 Secure/None 조합이 깨질 수 있어 Lax 유지
+        app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+        app.config["SESSION_COOKIE_SECURE"] = False
+    else:
+        # 운영(https)에서는 확장 프로그램에서도 세션 쿠키가 전송되도록 None + Secure 강제
+        app.config["SESSION_COOKIE_SAMESITE"] = "None"
+        app.config["SESSION_COOKIE_SECURE"] = True
 
     app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1)
 

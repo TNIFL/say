@@ -16,6 +16,8 @@ def call_claude_and_log(
         n_outputs=1,
         user_job="",
         user_job_detail="",
+        context_source="",
+        context_label="",
 ):
     """
     Claude 호출 (결과 개수 고정형)
@@ -33,6 +35,8 @@ def call_claude_and_log(
             emoji_checked,
             user_job=user_job,
             user_job_detail=user_job_detail,
+            context_source=context_source,
+            context_label=context_label,
         )
         count = max(1, int(n_outputs))
 

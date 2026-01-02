@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import secrets
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 from domain.models import db, ExtensionAuthCode, ExtensionToken
 from utils.time_utils import utcnow
@@ -35,7 +35,7 @@ def issue_auth_code(
     """
     authorize 단계: 1회용 code 발급 (5분 TTL 권장)
     """
-    now = utcnow()
+    now = datetime.utcnow()
     code = secrets.token_urlsafe(32)
 
     row = ExtensionAuthCode(
@@ -66,7 +66,7 @@ def exchange_code_for_token(
     """
     token 단계: code + verifier로 PKCE 검증 후 access token 발급
     """
-    now = utcnow()
+    now = datetime.utcnow()
 
     row = ExtensionAuthCode.query.filter_by(code=code).first()
     if not row:
@@ -124,7 +124,7 @@ def find_user_id_by_bearer_token(raw_token: str) -> str | None:
         return None
 
     token_hash = _sha256_hex(raw_token)
-    now = utcnow()
+    now = datetime.utcnow()
 
     row = ExtensionToken.query.filter_by(token_hash=token_hash).first()
     if not row:

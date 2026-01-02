@@ -41,6 +41,9 @@ def api_polish():
     opener_checked = bool(data.get("opener_checked"))
     emoji_checked = bool(data.get("emoji_checked"))
     provider = (data.get("provider") or os.getenv("PROVIDER_DEFAULT")).lower()
+    context_source = (data.get("context_source") or "").strip()
+    context_label = (data.get("context_label") or "").strip()
+
     if not input_text:
         _sleep_floor(start_t)
         return jsonify({"error": "empty_input", "message": "사용자 입력이 없습니다."}), 400

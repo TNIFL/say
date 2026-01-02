@@ -2,8 +2,20 @@ from services.ai.claude_service import call_claude_and_log
 from services.ai.openai_service import call_openai_and_log
 
 
-def _get_ai_outputs(provider, input_text, selected_categories, selected_tones, honorific_checked, opener_checked,
-                    emoji_checked, n_outputs, user_job, user_job_detail):
+def _get_ai_outputs(
+    provider,
+    input_text,
+    selected_categories,
+    selected_tones,
+    honorific_checked,
+    opener_checked,
+    emoji_checked,
+    n_outputs,
+    user_job,
+    user_job_detail,
+    context_source="",
+    context_label="",
+):
     """Helper function to call the appropriate AI provider and log the request."""
     outputs = []
     if provider == "openai":
@@ -31,8 +43,9 @@ def _get_ai_outputs(provider, input_text, selected_categories, selected_tones, h
             n_outputs=n_outputs,
             user_job=user_job,
             user_job_detail=user_job_detail,
+            context_source=context_source,
+            context_label=context_label,
         )
-
 
     else:  # Default to claude
         try:

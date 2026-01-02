@@ -64,6 +64,7 @@ def get_current_user() -> Optional[User]:
     # 실제 로그인 연동에서 g.current_user를 세팅했다고 가정
     return getattr(g, "current_user", None)
 
+
 def has_active_subscription(user: User) -> bool:
     if not user:
         return False

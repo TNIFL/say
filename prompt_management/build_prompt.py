@@ -10,6 +10,8 @@ def build_prompt(
     emoji_checked,
     user_job="",
     user_job_detail="",
+    context_source="",
+    context_label="",
 ):
     system_prompt = category_templates.SYSTEM_PROMPT_BASE
 
@@ -42,6 +44,7 @@ def build_prompt(
     - 이모지 허용: {"예" if emoji_checked else "아니오"}
     - 직업 : {user_job}
     - 직업 설명 : {user_job_detail}
+    - 작성 환경(플랫폼): {context_label or "일반 사이트"} ({context_source or "generic"})
     """.strip()
 
     final_user_prompt = f"""

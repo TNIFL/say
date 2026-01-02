@@ -49,7 +49,7 @@ def call_claude(system_prompt, final_user_prompt) -> Tuple[str, Dict[str, Any]]:
     error_message = ""  # output_text에 저장할 에러 메시지 초기화
     try:
         print(f"[Claude] model={model}")
-        # 🌟 2. messages.create의 인자 위치 수정 (max_tokens를 최상위로)
+        # 2. messages.create의 인자 위치 수정 (max_tokens를 최상위로)
         message = client.messages.create(
             model=model,
             max_tokens=1024,  # <-- max_tokens을 최상위로 이동
@@ -66,7 +66,7 @@ def call_claude(system_prompt, final_user_prompt) -> Tuple[str, Dict[str, Any]]:
         if message.content and message.content[0].type == 'text':
             text = (message.content[0].text or "").strip()
 
-        # 🌟 4. usage 정보는 message 객체에서 직접 접근 후 추출
+        # 4. usage 정보는 message 객체에서 직접 접근 후 추출
         usage_data = _extract_usage(message)
 
         print(f"[Claude] 1st call OK")
@@ -79,11 +79,11 @@ def call_claude(system_prompt, final_user_prompt) -> Tuple[str, Dict[str, Any]]:
             "total_tokens": usage_data.get("total_tokens")
         }
     except Exception as e:
-        # 🌟 5. 에러 발생 시, 에러 메시지를 문자열로 저장
+        # 5. 에러 발생 시, 에러 메시지를 문자열로 저장
         error_message = str(e)
         print(f"[Claude][Error] 1st call failed: {error_message}")
 
-    # 🌟 6. 실패 시, 오류 메시지와 초기화된 usage_data를 반환
+    # 6. 실패 시, 오류 메시지와 초기화된 usage_data를 반환
     return error_message, {  # 텍스트 대신 오류 메시지를 output_text에 저장하도록 반환 (DB 에러 방지)
         "provider": "Claude",
         "model": model,
