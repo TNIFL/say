@@ -25,6 +25,8 @@ from routes.api.admin_analytics import api_admin_bp
 from routes.api.subscription import api_subscription_bp
 from routes.api.nicepay_payment_method import api_nicepay_pm_bp
 from routes.api.nicepay_v1 import api_nicepay_v1_bp
+from routes.api.account import api_account_bp
+from routes.api.extension_oauth import api_extension_oauth_bp
 
 
 def register_routes(app):
@@ -54,3 +56,5 @@ def register_routes(app):
     app.register_blueprint(api_subscription_bp)
     app.register_blueprint(api_nicepay_pm_bp)
     app.register_blueprint(api_nicepay_v1_bp)
+    app.register_blueprint(api_account_bp)
+    app.register_blueprint(api_extension_oauth_bp)

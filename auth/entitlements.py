@@ -1,7 +1,7 @@
 from typing import Optional
-from flask import g
+from flask import g, request
 from domain.models import User, Subscription
-from utils.time_utils import utcnow
+from services.extension_oauth import find_user_id_by_bearer_token
 from flask import session
 from datetime import datetime
 
@@ -16,7 +16,28 @@ from datetime import datetime
 # TODO:: 현재 유저를 가져올 때 정확히 가져오게 해야함
 # TODO:: 어드민 계정인데 Guest 로 불러와지는 경우가 있음
 # TODO:: flask 의 전역공간인 g 에 현재 유저 티어를 정확하게 저장 시켜야함
+
+def _get_bearer_token() -> str | None:
+    auth = request.headers.get("Authorization") or ""
+    if not auth:
+        return None
+    if not auth.lower().startswith("bearer "):
+        return None
+    return auth.split(" ", 1)[1].strip() or None
+
+
 def load_current_user():
+    # 1) 확장 토큰(Bearer) 우선
+    raw = _get_bearer_token()
+    if raw:
+        uid = find_user_id_by_bearer_token(raw)
+        if uid:
+            user = User.query.filter_by(user_id=uid).first()
+            g.current_user = user
+            print("[AUTH][load_current_user] bearer uid=", uid, "found=", bool(user))
+            return user
+
+    # 2) 기존 세션 기반(웹)
     sess = session.get("user") or {}
     uid = sess.get("user_id")
 

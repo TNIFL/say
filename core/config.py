@@ -79,19 +79,17 @@ class Config:
     # -------------------------
     # Nicepay
     # -------------------------
-    NICEPAY_API_BASE = os.getenv("NICEPAY_API_BASE", "https://api.nicepay.co.kr").rstrip("/")
-    NICEPAY_CLIENT_ID = os.getenv("NICEPAY_CLIENT_ID", "")
-    NICEPAY_SECRET_KEY = os.getenv("NICEPAY_SECRET_KEY", "")
-
-    # payments toggle 배포 전 후 이걸로 on / off
-    PAYMENTS_ENABLED = _env_bool("PAYMENTS_ENABLED", default=False)
+    NICEPAY_API_BASE = os.getenv("NICEPAY_API_BASE", "https://sandbox-api.nicepay.co.kr").rstrip("/")
+    NICEPAY_CLIENT_ID = os.getenv("NICEPAY_CLIENT_ID", "").strip()
+    NICEPAY_SECRET_KEY = os.getenv("NICEPAY_SECRET_KEY", "").strip()
 
     NICEPAY_PATH_SUBSCRIBE_PAY = "/v1/subscribe/{bid}/payments"
     NICEPAY_PATH_SUBSCRIBE_EXPIRE = "/v1/subscribe/{bid}/expire"
-    # 샌드박스/운영 도메인 스위치
-    # sandbox: https://sandbox-api.nicepay.co.kr
-    # live:    https://api.nicepay.co.kr
-    NICEPAY_API_BASE = os.getenv("NICEPAY_API_BASE", "https://sandbox-api.nicepay.co.kr").strip()
+    NICEPAY_PATH_APPROVE_PAYMENT = "/v1/payments/{tid}"
+    NICEPAY_PATH_SUBSCRIBE_REGIST = "/v1/subscribe/regist"
+
+    # payments toggle 배포 전 후 이걸로 on / off
+    PAYMENTS_ENABLED = _env_bool("PAYMENTS_ENABLED", default=False)
 
 
     # -------------------------

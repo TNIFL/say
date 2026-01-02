@@ -13,8 +13,8 @@ from utils.time_utils import KST
 
 def _nicepay_headers() -> dict:
     cfg = current_app.config
-    client_id = cfg.get("NICEPAY_CLIENT_ID")
-    secret_key = cfg.get("NICEPAY_SECRET_KEY")
+    client_id = (cfg.get("NICEPAY_CLIENT_ID") or "").strip()
+    secret_key = (cfg.get("NICEPAY_SECRET_KEY") or "").strip()
 
     if not client_id or not secret_key:
         raise RuntimeError("NICEPAY_CLIENT_ID / NICEPAY_SECRET_KEY 환경변수가 설정되지 않았습니다.")
@@ -52,7 +52,7 @@ def verify_signature(tid: str, amount: int, edi_date: str, signature: str) -> bo
 
 def nicepay_request(method: str, path: str, json_body: dict):
     cfg = current_app.config
-    base = cfg.get("NICEPAY_API_BASE", "https://api.nicepay.co.kr").rstrip("/")
+    base = (cfg.get("NICEPAY_API_BASE", "https://api.nicepay.co.kr") or "").rstrip("/")
     url = f"{base}{path}"
 
     r = requests.request(method.upper(), url, headers=_nicepay_headers(), json=json_body, timeout=10)
@@ -91,7 +91,7 @@ def nicepay_subscribe_pay(
         "cardQuota": "0",
         "useShopInterest": False,
         "buyerName": buyer_name,
-        "buyerEmail": buyer_email,
+        "buyerEmail": buyer_email or "",
         "ediDate": edi_date,
         "signData": sign_data,
         "returnCharSet": "utf-8",
@@ -115,6 +115,31 @@ def nicepay_expire_bid(bid: str, *, order_id: str) -> dict:
         "returnCharSet": "utf-8",
     }
     return nicepay_request("POST", path_tpl.format(bid=bid), req)
+
+
+# -----------------------------
+# API v1 (JS SDK) - Server Approve / BillingKey Regist
+# -----------------------------
+def nicepay_approve_payment(*, tid: str, amount: int) -> dict:
+    """
+    결제창 인증 후 서버 승인:
+    POST /v1/payments/{tid}
+    """
+    cfg = current_app.config
+    path_tpl = cfg.get("NICEPAY_PATH_APPROVE_PAYMENT") or "/v1/payments/{tid}"
+    req = {"amount": int(amount)}
+    return nicepay_request("POST", path_tpl.format(tid=tid), req)
+
+
+def nicepay_regist_billing_key(*, customer_id: str, tid: str) -> dict:
+    """
+    빌키(BID) 발급:
+    POST /v1/subscribe/regist
+    """
+    cfg = current_app.config
+    path = cfg.get("NICEPAY_PATH_SUBSCRIBE_REGIST") or "/v1/subscribe/regist"
+    req = {"customerId": customer_id, "tid": tid}
+    return nicepay_request("POST", path, req)
 
 
 def new_order_id(prefix: str = "sub") -> str:

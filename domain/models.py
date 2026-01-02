@@ -36,7 +36,10 @@ class User(db.Model):
 
     created_at = db.Column(db.DateTime, default=utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow, nullable=False)
-
+    # 회원 탈퇴
+    deleted_at = db.Column(db.DateTime, nullable=True)
+    # 유예기간(30일)
+    purge_after = db.Column(db.DateTime, nullable=True)
     # 관계
     rewrites = db.relationship(
         "RewriteLog",
@@ -470,3 +473,66 @@ class PasswordResetToken(db.Model):
     created_ua = db.Column(db.Text, nullable=True)
 
     user = db.relationship("User", backref=db.backref("password_reset_tokens", lazy=True))
+
+
+# =========================
+#   Extension OAuth (Auth Code + Access Token)
+# =========================
+class ExtensionAuthCode(db.Model):
+    """
+    확장 OAuth에서 authorize 단계에서 발급되는 1회용 code 저장.
+    - code는 DB에 평문 저장(짧은 TTL + 1회용) 또는 hash 저장 둘 다 가능.
+      여기서는 구현 단순화를 위해 평문 + 짧은 TTL + 사용 처리로 운영.
+    """
+    __tablename__ = "extension_auth_codes"
+
+    id = db.Column(db.BigInteger, primary_key=True)
+
+    code = db.Column(db.String(80), nullable=False, unique=True, index=True)
+    user_id = db.Column(db.String(255), nullable=False, index=True)
+
+    # PKCE 검증용 (S256)
+    code_challenge = db.Column(db.String(128), nullable=False)
+    code_challenge_method = db.Column(db.String(10), nullable=False, default="S256")
+
+    redirect_uri = db.Column(db.Text, nullable=False)
+    state = db.Column(db.String(128), nullable=True)
+
+    created_at = db.Column(db.DateTime, default=utcnow, nullable=False, index=True)
+    expires_at = db.Column(db.DateTime, nullable=False, index=True)
+
+    used_at = db.Column(db.DateTime, nullable=True, index=True)
+
+    __table_args__ = (
+        Index("idx_ext_code_user_created", "user_id", "created_at"),
+        Index("idx_ext_code_expires", "expires_at"),
+    )
+
+
+class ExtensionToken(db.Model):
+    """
+    크롬 확장 프로그램 전용 인증 토큰.
+    - DB에는 평문 토큰을 저장하지 않고 sha256(hex) 해시만 저장한다.
+    - Authorization: Bearer <token> 로 들어온 token을 sha256으로 해시한 뒤 token_hash로 매칭.
+    """
+    __tablename__ = "extension_tokens"
+
+    id = db.Column(db.BigInteger, primary_key=True)
+
+    user_id = db.Column(db.String(255), nullable=False, index=True)
+
+    # sha256 hex(64)
+    token_hash = db.Column(db.String(64), nullable=False, unique=True, index=True)
+
+    created_at = db.Column(db.DateTime, default=utcnow, nullable=False, index=True)
+    last_used_at = db.Column(db.DateTime, nullable=True, index=True)
+    revoked_at = db.Column(db.DateTime, nullable=True, index=True)
+    expires_at = db.Column(db.DateTime, nullable=True, index=True)
+
+    note = db.Column(db.String(200), nullable=True)
+
+    __table_args__ = (
+        Index("idx_extension_tokens_user_id", "user_id"),
+        Index("idx_extension_tokens_revoked", "revoked_at"),
+        Index("idx_extension_tokens_expires_at", "expires_at"),
+    )
