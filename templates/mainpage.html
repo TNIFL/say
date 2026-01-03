@@ -10,6 +10,9 @@
   {% set _client_id = ADSENSE_CLIENT|default('', true) %}
   {% set _show_ads = SHOW_ADS and g.show_ads_here and ADS_PROVIDER == 'adsense' and _client_id %}
 
+  {# 확장 프로그램 링크(심사 통과 후 실제 URL로 교체) #}
+  {% set _ext_url = EXTENSION_URL|default('https://chromewebstore.google.com/', true) %}
+
   {# AdSense 로더 스크립트 #}
   {% if _show_ads %}
     <script async
@@ -25,6 +28,59 @@
       {% from "_ads.html" import display_responsive, in_article %}
       {{ display_responsive("1234567890", _client_id) }}
     {% endif %}
+
+    {# ===== 확장 프로그램 보조 CTA (상단 카드형, 더 화사하게 + 설치 시 숨김) ===== #}
+    <section id="extPromoCard" class="card" style="
+      margin-top:12px;
+      border: 1px solid rgba(59,130,246,.28);
+      background: linear-gradient(135deg, rgba(59,130,246,.18), rgba(14,165,233,.14), rgba(99,102,241,.12));
+      box-shadow: 0 14px 40px rgba(2, 6, 23, .12);
+      display: none;">
+      <div style="display:flex; gap:14px; align-items:center; justify-content:space-between; flex-wrap:wrap;">
+        <div style="display:flex; gap:12px; align-items:flex-start; min-width:260px;">
+          <div aria-hidden="true" style="
+            width:40px; height:40px; border-radius:12px;
+            background: rgba(255,255,255,.65);
+            display:flex; align-items:center; justify-content:center;
+            box-shadow: 0 8px 18px rgba(2, 6, 23, .12);">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.12 5.34 3 7 3h10c1.66 0 3 1.12 3 2.5v7c0 1.38-1.34 2.5-3 2.5H11l-3.6 3.1c-.52.45-1.4.09-1.4-.55V15H7c-1.66 0-3-1.12-3-2.5v-7Z"></path></svg>
+            </span>
+          </div>
+          <div>
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+              <h3 style="margin-bottom:2px;">크롬 확장으로 더 빠르게</h3>
+              <span class="small" style="
+                padding:2px 8px; border-radius:999px;
+                background: rgba(255,255,255,.55);
+                border: 1px solid rgba(59,130,246,.18);
+                color: rgba(15,23,42,.85);">
+                NEW
+              </span>
+              <span class="small" style="opacity:.75;">(심사 진행 중)</span>
+            </div>
+            <p class="small hint" style="margin:0;">
+              드래그·우클릭으로 바로 문장 순화/말투 교정을 실행할 수 있습니다.
+            </p>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:8px; align-items:center;">
+          <a class="btn small"
+             href="{{ _ext_url }}"
+             target="_blank" rel="noopener noreferrer"
+             style="white-space:nowrap;">
+            크롬 웹스토어에서 설치
+          </a>
+          <button type="button" id="extPromoClose"
+                  class="btn ghost small"
+                  aria-label="닫기"
+                  style="white-space:nowrap;">
+            ✕
+          </button>
+        </div>
+      </div>
+    </section>
 
     <form id="polishForm" class="stack" method="post" action="/">
       <div id="bootstrap"
@@ -88,7 +144,7 @@
                 <option value="inquiry">문의</option>
                 <option value="thanks">감사</option>
                 <option value="request">요청</option>
-<option value="guidance">안내</option>
+                <option value="guidance">안내</option>
                 <option value="report/approval">보고/결제</option>
                 <option value="feedback">피드백</option>
               </select>
@@ -199,7 +255,7 @@
             <option value="inquiry">문의</option>
             <option value="thanks">감사</option>
             <option value="request">요청</option>
-            <option value="guidence">안내</option>
+            <option value="guidance">안내</option>
             <option value="report/approval">보고/결제</option>
             <option value="feedback">피드백</option>
           </select>
@@ -287,6 +343,41 @@
         document.getElementById("cookie-accept").addEventListener("click", function(){
           localStorage.setItem(key, "1");
           document.getElementById("cookie-banner").style.display = "none";
+        });
+      } catch(e) {}
+    })();
+
+    (function(){
+      try {
+        // ===== 확장 프로그램 프로모 카드 노출 제어 =====
+        // 1) 확장 프로그램이 설치되어 있으면(=확장이 심어준 플래그가 있으면) 안 띄움
+        // 2) 사용자가 닫으면 14일간 숨김
+        const installedKey = "lexinoa_ext_installed_v1"; // 확장 프로그램이 설치되면 '1'로 세팅(권장)
+        const hideUntilKey = "lexinoa_ext_promo_hide_until_v1"; // 사용자가 닫으면 N일 숨김
+
+        const now = Date.now();
+        const hideUntil = Number(localStorage.getItem(hideUntilKey) || "0");
+        const isInstalled = (localStorage.getItem(installedKey) === "1");
+
+        const card = document.getElementById("extPromoCard");
+        const closeBtn = document.getElementById("extPromoClose");
+
+        if (!card) return;
+
+        // 설치됨이면 숨김
+        if (isInstalled) return;
+
+        // 사용자가 닫아서 숨김 기간이면 숨김
+        //if (now <= hideUntil) return;
+
+        // 그 외에는 노출
+        card.style.display = "block";
+
+        // 닫기: 14일 숨김
+        closeBtn?.addEventListener("click", function(){
+          const days14 = 14 * 24 * 60 * 60 * 1000;
+          localStorage.setItem(hideUntilKey, String(Date.now() + days14));
+          card.style.display = "none";
         });
       } catch(e) {}
     })();
