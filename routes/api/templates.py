@@ -13,8 +13,9 @@ api_user_templates_bp = Blueprint("api_user_templates", __name__)
 @limiter.limit("60/minute")
 @api_user_templates_bp.route("/api/user_templates", methods=["GET", "POST"])
 def api_user_templates():
-    if not origin_allowed():
-        return _json_err("forbidden_origin", status=403)
+    # 제거
+    #if not origin_allowed():
+    #    return _json_err("forbidden_origin", status=403)
 
     user = get_current_user()
 
@@ -69,8 +70,9 @@ def api_user_templates():
 @limiter.limit("60/minute")
 @api_user_templates_bp.route("/api/user_templates/<int:tpl_id>", methods=["DELETE"])
 def api_user_templates_delete(tpl_id):
-    if not origin_allowed():
-        return _json_err("forbidden_origin", status=403)
+    # 제거
+    #if not origin_allowed():
+    #    return _json_err("forbidden_origin", status=403)
 
     user = get_current_user()
     if not user:
