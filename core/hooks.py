@@ -67,6 +67,10 @@ def log_visit():
 # 이 요청이 허용된 출처(Origin) 에서 온 것인지 판별하는 자체 검사기
 # api 를 아무 사이트/아무 클라이언트가 막 호출하지 못하게 하려고, 요청 헤더를 보고 통과 / 차단 을 결정한다
 def origin_allowed():
+    # Bearer 토큰 요청은 origin으로 차단하지 말고 인증 로직으로 넘긴다
+    auth = request.headers.get("Authorization", "")
+    if auth.startswith("Bearer "):
+        return None
     origin = (request.headers.get("Origin") or "").rstrip("/")
     ref = (request.headers.get("Referer") or "").rstrip("/")
     this = (request.host_url or "").rstrip("/")
@@ -82,6 +86,7 @@ def origin_allowed():
     # Chrome extension
     if origin.startswith("chrome-extension://"):
         ok = origin in {f"chrome-extension://{i}" for i in ext_ids}
+        print("[ORIGIN] origin=", origin, "ext_ids=", ext_ids, "type=", type(ext_ids))
         # print("[ORIGIN] chrome ok=", ok)
         return ok
 
