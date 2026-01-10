@@ -205,7 +205,7 @@ def nicepay_subscribe_start():
 
     body = request.get_json(silent=True) or {}
     # 빌키 발급은 실제 결제가 아니라 인증/등록 목적이므로, 최소금액(문서/정책에 따라)만 사용
-    amount = _safe_int(body.get("amount"), 1000)
+    amount = _safe_int(body.get("amount"), 4900)
     goods_name = body.get("goodsName") or "Lexinoa 구독 카드등록"
     order_id = _new_order_id("subreg")
 

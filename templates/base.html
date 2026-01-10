@@ -29,6 +29,7 @@
           {# <a class="btn ghost" href="{{ url_for('summarize.summarize_page') }}">요약·정리</a> #}
           <a class="btn ghost" href="{{ url_for('feedback.feedback') }}">피드백</a>
           <a class="btn ghost" href="{{ url_for('subscribe.subscribe_page') }}">구독</a>
+          <a class="btn ghost" href="{{ url_for('learn.learn_index') }}">가이드</a>
 
           {% if session.get('user') %}
             <a class="btn ghost" href="{{ url_for('history.user_history') }}">기록보기</a>

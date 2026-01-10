@@ -11,6 +11,7 @@ from routes.web.feedback import feedback_bp
 from routes.web.subscribe import subscribe_bp
 from routes.web.auth import auth_bp
 from routes.web.billing import billing_bp
+from routes.web.learn import learn_bp
 
 from routes.api.history import api_history_bp
 from routes.api.usage import api_usage_bp
@@ -42,6 +43,7 @@ def register_routes(app):
     app.register_blueprint(subscribe_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(billing_bp)
+    app.register_blueprint(learn_bp)
 
     app.register_blueprint(api_history_bp)
     app.register_blueprint(api_usage_bp)

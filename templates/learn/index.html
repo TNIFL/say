@@ -1,0 +1,50 @@
+{% extends "learn/_layout.html" %}
+
+{% block learn_main %}
+
+{% if not active_section %}
+  <div class="row cols-2">
+    {% for sec in nav %}
+      <a href="{{ url_for('learn.learn_index', section=sec['section']) }}" style="text-decoration:none; color:inherit;">
+        <div class="card">
+          <h3 style="margin:0 0 6px 0;">{{ sec["section"] }}</h3>
+          <div class="small">{{ sec.get("desc","") }}</div>
+          <div class="small" style="margin-top:10px;">
+            {{ sec["items"]|length }}개의 가이드
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+
+{% else %}
+  {% for sec in nav %}
+    {% if sec["section"] == active_section %}
+      <div class="card">
+        <div class="toolbar">
+          <div>
+            <h3 style="margin:0 0 6px 0;">{{ sec["section"] }}</h3>
+            <div class="small">{{ sec.get("desc","") }}</div>
+          </div>
+          <span class="spacer"></span>
+          <a class="btn secondary" href="{{ url_for('learn.learn_index') }}">섹션 전체</a>
+        </div>
+      </div>
+
+      <div class="row cols-2">
+        {% for it in sec["items"] %}
+          <a href="{{ url_for('learn.learn_page', slug=it['slug']) }}" style="text-decoration:none; color:inherit;">
+            <div class="card">
+              <h3 style="margin:0 0 6px 0;">{{ it["title"] }}</h3>
+              {% if it.get("intro") %}
+                <div class="small">{{ it["intro"] }}</div>
+              {% endif %}
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% endblock %}

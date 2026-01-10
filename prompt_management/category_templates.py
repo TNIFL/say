@@ -162,6 +162,20 @@ FEEDBACK_GUIDE = """
 "잘못됐어요" → "이 부분은 이렇게 바꾸면 더 좋을 것 같습니다"
 """
 
+# 12. 거절/대안 (refusal/alternative)
+REFUSAL_ALTERNATIVE_GUIDE = """
+- 직접적인 거절 표현 피하기
+- 불가 사유는 짧게
+- 가능한 대안 또는 범위 제시
+- 차분하고 실무적인 톤 유지
+
+예시:
+"그건 안 됩니다" → "현재는 진행이 어려울 것 같습니다. 대신 이런 방식은 가능합니다"
+"지금은 못 해요" → "지금은 일정상 어렵습니다. 다만 OO까지는 가능합니다"
+"그건 우리 쪽 일이 아니에요" → "해당 부분은 저희 범위에서는 어렵습니다. OO 쪽으로 확인해보시는 건 어떨까요?"
+"""
+
+
 # 카테고리 맵핑
 CATEGORY_GUIDE_MAP = {
     "general": GENERAL_GUIDE,
@@ -172,7 +186,9 @@ CATEGORY_GUIDE_MAP = {
     "inquiry": INQUIRY_GUIDE,
     "thanks": THANKS_GUIDE,
     "request": REQUEST_GUIDE,
-    "guidance": GUIDANCE_GUIDE,  # 오타 수정 (guidence → guidance)
+    "guidance": GUIDANCE_GUIDE,
     "report/approval": REPORT_APPROVAL_GUIDE,
     "feedback": FEEDBACK_GUIDE,
+    "refusal/alternative": REFUSAL_ALTERNATIVE_GUIDE,
 }
+

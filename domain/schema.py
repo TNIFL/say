@@ -15,6 +15,7 @@ CATEGORY_ALLOW = [
     "guidance",
     "report/approval",
     "feedback",
+    "refusal/alternative",
 ]
 TONE_ALLOW = [
     "soft",
