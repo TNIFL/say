@@ -2,8 +2,11 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>{% block title %}Lexinoa{% endblock %} - AI 문장 교정</title>
-  <meta name="description" content="{% block description %}AI가 이메일, 보고서, 메시지를 상황에 맞는 자연스러운 문장으로 교정합니다.{% endblock %}">
+  <title>{% block title %}Lexinoa{% endblock %} - 문장 교정</title>
+  <meta name="description"
+        content="{% block meta_description %}
+  상황에 맞게 문장을 자연스럽게 다듬어주는 문장 순화 도구. 카테고리와 톤만 선택하면 바로 결과를 얻을 수 있습니다.
+  {% endblock %}">
   <meta name="color-scheme" content="dark light">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/mainpage.css') }}">
