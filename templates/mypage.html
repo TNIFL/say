@@ -86,16 +86,60 @@
     <!-- 계정 정보 -->
     <section class="card">
       <h3>계정</h3>
-      <div class="kv">
-        <div><strong>{{ user.email }}</strong></div>
-        <div class="muted mini">(User ID: {{ user.user_id }})</div>
-        <div class="spacer"></div>
-        <div>
-          {% if tier == 'pro' %}<span class="badge badge-pro">PRO</span>
-          {% else %}<span class="badge badge-free">FREE</span>{% endif %}
+
+      <!-- 상단: 이메일/유저ID/티어 -->
+      <div class="account-top">
+        <div class="account-left">
+          <div class="account-email"><strong>{{ user.email }}</strong></div>
+          <div class="muted mini">(User ID: {{ user.user_id }})</div>
+        </div>
+
+        <div class="account-right">
+          {% if tier == 'pro' %}
+            <span class="badge badge-pro">PRO</span>
+          {% else %}
+            <span class="badge badge-free">FREE</span>
+          {% endif %}
         </div>
       </div>
-      <div class="muted" style="margin-top:6px;">
+
+      <!-- 닉네임 변경 -->
+      <div class="nick-card">
+        <div class="nick-head">
+          <div class="nick-title">닉네임</div>
+          <div class="nick-desc">서비스에서 표시되는 이름입니다. 최대 20자.</div>
+        </div>
+
+        <div class="nick-current">
+          <span class="muted">현재:</span>
+          <strong>{{ user.display_name or user.email.split('@')[0] }}</strong>
+        </div>
+
+        <form class="nick-form" action="{{ url_for('mypage.mypage_update_nickname') }}" method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+          <label class="nick-label" for="display_name">새 닉네임</label>
+
+          <div class="nick-row">
+            <input
+              id="display_name"
+              class="nick-input"
+              type="text"
+              name="display_name"
+              maxlength="20"
+              value="{{ user.display_name or user.email.split('@')[0] }}"
+              placeholder="예: yysasas1002"
+              autocomplete="off"
+            />
+            <button type="submit" class="btn nick-btn">변경</button>
+          </div>
+
+          <div class="nick-hint muted">영문/숫자/._- 만 권장합니다.</div>
+        </form>
+      </div>
+
+      <!-- 이메일 인증 -->
+      <div class="muted" style="margin-top:10px;">
         이메일 인증:
         {% if user.email_verified %}
           <span class="status-green">완료</span>
@@ -113,6 +157,7 @@
       </form>
       {% endif %}
     </section>
+
 
     <br>
 
@@ -522,6 +567,21 @@
             window.location.reload();
           });
         }
+      })();
+
+      (function () {
+        const p = new URLSearchParams(window.location.search);
+        const err = p.get("nick_error");
+        const ok = p.get("nick_ok");
+
+        if (err === "taken") {
+          alert("이미 사용 중인 닉네임입니다.");
+        } else if (err === "too_short") {
+          alert("닉네임은 2자 이상 입력해주세요.");
+        }
+
+        // 성공 알림
+        if (ok === "1") alert("닉네임이 변경되었습니다.");
       })();
       </script>
 

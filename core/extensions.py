@@ -6,6 +6,8 @@ from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect
 from domain.models import db
 
+from authlib.integrations.flask_client import OAuth
+
 
 migrate = Migrate()
 csrf = CSRFProtect()
@@ -14,6 +16,7 @@ csrf = CSRFProtect()
 limiter = Limiter(key_func=get_remote_address)
 
 cors = CORS()
+oauth = OAuth()
 
 #TODO:: extensions.py 에는 db, migrate, csrf, limiter, cors 등 init
 

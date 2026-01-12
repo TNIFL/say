@@ -8,7 +8,7 @@ import routes
 from auth.entitlements import load_current_user
 from core.config import Config
 from core.context import init_context_processors
-from core.extensions import init_extensions
+from core.extensions import init_extensions, oauth
 from core.hooks import register_hooks
 from security.headers import init_security_headers
 
@@ -19,6 +19,7 @@ def create_app():
     app.config.from_object(Config)
 
     init_extensions(app)
+    oauth.init_app(app)
     init_security_headers(app)
     init_context_processors(app)
     socket.setdefaulttimeout(5)

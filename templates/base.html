@@ -38,7 +38,7 @@
             <a class="btn ghost" href="{{ url_for('history.user_history') }}">기록보기</a>
             <a class="btn ghost" href="{{ url_for('mypage_overview') if false else '/mypage' }}">마이페이지</a>
             <span class="small" style="max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; opacity:.8;" title="{{ session.get('user').user_id }}">
-              {{ session.get('user').user_id }}
+              {{ session.get('user').display_name or session.get('user').user_id }}
             </span>
             <a class="btn ghost" href="{{ url_for('auth.logout') }}">로그아웃</a>
           {% else %}

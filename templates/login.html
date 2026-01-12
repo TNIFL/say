@@ -121,6 +121,87 @@
       color:#d1fae5; padding:10px 12px; border-radius:12px; font-size:13px;
     }
     body.light .success{color:#065f46}
+
+    /* 가운데 정렬 래퍼 */
+    .google-btn-wrap{
+      display:flex;
+      justify-content:center;
+      margin: 16px 0;
+    }
+
+    /* 버튼 기본 */
+    .google-btn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+
+      width:100%;
+      max-width:360px;
+      height:44px;
+
+      padding:0 14px;
+      border:1px solid rgba(0,0,0,.18);
+      border-radius:10px;
+      background:#fff;
+      text-decoration:none;
+
+      box-shadow:0 1px 2px rgba(0,0,0,.06);
+      transition:
+        box-shadow .15s ease,
+        border-color .15s ease,
+        transform .08s ease;
+    }
+
+    /* 👉 호버: 색은 거의 그대로, 윤곽만 살짝 강조 */
+    .google-btn:hover{
+      border-color: rgba(0,0,0,.28);     /* 테두리만 살짝 진해짐 */
+      box-shadow: 0 2px 6px rgba(0,0,0,.10); /* 그림자만 조금 증가 */
+    }
+
+    /* 클릭 시 아주 미세한 눌림 */
+    .google-btn:active{
+      transform: translateY(1px);
+      box-shadow: 0 1px 2px rgba(0,0,0,.06);
+    }
+
+    /* 텍스트 */
+    .google-text{
+      color:rgba(0,0,0,.88);
+      font-size:14px;
+      font-weight:600;
+      letter-spacing:.1px;
+      line-height:1;
+    }
+
+    .google-btn:focus-visible{
+      outline: 2px solid rgba(66,133,244,.35); /* Google Blue 톤 */
+      outline-offset: 2px;
+    }
+    /* Google "G" 아이콘 (반드시 필요) */
+    .google-icon{
+      width:18px;
+      height:18px;
+      flex:0 0 18px;
+
+      background-repeat:no-repeat;
+      background-position:center;
+      background-size:18px 18px;
+
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%23EA4335' d='M24 9.5c3.54 0 6.12 1.53 7.52 2.8l5.18-5.18C33.62 4.2 29.27 2 24 2 14.73 2 6.98 7.36 3.69 14.98l6.04 4.69C11.33 13.2 17.15 9.5 24 9.5z'/%3E%3Cpath fill='%234285F4' d='M46.1 24.5c0-1.57-.14-2.73-.44-3.93H24v7.43h12.64c-.25 2.01-1.6 5.04-4.6 7.07l-.04.3 6.6 5.1.46.05c4.24-3.91 6.68-9.67 6.68-16.02z'/%3E%3Cpath fill='%23FBBC05' d='M9.73 28.33A14.5 14.5 0 0 1 9 24c0-1.5.26-2.95.72-4.33l-.03-.31-6.14-4.76-.2.1A22 22 0 0 0 2 24c0 3.55.85 6.91 2.36 9.87l5.37-5.54z'/%3E%3Cpath fill='%2334A853' d='M24 46c5.27 0 9.69-1.73 12.92-4.72l-6.16-4.78c-1.65 1.15-3.86 1.95-6.76 1.95-6.85 0-12.67-3.7-14.27-10.17l-.29.02-6.03 5.83-.1.28C6.98 40.64 14.73 46 24 46z'/%3E%3C/svg%3E");
+    }
+
+    body:not(.light) .google-btn{
+      border-color: rgba(255,255,255,.14);
+      box-shadow: 0 1px 2px rgba(0,0,0,.35);
+    }
+    body:not(.light) .google-btn:hover{
+      border-color: rgba(255,255,255,.22);
+      box-shadow: 0 2px 8px rgba(0,0,0,.45);
+    }
+
+
+
   </style>
 {% endblock %}
 
@@ -188,6 +269,15 @@
           <button class="btn" type="submit">로그인</button>
         </div>
       </form>
+    <div class="google-btn-wrap">
+      <a class="google-btn" href="/auth/login/google" aria-label="Sign in with Google">
+        <span class="google-icon" aria-hidden="true"></span>
+        <span class="google-text">Google로 로그인</span>
+      </a>
+    </div>
+
+
+
     </section>
   </div>
 {% endblock %}

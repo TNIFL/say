@@ -23,6 +23,7 @@ class User(db.Model):
     user_job = db.Column(db.String(80), nullable=True)
     user_job_detail = db.Column(db.String(400), nullable=True)
 
+    display_name = db.Column(db.String(50), nullable=True, index=True)
     email = db.Column(db.String(255), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(255), nullable=False)
 
@@ -85,6 +86,29 @@ class User(db.Model):
         Index("idx_users_created_at", "created_at"),
     )
 
+
+# =========================
+#       Core: GOOGLE SSO User
+# =========================
+
+class OAuthIdentity(db.Model):
+    __tablename__ = "oauth_identities"
+
+    id = db.Column(db.BigInteger, primary_key=True)
+
+    provider = db.Column(db.String(32), nullable=False)          # "google"
+    provider_sub = db.Column(db.String(255), nullable=False)     # OIDC sub (고유 ID)
+
+    user_pk = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"),
+                        nullable=False, index=True)
+
+    email = db.Column(db.String(255), nullable=True)
+    created_at = db.Column(db.DateTime, default=utcnow, nullable=False, index=True)
+
+    __table_args__ = (
+        UniqueConstraint("provider", "provider_sub", name="uq_oauth_provider_sub"),
+        Index("idx_oauth_user_pk", "user_pk"),
+    )
 
 # =========================
 #     Product: Rewrite
