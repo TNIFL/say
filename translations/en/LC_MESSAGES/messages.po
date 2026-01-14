@@ -1318,6 +1318,10 @@ msgstr "Update"
 msgid "영문/숫자/._- 만 권장합니다."
 msgstr "Letters, numbers, and . _ - are recommended."
 
+#: templates/mypage.html:143
+msgid "이메일 인증"
+msgstr "Email verification"
+
 #: templates/mypage.html:145
 msgid "완료"
 msgstr "Complete"

@@ -140,7 +140,7 @@
 
       <!-- 이메일 인증 -->
       <div class="muted" style="margin-top:10px;">
-        이메일 인증:
+        {{ _("이메일 인증") }}
         {% if user.email_verified %}
           <span class="status-green">{{ _("완료") }}</span>
         {% else %}
