@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Lexinoa · 결제 체크아웃{% endblock %}
+{% block title %}{{ _("Lexinoa · 결제 체크아웃") }}{% endblock %}
 
 {% block head_extra %}
   <style>
@@ -19,24 +19,24 @@
 {% block content %}
   <div class="wrap">
     <header>
-      <div><strong>Lexinoa Pro 결제</strong></div>
-      <div><a href="/subscribe">← 가격으로 돌아가기</a></div>
+      <div><strong>{{ _("Lexinoa Pro 결제") }}</strong></div>
+      <div><a href="/subscribe">{{ _("← 가격으로 돌아가기") }}</a></div>
     </header>
 
     <div class="card row">
       <div>
-        <h2 style="margin:0 0 6px">Pro 월 구독 결제</h2>
+        <h2 style="margin:0 0 6px">{{ _("Pro 월 구독 결제") }}</h2>
         <p class="muted" style="margin:0">
-          카드를 한 번만 등록하면, 이후 매달 자동으로 결제가 진행됩니다.
+          {{ _("카드를 한 번만 등록하면, 이후 매달 자동으로 결제가 진행됩니다.") }}
         </p>
         <p class="muted" style="margin:0">
-           현재 구독 기능을 준비 중입니다. 조금만 기다려주세요.
+           {{ _("현재 구독 기능을 준비 중입니다. 조금만 기다려주세요.") }}
         </p>
       </div>
 
       <div>
-        <button id="btn-start" class="btn">카드 등록하고 결제 진행</button>
-        <button class="btn ghost" onclick="history.back()">취소</button>
+        <button id="btn-start" class="btn">{{ _("카드 등록하고 결제 진행") }}</button>
+        <button class="btn ghost" onclick="history.back()">{{ _("취소") }}</button>
       </div>
 
       <p id="hint" class="muted" style="margin:0;display:none"></p>

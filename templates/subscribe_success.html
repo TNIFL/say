@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}구독 완료 | Lexinoa{% endblock %}
+{% block title %}{{ _("구독 완료 | Lexinoa") }}{% endblock %}
 
 {% block head_extra %}
 <style>
@@ -24,28 +24,28 @@
     <div class="card row">
       <div class="kv">
         <div class="grid">
-          <span class="pill ok">결제/구독 처리 완료</span>
+          <span class="pill ok">{{ _("결제/구독 처리 완료") }}</span>
         </div>
-        <h2 style="margin:6px 0 0;">구독이 활성화되었습니다</h2>
+        <h2 style="margin:6px 0 0;">{{ _("구독이 활성화되었습니다") }}</h2>
         <p class="muted" style="margin:0;">
-          이제 Pro 기능을 사용할 수 있습니다. 마이페이지에서 구독 상태와 다음 결제일을 확인하세요.
+          {{ _("이제 Pro 기능을 사용할 수 있습니다. 마이페이지에서 구독 상태와 다음 결제일을 확인하세요.") }}
         </p>
       </div>
 
       {% if order_id %}
         <div class="kv">
-          <div class="muted" style="font-size:.9rem;">주문번호</div>
+          <div class="muted" style="font-size:.9rem;">{{ _("주문번호") }}</div>
           <div style="font-weight:800;word-break:break-all;">{{ order_id }}</div>
         </div>
       {% endif %}
 
       <div class="grid" style="margin-top:6px;">
-        <a class="btn" href="/mypage">마이페이지로 이동</a>
-        <a class="btn ghost" href="/">홈으로</a>
+        <a class="btn" href="/mypage">{{ _("마이페이지로 이동") }}</a>
+        <a class="btn ghost" href="/">{{ _("홈으로") }}</a>
       </div>
 
       <p class="muted" style="margin:0;font-size:.9rem;">
-        문제가 있다면 마이페이지의 “내 문의 / 피드백”을 통해 알려주세요.
+        {{ _("문제가 있다면 마이페이지의 “내 문의 / 피드백”을 통해 알려주세요.") }}
       </p>
     </div>
   </div>

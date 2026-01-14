@@ -81,10 +81,18 @@ feedback_schema = {
             "type": "string",
             "enum": ["general", "bug", "ux", "idea", "other"],
         },
-        "message": {"type": "string", "minLength": 1, "maxLength": 2000},
+
+        # 빈 문자열/미전송도 400 없이 라우트로 들어오게 함
+        # 라우트에서 `if not message:`로 사용자 친화 에러 처리
+        "message": {"type": ["string", "null"], "maxLength": 2000},
+
         "page": {"type": ["string", "null"], "maxLength": 255},
     },
-    "required": ["message"],
+
+    # required 제거 (빈 제출 시 Bad Request 방지)
+    "required": [],
+
+    # 기존 의도 유지
     "additionalProperties": True,
 }
 

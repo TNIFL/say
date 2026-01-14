@@ -5,6 +5,8 @@ from flask_limiter.util import get_remote_address
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect
 from domain.models import db
+from flask_babel import Babel
+from core.i18n import select_locale
 
 from authlib.integrations.flask_client import OAuth
 
@@ -17,6 +19,7 @@ limiter = Limiter(key_func=get_remote_address)
 
 cors = CORS()
 oauth = OAuth()
+babel = Babel()
 
 #TODO:: extensions.py 에는 db, migrate, csrf, limiter, cors 등 init
 
@@ -33,6 +36,8 @@ def init_extensions(app):
     # 레이트리밋 초기화
     limiter.init_app(app)
 
+    # i18n (Babel)
+    babel.init_app(app, locale_selector=select_locale)
 
     # 3) CORS: /api/*만 허용
     allowed_origins = (app.config.get("CORS_ORIGINS") or []) + (app.config.get("EXT_ORIGINS") or [])

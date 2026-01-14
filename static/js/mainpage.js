@@ -1,13 +1,21 @@
 /* ============================================================
  *  Lexinoa mainpage.js — SINGLE SUBMIT HANDLER (no duplicates)
- *  기능:
- *    - 카테고리/말투 칩 + hidden input 동기화
- *    - 서버 상태 복원(data-*)
- *    - 결과 렌더(복사 버튼 포함)
- *    - 폼 제출(fetch /api/polish) + 429/empty_input 처리
- *    - 사용량 표시 갱신(/api/usage)
- *    - 템플릿 라이브러리(목록/추가/삭제/즉시적용)
  * ============================================================ */
+
+/* ------------------ i18n helper ------------------ */
+function tr(key, vars, fallback) {
+  if (typeof window !== "undefined" && typeof window.t === "function") {
+    return window.t(key, vars, fallback);
+  }
+  // fallback for safety
+  let s = fallback || key;
+  if (vars && typeof vars === "object") {
+    for (const [k, v] of Object.entries(vars)) {
+      s = s.replaceAll(`%(${k})s`, String(v));
+    }
+  }
+  return s;
+}
 
 /* ------------------ 칩 유틸 ------------------ */
 function createChip(text, value, group, inputName) {
@@ -68,7 +76,6 @@ function clearAll() {
     if (el) el.checked = false;
   });
 
-  // 템플릿 셀렉트도 초기화 (있으면)
   const sel = document.getElementById("templateSelect");
   if (sel) sel.value = "";
 }
@@ -88,21 +95,20 @@ function renderOutputsInto(container, outputs) {
 
     const head = document.createElement("div");
     head.className = "output-card-head small hint";
-    head.textContent = `결과 ${i + 1}`;
+    head.textContent = tr("output.result_n", { n: String(i + 1) }, `Result ${i + 1}`);
 
-    // 복사 버튼 (Pro + 다중결과일 때)
     if (isPro && outputs.length > 1) {
       const copyBtn = document.createElement("button");
       copyBtn.type = "button";
       copyBtn.className = "btn small ghost copy-single-btn";
-      copyBtn.textContent = "복사";
+      copyBtn.textContent = tr("common.copy", null, "Copy");
       copyBtn.addEventListener("click", async () => {
         try {
           await navigator.clipboard.writeText(txt);
-          copyBtn.textContent = "복사됨!";
-          setTimeout(() => (copyBtn.textContent = "복사"), 1000);
+          copyBtn.textContent = tr("common.copied", null, "Copied!");
+          setTimeout(() => (copyBtn.textContent = tr("common.copy", null, "Copy")), 1000);
         } catch {
-          alert("복사 실패");
+          alert(tr("common.copy_failed", null, "Copy failed"));
         }
       });
       head.appendChild(copyBtn);
@@ -110,28 +116,27 @@ function renderOutputsInto(container, outputs) {
 
     const body = document.createElement("div");
     body.className = "output";
-    body.textContent = txt || ""; // XSS-safe
+    body.textContent = txt || "";
 
     card.appendChild(head);
     card.appendChild(body);
     wrap.appendChild(card);
   });
 
-  // 전체 복사 (다중결과)
   if (outputs.length > 1) {
     const allCopyBtn = document.createElement("button");
     allCopyBtn.type = "button";
     allCopyBtn.className = "btn secondary";
-    allCopyBtn.textContent = "전체 복사";
+    allCopyBtn.textContent = tr("common.copy_all", null, "Copy all");
     allCopyBtn.style.marginTop = "8px";
 
     allCopyBtn.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(outputs.join("\n\n"));
-        allCopyBtn.textContent = "복사됨!";
-        setTimeout(() => (allCopyBtn.textContent = "전체 복사"), 1000);
+        allCopyBtn.textContent = tr("common.copied", null, "Copied!");
+        setTimeout(() => (allCopyBtn.textContent = tr("common.copy_all", null, "Copy all")), 1000);
       } catch {
-        alert("복사 실패");
+        alert(tr("common.copy_failed", null, "Copy failed"));
       }
     });
 
@@ -217,14 +222,14 @@ function bindCopyOutputButton() {
         document.execCommand("copy");
         sel.removeAllRanges();
       }
-      btn.textContent = "복사됨!";
+      btn.textContent = tr("common.copied", null, "Copied!");
       btn.disabled = true;
       setTimeout(() => {
         btn.textContent = labelOrig;
         btn.disabled = false;
       }, 1200);
     } catch {
-      btn.textContent = "복사 실패";
+      btn.textContent = tr("common.copy_failed", null, "Copy failed");
       setTimeout(() => (btn.textContent = labelOrig), 1200);
     }
   });
@@ -244,11 +249,16 @@ async function updateUsageInfo() {
     if (!res.ok) throw new Error();
     const data = await res.json();
 
-    const label = data.tier === "guest" ? "비로그인"
-      : data.tier === "free" ? "회원"
-      : "구독";
+    const label =
+      data.tier === "guest" ? tr("tier.guest", null, "Guest") :
+      data.tier === "free"  ? tr("tier.free", null, "Free") :
+                              tr("tier.pro", null, "Pro");
 
-    el.textContent = `총 ${data.limit}회 / ${data.limit - data.used}회 남음 (${label})`;
+    el.textContent = tr(
+      "usage.summary",
+      { limit: String(data.limit), remain: String(data.limit - data.used), label },
+      `Total ${data.limit} / ${data.limit - data.used} remaining (${label})`
+    );
   } catch {
     // 실패 시 기존 표시 유지
   }
@@ -276,10 +286,29 @@ function initTemplates() {
   const btnCancel = document.getElementById("tplCancel");
   const btnSave   = document.getElementById("tplSave");
 
-  // Pro UI 없으면 종료
   if (!sel) return;
 
   async function loadTemplates() {
+    const isPro = document.getElementById("bootstrap")?.dataset.isPro === "true";
+
+    const placeholder = sel.dataset.i18nPlaceholder || "Select a template…";
+    const hint1 = sel.dataset.i18nHint1 || "";
+    const hint2 = sel.dataset.i18nHint2 || "";
+    const hint3 = sel.dataset.i18nHint3 || "";
+
+    // 1) 비-Pro: 힌트만 보여주고 API 호출은 하지 않음
+    if (!isPro) {
+      sel.innerHTML =
+        `<option value="" selected>${placeholder}</option>` +
+        (hint1 ? `<option value="__hint1" disabled>${hint1}</option>` : "") +
+        (hint2 ? `<option value="__hint2" disabled>${hint2}</option>` : "") +
+        (hint3 ? `<option value="__hint3" disabled>${hint3}</option>` : "");
+      return;
+    }
+
+    // 2) Pro: 힌트 없이 placeholder만 먼저 깔고, 템플릿 목록만 append
+    sel.innerHTML = `<option value="" selected>${placeholder}</option>`;
+
     try {
       const res  = await fetch("/api/user_templates", {
         method: "GET",
@@ -288,7 +317,7 @@ function initTemplates() {
       });
       const data = await safeJson(res);
 
-      // 401/403이면 조용히 종료 (원래 동작 유지)
+      // Pro인데도 권한 문제면(예: 세션 만료) placeholder만 유지하고 종료
       if (res.status === 401 || res.status === 403) return;
       if (!res.ok) return;
 
@@ -296,16 +325,17 @@ function initTemplates() {
         : Array.isArray(data) ? data
         : [];
 
-      sel.innerHTML = '<option value=""> 템플릿 선택…</option>';
       for (const t of list) {
         const opt = document.createElement("option");
         opt.value = String(t.id);
         opt.textContent = t.title;
+
         opt.dataset.category  = t.category || "";
         opt.dataset.tone      = t.tone || "";
         opt.dataset.honorific = String(!!t.honorific);
         opt.dataset.opener    = String(!!t.opener);
         opt.dataset.emoji     = String(!!t.emoji);
+
         sel.appendChild(opt);
       }
     } catch (err) {
@@ -313,10 +343,9 @@ function initTemplates() {
     }
   }
 
-  // 외부에서 호출할 수 있게 유지
+
   window.loadTemplates = loadTemplates;
 
-  // 선택 즉시 적용
   sel.addEventListener("change", (e) => {
     const opt = e.target.selectedOptions[0];
     if (!opt) return;
@@ -330,31 +359,26 @@ function initTemplates() {
 
     if (!cSel || !tSel || !cChips || !tChips || !cHidden || !tHidden) return;
 
-    // 초기화
     cChips.innerHTML = ""; tChips.innerHTML = "";
     cHidden.innerHTML = ""; tHidden.innerHTML = "";
 
-    // 카테고리 1개 적용(현재 구조 기준)
     if (opt.dataset.category) {
       const match = Array.from(cSel.options).find(o => o.value === opt.dataset.category);
       const made  = createChip(match?.text || opt.dataset.category, opt.dataset.category, "category", "selected_categories");
       if (made) { cChips.appendChild(made.chip); cHidden.appendChild(made.hid); }
     }
 
-    // 톤 1개 적용
     if (opt.dataset.tone) {
       const match = Array.from(tSel.options).find(o => o.value === opt.dataset.tone);
       const made  = createChip(match?.text || opt.dataset.tone, opt.dataset.tone, "tone", "selected_tones");
       if (made) { tChips.appendChild(made.chip); tHidden.appendChild(made.hid); }
     }
 
-    // 체크박스
     document.getElementById("honorific").checked = opt.dataset.honorific === "true";
     document.getElementById("opener").checked    = opt.dataset.opener    === "true";
     document.getElementById("emoji").checked     = opt.dataset.emoji     === "true";
   });
 
-  // 다이얼로그 열기
   addBtn?.addEventListener("click", () => {
     if (!dlg) return;
     if (typeof dlg.showModal === "function") dlg.showModal();
@@ -369,7 +393,6 @@ function initTemplates() {
   btnClose?.addEventListener("click", closeDlg);
   btnCancel?.addEventListener("click", closeDlg);
 
-  // 저장
   btnSave?.addEventListener("click", async () => {
     const title     = document.getElementById("tplTitle").value.trim();
     const category  = document.getElementById("tplCategory").value || "";
@@ -378,7 +401,7 @@ function initTemplates() {
     const opener    = document.getElementById("tplOpener").checked;
     const emoji     = document.getElementById("tplEmoji").checked;
 
-    if (!title) { alert("제목을 입력하세요."); return; }
+    if (!title) { alert(tr("tpl.title_required", null, "Please enter a title.")); return; }
 
     try {
       const res  = await fetch("/api/user_templates", {
@@ -390,25 +413,25 @@ function initTemplates() {
       });
       const data = await safeJson(res);
 
-      if (res.status === 401) return alert("로그인이 필요합니다.");
-      if (res.status === 403) return alert("Pro 구독이 필요합니다.");
-      if (!res.ok || data.ok === false) return alert(data.message || "저장 중 오류가 발생했습니다.");
+      if (res.status === 401) return alert(tr("tpl.login_required", null, "Login required."));
+      if (res.status === 403) return alert(tr("tpl.pro_required", null, "Pro required."));
+      if (!res.ok || data.ok === false) return alert(data.message || tr("tpl.save_error", null, "Error while saving."));
 
       await loadTemplates();
       closeDlg();
-      alert("템플릿이 저장되었습니다.");
+      alert(tr("tpl.saved", null, "Template saved."));
     } catch (err) {
       console.error("템플릿 저장 오류:", err);
-      alert("네트워크 오류가 발생했습니다.");
+      alert(tr("common.network_error_retry", null, "Network error. Please try again."));
     }
   });
 
-  // 삭제
   delBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
     const tplId = sel?.value;
-    if (!tplId) return alert("삭제할 템플릿을 먼저 선택해주세요.");
-    if (!confirm("정말 이 템플릿을 삭제하시겠습니까?")) return;
+
+    if (!tplId) return alert(tr("tpl.delete_select_first", null, "Select a template to delete."));
+    if (!confirm(tr("tpl.delete_confirm", null, "Are you sure you want to delete this template?"))) return;
 
     try {
       const res  = await fetch(`/api/user_templates/${tplId}`, {
@@ -418,31 +441,28 @@ function initTemplates() {
       });
       const data = await safeJson(res);
 
-      if (res.status === 401 || res.status === 403) return; // 조용히 종료(기존 유지)
-      if (res.status === 404) return alert("이미 삭제된 템플릿입니다.");
-      if (!res.ok || data.ok === false) return alert(data.message || "템플릿 삭제 실패");
+      if (res.status === 401 || res.status === 403) return;
+      if (res.status === 404) return alert(tr("tpl.already_deleted", null, "Template already deleted."));
+      if (!res.ok || data.ok === false) return alert(data.message || tr("tpl.delete_failed", null, "Delete failed."));
 
       await loadTemplates();
       sel.value = "";
-      alert("🗑️ 템플릿을 삭제했습니다.");
+      alert(tr("tpl.deleted", null, "Template deleted."));
     } catch (err) {
       console.error("템플릿 삭제 오류:", err);
-      alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+      alert(tr("common.network_error_retry", null, "Network error. Please try again."));
     }
   });
 
-  // 초기화 버튼
   resetBtn?.addEventListener("click", () => {
     clearAll();
   });
 
-  // 첫 로드
   loadTemplates();
 }
 
 /* ------------------ 메인 초기화 + 단일 submit 핸들러 ------------------ */
 document.addEventListener("DOMContentLoaded", () => {
-  // 칩 바인딩
   const cSel = document.getElementById("categorySelect");
   const tSel = document.getElementById("toneSelect");
   const cChips = document.getElementById("categoryChips");
@@ -470,19 +490,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (clearBtn) clearBtn.addEventListener("click", clearAll);
   }
 
-  // 서버 상태 복원
   restoreFromServer();
-
-  // 복사 버튼
   bindCopyOutputButton();
-
-  // 사용량 최초 로드
   updateUsageInfo();
-
-  // 템플릿
   initTemplates();
 
-  // submit 핸들러(단 하나)
   const form = document.getElementById("polishForm");
   const btn  = document.getElementById("submitBtn");
   if (form && btn) {
@@ -501,9 +513,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const inputText = (input?.value || "").trim();
 
-      // 입력이 없으면: 스피너/disabled 절대 하지 않음
       if (!inputText) {
-        alert("사용자 입력이 없습니다.");
+        alert(tr("input.empty", null, "No input."));
         return;
       }
 
@@ -517,7 +528,6 @@ document.addEventListener("DOMContentLoaded", () => {
         provider: (providerSel?.value || "claude"),
       };
 
-      // 스피너 ON
       btn.classList.add("loading");
       btn.setAttribute("aria-busy", "true");
       btn.disabled = true;
@@ -533,20 +543,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await res.json().catch(() => ({}));
 
         if (res.status === 429) {
-          alert(`무료 사용 한도(${data.limit ?? "?"}회)를 모두 사용했습니다.\n\n로그인 또는 구독으로 한도를 늘려보세요.`);
+          alert(tr("limit.reached", { limit: String(data.limit ?? "?") }, "Limit reached."));
           return;
         }
 
         if (!res.ok) {
           if (data?.error === "empty_input") {
-            alert("사용자 입력이 없습니다.");
+            alert(tr("input.empty", null, "No input."));
             return;
           }
-          alert(data?.message || `요청 처리 중 오류가 발생했습니다. (${res.status})`);
+          alert(data?.message || tr("request.error_status", { status: String(res.status) }, `Error (${res.status})`));
           return;
         }
 
-        // 성공 렌더
         const out = document.getElementById("output_text");
         if (!out) return;
 
@@ -556,7 +565,7 @@ document.addEventListener("DOMContentLoaded", () => {
           out.textContent = data.output_text || "";
         }
       } catch (err) {
-        alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+        alert(tr("common.network_error_retry", null, "Network error. Please try again."));
       } finally {
         await updateUsageInfo();
         btn.classList.remove("loading");

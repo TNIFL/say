@@ -3,12 +3,13 @@
 {% block learn_main %}
 <div class="card">
   <div class="small">
-    <a href="{{ url_for('learn.learn_index') }}" style="color:inherit; text-decoration:none; opacity:.85;">가이드</a>
+    <a href="{{ url_for('learn.learn_index') }}" style="color:inherit; text-decoration:none; opacity:.85;">{{ _("가이드") }}</a>
     <span style="opacity:.55;"> / </span>
-    <a href="{{ url_for('learn.learn_index', section=page['section']) }}" style="color:inherit; text-decoration:none; font-weight:800;">
-      {{ page["section"] }}
+    <a href="{{ url_for('learn.learn_index', section=page['section_key']) }}" style="color:inherit; text-decoration:none; font-weight:800;">
+      {{ page["section_label"] }}
     </a>
   </div>
+
   <h3 style="margin:6px 0 6px 0;">{{ page["title"] }}</h3>
   {% if page.get("intro") %}
     <div class="small">{{ page["intro"] }}</div>
@@ -51,11 +52,11 @@
 <div class="card">
   <div class="toolbar">
     <div>
-      <div style="font-weight:800;">같은 섹션 더 보기</div>
-      <div class="small">프롬프트가 아니라 옵션 선택으로 결과를 조정하세요.</div>
+      <div style="font-weight:800;">{{ _("같은 섹션 더 보기") }}</div>
+      <div class="small">{{ _("프롬프트가 아니라 옵션 선택으로 결과를 조정하세요.") }}</div>
     </div>
     <span class="spacer"></span>
-    <a class="btn secondary" href="{{ url_for('learn.learn_index', section=page['section']) }}">섹션 목록</a>
+    <a class="btn secondary" href="{{ url_for('learn.learn_index', section=page['section_key']) }}">{{ _("섹션 목록") }}</a>
   </div>
 </div>
 {% endblock %}

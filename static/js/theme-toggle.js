@@ -14,3 +14,15 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
   });
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const sel = document.getElementById("lang-select-web");
+  if (!sel) return;
+
+  sel.addEventListener("change", () => {
+    const url = sel.value;
+    if (url) window.location.href = url;
+  });
+});
+

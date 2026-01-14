@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %}이메일 인증 | Lexinoa{% endblock %}
+{% block title %}{{ _("이메일 인증 | Lexinoa") }}{% endblock %}
 
 {% block content %}
 <div class="main" style="max-width:720px; margin:24px auto; padding:16px;">
   <div class="card">
-    <h3>이메일 인증</h3>
+    <h3>{{ _("이메일 인증") }}</h3>
     {% if sent %}
-      <p>인증 메일을 <b>{{ email }}</b> 주소로 보냈습니다. 30분 안에 메일의 링크를 눌러 인증을 완료해 주세요.</p>
-      <p class="small muted">수신함/스팸함을 함께 확인해 주세요.</p>
+      <p>{{ _("인증 메일을") }} <b>{{ email }}</b> {{ _("주소로 보냈습니다. 30분 안에 메일의 링크를 눌러 인증을 완료해 주세요.") }}</p>
+      <p class="small muted">{{ _("수신함/스팸함을 함께 확인해 주세요.") }}</p>
     {% else %}
-      <p>구독을 이용하려면 이메일 인증이 필요합니다. 아래 버튼을 눌러 인증 메일을 받아보세요.</p>
+      <p>{{ _("구독을 이용하려면 이메일 인증이 필요합니다. 아래 버튼을 눌러 인증 메일을 받아보세요.") }}</p>
       <form action="/verify/send" method="post" style="margin-top:10px;">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <input type="hidden" name="next" value="{{ next or '' }}">
-        <button type="submit" class="btn">인증 메일 보내기</button>
+        <button type="submit" class="btn">{{ _("인증 메일 보내기") }}</button>
       </form>
     {% endif %}
     <div style="height:8px"></div>
-    <a class="btn secondary" href="{{ next or '/mypage' }}">돌아가기</a>
+    <a class="btn secondary" href="{{ next or '/mypage' }}">{{ _("돌아가기") }}</a>
   </div>
 </div>
 {% endblock %}

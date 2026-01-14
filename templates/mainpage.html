@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Lexinoa - 문장 다듬기 | 말투 교정{% endblock %}
-{% block description %}이메일, 보고서, 카카오톡 메시지까지 더 자연스럽고 정중한 문장으로 바꿔줍니다. Lexinoa는 상황별 맞춤 어투를 실시간으로 제안하는 커뮤니케이션 보조 서비스입니다.{% endblock %}
+{% block title %}{{ _("Lexinoa - 문장 다듬기 | 말투 교정") }}{% endblock %}
+{% block description %}
+  {{ _("이메일, 보고서, 카카오톡 메시지까지 더 자연스럽고 정중한 문장으로 바꿔줍니다. Lexinoa는 상황별 맞춤 어투를 실시간으로 제안하는 커뮤니케이션 보조 서비스입니다.") }}
+{% endblock %}
 
 {% block head_extra %}
   {# --- 광고 제어값 (app.py에서 내려옴) --- #}
@@ -49,7 +51,7 @@
           </div>
           <div>
             <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-              <h3 style="margin-bottom:2px;">크롬 확장으로 더 빠르게</h3>
+              <h3 style="margin-bottom:2px;">{{ _("크롬 확장으로 더 빠르게") }}</h3>
               <span class="small" style="
                 padding:2px 8px; border-radius:999px;
                 background: rgba(255,255,255,.55);
@@ -59,21 +61,21 @@
               </span>
             </div>
             <p class="small hint" style="margin:0;">
-              드래그·우클릭으로 바로 문장 순화/말투 교정을 실행할 수 있습니다.
+              {{ _("드래그·우클릭으로 바로 문장 순화/말투 교정을 실행할 수 있습니다.") }}
             </p>
           </div>
         </div>
 
         <div style="display:flex; gap:8px; align-items:center;">
           <a class="btn small"
-             href="https://chromewebstore.google.com/detail/lexinoa-%EB%AC%B8%EC%9E%A5-%EC%88%9C%ED%99%94-%EB%8F%84%EC%9A%B0%EB%AF%B8/ggmgbbhaidapcbjkmelimhbpagpiejje?hl=ko"
+             href="{{ _ext_url }}"
              target="_blank" rel="noopener noreferrer"
              style="white-space:nowrap;">
-            크롬 웹스토어에서 설치
+            {{ _("크롬 웹스토어에서 설치") }}
           </a>
           <button type="button" id="extPromoClose"
                   class="btn ghost small"
-                  aria-label="닫기"
+                  aria-label="{{ _("닫기") }}"
                   style="white-space:nowrap;">
             ✕
           </button>
@@ -85,46 +87,55 @@
       <div id="bootstrap"
            data-selected-categories='{{ selected_categories|tojson|safe }}'
            data-selected-tones='{{ selected_tones|tojson|safe }}'
-           data-honorific='{{ 'true' if honorific_checked else 'false' }}'
-           data-opener='{{ 'true' if opener_checked else 'false' }}'
-           data-emoji='{{ 'true' if emoji_checked else 'false' }}'
-           data-is-pro='{{ 'true' if (is_pro|default(False)) else 'false' }}'></div>
+           data-honorific='{{ "true" if honorific_checked else "false" }}'
+           data-opener='{{ "true" if opener_checked else "false" }}'
+           data-emoji='{{ "true" if emoji_checked else "false" }}'
+           data-is-pro='{{ "true" if (is_pro|default(False)) else "false" }}'></div>
 
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="provider" value="claude">
 
       <!-- 입력 -->
       <section class="card">
-        <h3>입력</h3>
-        <p class="small hint">전달할 문장을 아래에 입력하세요.</p>
-        <textarea id="input_text" name="input_text" placeholder="예) 왜 이렇게 늦게 보내세요? 다음부턴 제때 보내세요.">{{ input_text or "" }}</textarea>
+        <h3>{{ _("입력") }}</h3>
+        <p class="small hint">{{ _("전달할 문장을 아래에 입력하세요.") }}</p>
+        <textarea id="input_text" name="input_text" placeholder="{{ _("예) 왜 이렇게 늦게 보내세요? 다음부턴 제때 보내세요.") }}">{{ input_text or "" }}</textarea>
       </section>
-      <input type="hidden" name="provider" value="claude">
 
       <!-- 카테고리 & 말투 -->
       <section class="card">
         <div class="section-header">
-          <h3>카테고리 & 말투 설정 (선택 시 자동 추가)</h3>
+          <h3>{{ _("카테고리 & 말투 설정 (선택 시 자동 추가)") }}</h3>
           <div class="toolbar-right">
             {% if is_pro %}
               <span class="template-badge badge-pro">Pro</span>&nbsp;
-              <select id="templateSelect" class="template-select" aria-label="템플릿 선택">
-                <option value="" selected>템플릿 선택…</option>
+              <select id="templateSelect"
+                      class="template-select"
+                      aria-label="{{ _('템플릿 선택') }}"
+                      data-i18n-placeholder="{{ _('템플릿 선택…') }}"
+                      data-i18n-hint1="{{ _('템플릿을 저장해서') }}"
+                      data-i18n-hint2="{{ _('상황에 맞게 사용할 수 있습니다.') }}"
+                      data-i18n-hint3="{{ _('예) 업무, 정중하게, 존댓말 선택') }}">
+                <option value="" selected>{{ _('템플릿 선택…') }}</option>
               </select>
-              <button type="button" class="btn small secondary" id="btnTemplateAdd">템플릿 추가</button>
-              <button type="button" class="btn ghost small" id="btnTemplateDelete">템플릿 삭제</button>
+              <button type="button" class="btn small secondary" id="btnTemplateAdd">{{ _("템플릿 추가") }}</button>
+              <button type="button" class="btn ghost small" id="btnTemplateDelete">{{ _("템플릿 삭제") }}</button>
               <span class="spacer"></span>
-              <button type="button" class="btn ghost small" id="resetTemplateBtn" style="margin-left:auto;">초기화</button>
+              <button type="button" class="btn ghost small" id="resetTemplateBtn" style="margin-left:auto;">{{ _("초기화") }}</button>
             {% else %}
-              <span class="template-badge badge-locked">🔒 Pro 전용</span>
-              <select id="templateSelect" class="template-select" aria-label="템플릿 선택">
-                <option value="" selected>템플릿 선택...</option>
-                <option>템플릿을 저장해서 </option>
-                <option>상황에 맞게 사용할 수 있습니다.</option>
-                <option>예) 업무, 정중하게, 존댓말 선택</option>
+              <span class="template-badge badge-locked">{{ _("🔒 Pro 전용") }}</span>
+              <select id="templateSelect"
+                      class="template-select"
+                      aria-label="{{ _('템플릿 선택') }}"
+                      data-i18n-placeholder="{{ _('템플릿 선택…') }}"
+                      data-i18n-hint1="{{ _('템플릿을 저장해서') }}"
+                      data-i18n-hint2="{{ _('상황에 맞게 사용할 수 있습니다.') }}"
+                      data-i18n-hint3="{{ _('예) 업무, 정중하게, 존댓말 선택') }}">
+                <option value="" selected>{{ _('템플릿 선택…') }}</option>
               </select>
-              <a class="btn small" href="{{ url_for('subscribe.subscribe_page') }}">구독하기</a>
+              <a class="btn small" href="{{ url_for('subscribe.subscribe_page') }}">{{ _("구독하기") }}</a>
               <span class="spacer"></span>
-              <button type="button" class="btn ghost small" id="resetTemplateBtn" style="margin-left:auto;">초기화</button>
+              <button type="button" class="btn ghost small" id="resetTemplateBtn" style="margin-left:auto;">{{ _("초기화") }}</button>
             {% endif %}
           </div>
         </div>
@@ -132,21 +143,21 @@
         <div class="row cols-2">
           <!-- 카테고리 -->
           <div>
-            <label class="small" for="categorySelect">카테고리 선택</label>
+            <label class="small" for="categorySelect">{{ _("카테고리 선택") }}</label>
             <div class="input-group">
-              <select id="categorySelect" aria-label="카테고리 선택">
-                <option value="" disabled selected>카테고리 선택…</option>
-                <option value="general">일반</option>
-                <option value="work">업무</option>
-                <option value="support">고객응대</option>
-                <option value="apology">사과</option>
-                <option value="inquiry">문의</option>
-                <option value="thanks">감사</option>
-                <option value="request">요청</option>
-                <option value="guidance">안내</option>
-                <option value="report/approval">보고/결제</option>
-                <option value="feedback">피드백</option>
-                <option value="refusal/alternative">거절/대안</option>
+              <select id="categorySelect" aria-label="{{ _("카테고리 선택") }}">
+                <option value="" disabled selected>{{ _("카테고리 선택…") }}</option>
+                <option value="general">{{ _("일반") }}</option>
+                <option value="work">{{ _("업무") }}</option>
+                <option value="support">{{ _("고객응대") }}</option>
+                <option value="apology">{{ _("사과") }}</option>
+                <option value="inquiry">{{ _("문의") }}</option>
+                <option value="thanks">{{ _("감사") }}</option>
+                <option value="request">{{ _("요청") }}</option>
+                <option value="guidance">{{ _("안내") }}</option>
+                <option value="report/approval">{{ _("보고/결제") }}</option>
+                <option value="feedback">{{ _("피드백") }}</option>
+                <option value="refusal/alternative">{{ _("거절/대안") }}</option>
               </select>
             </div>
             <div class="chipbox" id="categoryChips"></div>
@@ -155,20 +166,20 @@
 
           <!-- 말투 -->
           <div>
-            <label class="small" for="toneSelect">말투 선택</label>
+            <label class="small" for="toneSelect">{{ _("말투 선택") }}</label>
             <div class="input-group">
-              <select id="toneSelect" aria-label="말투 선택">
-                <option value="" disabled selected>말투 선택…</option>
-                <option value="soft">부드럽게</option>
-                <option value="polite">정중하게</option>
-                <option value="concise">간결하게</option>
-                <option value="report">보고서체</option>
-                <option value="friendly">친근하게</option>
-                <option value="warmly">따듯하게</option>
-                <option value="calmly">차분하게</option>
-                <option value="formally">격식있게</option>
-                <option value="clearly">명확하게</option>
-                <option value="without_emotion">감정 없이(중립)</option>
+              <select id="toneSelect" aria-label="{{ _("말투 선택") }}">
+                <option value="" disabled selected>{{ _("말투 선택…") }}</option>
+                <option value="soft">{{ _("부드럽게") }}</option>
+                <option value="polite">{{ _("정중하게") }}</option>
+                <option value="concise">{{ _("간결하게") }}</option>
+                <option value="report">{{ _("보고서체") }}</option>
+                <option value="friendly">{{ _("친근하게") }}</option>
+                <option value="warmly">{{ _("따듯하게") }}</option>
+                <option value="calmly">{{ _("차분하게") }}</option>
+                <option value="formally">{{ _("격식있게") }}</option>
+                <option value="clearly">{{ _("명확하게") }}</option>
+                <option value="without_emotion">{{ _("감정 없이(중립)") }}</option>
               </select>
             </div>
             <div class="chipbox" id="toneChips"></div>
@@ -180,40 +191,40 @@
         <div class="checkbox-group">
           <label class="checkbox-item">
             <input type="checkbox" id="honorific" name="honorific_checked" value="on" {% if honorific_checked %}checked{% endif %}>
-            <span>존댓말 유지</span>
+            <span>{{ _("존댓말 유지") }}</span>
           </label>
           <label class="checkbox-item">
             <input type="checkbox" id="opener" name="opener_checked" value="on" {% if opener_checked %}checked{% endif %}>
-            <span>완충문·인사 추가</span>
+            <span>{{ _("완충문·인사 추가") }}</span>
           </label>
           <label class="checkbox-item">
             <input type="checkbox" id="emoji" name="emoji_checked" value="on" {% if emoji_checked %}checked{% endif %}>
-            <span>이모지 허용 🙂</span>
+            <span>{{ _("이모지 허용 🙂") }}</span>
           </label>
         </div>
 
         <div class="toolbar" style="margin-top:8px;">
-          <span class="small">선택한 칩을 클릭하면 제거됩니다.</span>
+          <span class="small">{{ _("선택한 칩을 클릭하면 제거됩니다.") }}</span>
           <span class="spacer"></span>
-          <p class="small hint">단축키: ⌘/Ctrl + Enter</p>
+          <p class="small hint">{{ _("단축키: ⌘/Ctrl + Enter") }}</p>
           <button type="submit" class="btn" id="submitBtn">
             <span class="spinner" aria-hidden="true"></span>
-            <span class="btn-label">번역하기</span>
+            <span class="btn-label">{{ _("번역하기") }}</span>
           </button>
         </div>
 
         {% if not is_pro %}
-        <p class="lock-note muted" style="margin-top:8px;">※ 템플릿 저장·불러오기는 구독(Pro)에서 사용할 수 있습니다.</p>
+          <p class="lock-note muted" style="margin-top:8px;">{{ _("※ 템플릿 저장·불러오기는 구독(Pro)에서 사용할 수 있습니다.") }}</p>
         {% endif %}
       </section>
 
       <!-- 출력 -->
       <section class="card">
-        <h3>출력</h3>
+        <h3>{{ _("출력") }}</h3>
         <div id="usageInfo" style="font-size:0.9rem; opacity:0.75; color:var(--muted); margin-right:4px;"></div>
-        <div id="output_text" class="output">{{ output_text or "서버에서 처리된 결과가 여기에 표시됩니다." }}</div>
+        <div id="output_text" class="output">{{ output_text or _("서버에서 처리된 결과가 여기에 표시됩니다.") }}</div>
         <div class="toolbar" style="margin-top:8px;">
-          <span class="small">※ 원하는 결과가 나오지 않을 수도 있습니다</span>
+          <span class="small">{{ _("※ 원하는 결과가 나오지 않을 수도 있습니다") }}</span>
           <span class="spacer"></span>
         </div>
       </section>
@@ -221,11 +232,13 @@
 
     {# ---------- 광고 2: 본문 중간 인아티클 ---------- #}
     {% if _show_ads %}
+      {% from "_ads.html" import in_article %}
       {{ in_article("0987654321", _client_id) }}
     {% endif %}
 
     {# ---------- 광고 3: 푸터 위 반응형 ---------- #}
     {% if _show_ads %}
+      {% from "_ads.html" import display_responsive %}
       {{ display_responsive("1122334455", _client_id) }}
     {% endif %}
 
@@ -234,90 +247,108 @@
   <dialog id="tplDialog" class="tpl-dialog">
     <form method="dialog" class="tpl-dialog-inner">
       <header class="tpl-dialog-header">
-        <h3>템플릿 저장</h3>
-        <button type="button" id="tplClose" class="btn ghost small" aria-label="닫기">✕</button>
+        <h3>{{ _("템플릿 저장") }}</h3>
+        <button type="button" id="tplClose" class="btn ghost small" aria-label="{{ _("닫기") }}">✕</button>
       </header>
 
       <div class="tpl-dialog-body">
         <div class="field">
-          <label for="tplTitle">템플릿 이름</label>
-          <input type="text" id="tplTitle" placeholder="예) 업무·정중·존댓말" />
+          <label for="tplTitle">{{ _("템플릿 이름") }}</label>
+          <input type="text" id="tplTitle" placeholder="{{ _("예) 업무·정중·존댓말") }}" />
         </div>
 
         <div class="field">
-          <label for="tplCategory">카테고리</label>
+          <label for="tplCategory">{{ _("카테고리") }}</label>
           <select id="tplCategory">
-            <option value="">선택 안 함</option>
-            <option value="general">일반</option>
-            <option value="work">업무</option>
-            <option value="support">고객응대</option>
-            <option value="apology">사과</option>
-            <option value="inquiry">문의</option>
-            <option value="thanks">감사</option>
-            <option value="request">요청</option>
-            <option value="guidance">안내</option>
-            <option value="report/approval">보고/결제</option>
-            <option value="feedback">피드백</option>
+            <option value="">{{ _("선택 안 함") }}</option>
+            <option value="general">{{ _("일반") }}</option>
+            <option value="work">{{ _("업무") }}</option>
+            <option value="support">{{ _("고객응대") }}</option>
+            <option value="apology">{{ _("사과") }}</option>
+            <option value="inquiry">{{ _("문의") }}</option>
+            <option value="thanks">{{ _("감사") }}</option>
+            <option value="request">{{ _("요청") }}</option>
+            <option value="guidance">{{ _("안내") }}</option>
+            <option value="report/approval">{{ _("보고/결제") }}</option>
+            <option value="feedback">{{ _("피드백") }}</option>
           </select>
         </div>
 
         <div class="field">
-          <label for="tplTone">말투</label>
+          <label for="tplTone">{{ _("말투") }}</label>
           <select id="tplTone">
-            <option value="">선택 안 함</option>
-            <option value="soft">부드럽게</option>
-            <option value="polite">정중하게</option>
-            <option value="concise">간결하게</option>
-            <option value="report">보고서체</option>
-            <option value="friendly">친근하게</option>
-            <option value="warmly">따듯하게</option>
-            <option value="calmly">차분하게</option>
-            <option value="formally">격식있게</option>
-            <option value="clearly">명확하게</option>
-            <option value="without_emotion">감정 없이(중립)</option>
+            <option value="">{{ _("선택 안 함") }}</option>
+            <option value="soft">{{ _("부드럽게") }}</option>
+            <option value="polite">{{ _("정중하게") }}</option>
+            <option value="concise">{{ _("간결하게") }}</option>
+            <option value="report">{{ _("보고서체") }}</option>
+            <option value="friendly">{{ _("친근하게") }}</option>게
+            <option value="warmly">{{ _("따듯하게") }}</option>
+            <option value="calmly">{{ _("차분하게") }}</option>
+            <option value="formally">{{ _("격식있게") }}</option>
+            <option value="clearly">{{ _("명확하게") }}</option>
+            <option value="without_emotion">{{ _("감정 없이(중립)") }}</option>
           </select>
         </div>
 
         <div class="field checkbox-group">
           <label>
             <input type="checkbox" id="tplHonorific" />
-            <span>존댓말 유지</span>
+            <span>{{ _("존댓말 유지") }}</span>
           </label>
           <label>
             <input type="checkbox" id="tplOpener" />
-            <span>완충문·인사 추가</span>
+            <span>{{ _("완충문·인사 추가") }}</span>
           </label>
           <label>
             <input type="checkbox" id="tplEmoji" />
-            <span>이모지 허용 🙂</span>
+            <span>{{ _("이모지 허용 🙂") }}</span>
           </label>
         </div>
       </div>
 
       <footer class="tpl-dialog-footer">
-        <button type="button" class="btn ghost small" id="tplCancel">취소</button>
-        <button type="button" class="btn small" id="tplSave">저장</button>
+        <button type="button" class="btn ghost small" id="tplCancel">{{ _("취소") }}</button>
+        <button type="button" class="btn small" id="tplSave">{{ _("저장") }}</button>
       </footer>
     </form>
   </dialog>
   {% endif %}
 
   <div id="cookie-banner" style="position:fixed; left:16px; right:16px; bottom:16px; padding:10px; background:#111; color:#fff; border-radius:10px; display:none; z-index:9999;">
-    이 사이트는 서비스 제공 및 광고를 위해 쿠키를 사용할 수 있습니다.
-    <a href="/privacy" style="color:#8ec5ff;">자세히</a>
-    <button id="cookie-accept" class="btn" style="margin-left:8px; padding:6px 10px; border-radius:8px; background:#3b82f6; color:#fff; border:0;">동의</button>
+    {{ _("이 사이트는 서비스 제공 및 광고를 위해 쿠키를 사용할 수 있습니다.") }}
+    <a href="/privacy" style="color:#8ec5ff;">{{ _("자세히") }}</a>
+    <button id="cookie-accept" class="btn" style="margin-left:8px; padding:6px 10px; border-radius:8px; background:#3b82f6; color:#fff; border:0;">{{ _("동의") }}</button>
   </div>
 {% endblock %}
 
 {% block scripts %}
   <script src="{{ url_for('static', filename='js/mainpage.js') }}" defer></script>
+
+  {# ---- JS i18n bridge (for inline scripts) ---- #}
   <script nonce="{{ csp_nonce }}">
-    // 단축키: Cmd/Ctrl + Enter (입력창에 포커스 있을 때만)
+    window.I18N = Object.assign(window.I18N || {}, {
+      "input.empty": {{ _("사용자 입력이 없습니다.")|tojson }},
+    });
+
+    window.t = window.t || function(key, vars, fallback) {
+      var s = (window.I18N && window.I18N[key]) || fallback || key;
+      if (vars && typeof vars === "object") {
+        for (var k in vars) {
+          if (!Object.prototype.hasOwnProperty.call(vars, k)) continue;
+          s = s.split("%(" + k + ")s").join(String(vars[k]));
+        }
+      }
+      return s;
+    };
+  </script>
+
+  <script nonce="{{ csp_nonce }}">
+    // Shortcut: Cmd/Ctrl + Enter (only when input is focused)
     document.addEventListener("keydown", (e) => {
       const isCmdEnter = (e.metaKey || e.ctrlKey) && e.key === "Enter";
       if (!isCmdEnter) return;
 
-      // 입력창에 포커스 있을 때만
       if (document.activeElement?.id !== "input_text") return;
 
       e.preventDefault();
@@ -325,35 +356,35 @@
       const input = document.getElementById("input_text");
       const text = (input?.value || "").trim();
       if (!text) {
-        alert("사용자 입력이 없습니다.");
+        alert(window.t("input.empty", null, "No input."));
         return;
       }
 
-      // submit 이벤트를 정상적으로 발생시켜 기존 submit 핸들러(fetch)가 실행되게 함
       document.getElementById("polishForm")?.requestSubmit?.();
     });
-
 
     (function(){
       try {
         const key = "lexinoa_cookie_ok_v1";
+        const banner = document.getElementById("cookie-banner");
+        const btn = document.getElementById("cookie-accept");
+
+        if (!banner || !btn) return;
+
         if (!localStorage.getItem(key)) {
-          document.getElementById("cookie-banner").style.display = "block";
+          banner.style.display = "block";
         }
-        document.getElementById("cookie-accept").addEventListener("click", function(){
+        btn.addEventListener("click", function(){
           localStorage.setItem(key, "1");
-          document.getElementById("cookie-banner").style.display = "none";
+          banner.style.display = "none";
         });
       } catch(e) {}
     })();
 
     (function(){
       try {
-        // ===== 확장 프로그램 프로모 카드 노출 제어 =====
-        // 1) 확장 프로그램이 설치되어 있으면(=확장이 심어준 플래그가 있으면) 안 띄움
-        // 2) 사용자가 닫으면 14일간 숨김
-        const installedKey = "lexinoa_ext_installed_v1"; // 확장 프로그램이 설치되면 '1'로 세팅(권장)
-        const hideUntilKey = "lexinoa_ext_promo_hide_until_v1"; // 사용자가 닫으면 N일 숨김
+        const installedKey = "lexinoa_ext_installed_v1";
+        const hideUntilKey = "lexinoa_ext_promo_hide_until_v1";
 
         const now = Date.now();
         const hideUntil = Number(localStorage.getItem(hideUntilKey) || "0");
@@ -364,16 +395,13 @@
 
         if (!card) return;
 
-        // 설치됨이면 숨김
         if (isInstalled) return;
 
-        // 사용자가 닫아서 숨김 기간이면 숨김
-        //if (now <= hideUntil) return;
+        // If you want to respect hide-until, uncomment:
+        // if (now <= hideUntil) return;
 
-        // 그 외에는 노출
         card.style.display = "block";
 
-        // 닫기: 14일 숨김
         closeBtn?.addEventListener("click", function(){
           const days14 = 14 * 24 * 60 * 60 * 1000;
           localStorage.setItem(hideUntilKey, String(Date.now() + days14));

@@ -1,0 +1,55 @@
+#: templates/base.html:5
+msgid "문장 교정"
+msgstr "Sentence Refinement"
+
+#: templates/base.html:9
+msgid "상황에 맞게 문장을 자연스럽게 다듬어주는 문장 순화 도구. 카테고리와 톤만 선택하면 바로 결과를 얻을 수 있습니다."
+msgstr "A sentence refinement tool that rewrites your text naturally for the situation. Just choose a category and tone to get instant results."
+
+#: templates/base.html:46
+msgid "어드민 분석"
+msgstr "Admin Analytics"
+
+#: templates/base.html:49
+msgid "다크/라이트"
+msgstr "Dark / Light"
+
+#: templates/base.html:51
+msgid "피드백"
+msgstr "Feedback"
+
+#: templates/base.html:52
+msgid "구독"
+msgstr "Subscription"
+
+#: templates/base.html:53
+msgid "가이드"
+msgstr "Guide"
+
+#: templates/base.html:56
+msgid "기록보기"
+msgstr "History"
+
+#: templates/base.html:57
+msgid "마이페이지"
+msgstr "My Page"
+
+#: templates/base.html:62
+msgid "로그아웃"
+msgstr "Log out"
+
+#: templates/base.html:64
+msgid "로그인"
+msgstr "Log in"
+
+#: templates/base.html:75
+msgid "이용약관"
+msgstr "Terms of Service"
+
+#: templates/base.html:77
+msgid "개인정보 처리방침"
+msgstr "Privacy Policy"
+
+#: templates/base.html:79
+msgid "면책 고지"
+msgstr "Disclaimer"

@@ -3,6 +3,7 @@ from flask import Blueprint, request, render_template, session, g
 from domain.models import Feedback, db
 from domain.schema import feedback_schema
 from security.security import require_safe_input
+from flask_babel import gettext as _
 
 feedback_bp = Blueprint("feedback", __name__)
 
@@ -26,7 +27,7 @@ def feedback():
         page = (data.get("page") or default_page).strip()
 
         if not message:
-            error = "피드백 내용을 입력해 주세요."
+            error = _("피드백 내용을 입력해 주세요.")
         else:
             try:
                 fb = Feedback(
@@ -38,7 +39,8 @@ def feedback():
                 )
                 db.session.add(fb)
                 db.session.commit()
-                success = "소중한 의견 감사합니다! 반영에 노력하겠습니다."
+                success = _("소중한 의견 감사합니다! 반영에 노력하겠습니다.")
+                print("[feedback][success]")
                 return render_template(
                     "feedback.html",
                     success=success,
@@ -50,7 +52,8 @@ def feedback():
                 )
             except Exception as e:
                 db.session.rollback()
-                error = f"저장 중 오류가 발생했습니다: {e}"
+                error = _("저장 중 오류가 발생했습니다.")
+                print("[feedback][error] : " + str(e))
 
     return render_template(
         "feedback.html",

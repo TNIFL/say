@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Lexinoa · 피드백{% endblock %}
+{% block title %}{{ _("Lexinoa · 피드백") }}{% endblock %}
 
 {% block head_extra %}
   <style>
@@ -98,8 +98,8 @@
 {% block content %}
     <!-- Feedback Card -->
     <section class="card" style="max-width:680px; margin:24px auto;">
-      <h3>건의사항 / 피드백</h3>
-      <p class="small">서비스 개선을 위해 자유롭게 의견을 남겨주세요.</p>
+      <h3>{{ _("건의사항 / 피드백") }}</h3>
+      <p class="small">{{ _("서비스 개선을 위해 자유롭게 의견을 남겨주세요.") }}</p>
 
       {% if error %}
         <div class="alert" role="alert">{{ error }}</div>
@@ -111,25 +111,25 @@
       <form method="post" action="/feedback" class="stack" style="display:grid; gap:12px;">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <div>
-          <label class="small" for="category">카테고리</label>
+          <label class="small" for="category">{{ _("카테고리") }}</label>
           <select id="category" name="category">
-            <option value="general" {% if category=='general' %}selected{% endif %}>일반</option>
-            <option value="bug" {% if category=='bug' %}selected{% endif %}>버그 신고</option>
-            <option value="ux" {% if category=='ux' %}selected{% endif %}>UX 제안</option>
-            <option value="idea" {% if category=='idea' %}selected{% endif %}>기능 아이디어</option>
-            <option value="other" {% if category=='other' %}selected{% endif %}>기타</option>
+            <option value="general" {% if category=='general' %}selected{% endif %}>{{ _("일반") }}</option>
+            <option value="bug" {% if category=='bug' %}selected{% endif %}>{{ _("버그 신고") }}</option>
+            <option value="ux" {% if category=='ux' %}selected{% endif %}>{{ _("UX 제안") }}</option>
+            <option value="idea" {% if category=='idea' %}selected{% endif %}>{{ _("기능 아이디어") }}</option>
+            <option value="other" {% if category=='other' %}selected{% endif %}>{{ _("기타") }}</option>
           </select>
         </div>
 
         <div class="two-col">
           <div class="field">
-            <label class="small" for="user_id">아이디(선택)</label>
+            <label class="small" for="user_id">{{ _("아이디(선택)") }}</label>
             <input type="text" id="user_id" name="user_id"
-                   placeholder="로그인 아이디" value="{{ user_id or '' }}" />
+                   placeholder="{{ _("로그인 아이디") }}" value="{{ user_id or '' }}" />
           </div>
 
           <div class="field">
-            <label class="small" for="email">이메일(선택, 답변용)</label>
+            <label class="small" for="email">{{ _("이메일(선택, 답변용)") }}</label>
             <input type="email" id="email" name="email"
                    placeholder="you@example.com" value="{{ email or '' }}" />
           </div>
@@ -137,16 +137,16 @@
 
 
         <div>
-          <label class="small" for="message">내용</label>
-          <textarea id="message" name="message" placeholder="어떤 점이 불편했나요? 또는 어떤 기능이 있으면 좋겠나요?">{{ message or '' }}</textarea>
+          <label class="small" for="message">{{ _("내용") }}</label>
+          <textarea id="message" name="message" placeholder="{{ _("어떤 점이 불편했나요? 또는 어떤 기능이 있으면 좋겠나요?") }}">{{ message or '' }}</textarea>
         </div>
 
         <input type="hidden" name="page" value="{{ page or '/' }}"/>
 
         <div class="toolbar" style="margin-top:8px;">
           <span class="spacer"></span>
-          <a class="btn ghost" href="/">취소</a>
-          <button class="btn" type="submit">제출</button>
+          <a class="btn ghost" href="/">{{ _("취소") }}</a>
+          <button class="btn" type="submit">{{ _("제출") }}</button>
         </div>
       </form>
     </section>

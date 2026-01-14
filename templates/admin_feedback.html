@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}어드민 · 피드백{% endblock %}
+{% block title %}{{ _("어드민 · 피드백") }}{% endblock %}
 
 {% block head_extra %}
   <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -32,12 +32,12 @@
 {% block content %}
   <div class="wrap">
     <div class="row" style="justify-content:space-between;">
-      <h2 style="margin:0;">피드백 관리</h2>
+      <h2 style="margin:0;">{{ _("피드백 관리") }}</h2>
       <br>
       <div class="row">
-        <a class="btn" href="/admin/analytics">방문자 대시보드</a>
-        <a class="btn" href="/admin/usage">사용량 대시보드</a>
-        <a class="btn" href="/mypage">마이페이지</a>
+        <a class="btn" href="/admin/analytics">{{ _("방문자 대시보드") }}</a>
+        <a class="btn" href="/admin/usage">{{ _("사용량 대시보드") }}</a>
+        <a class="btn" href="/mypage">{{ _("마이페이지") }}</a>
       </div>
     </div>
 
@@ -45,7 +45,7 @@
     <section class="card">
       <div class="row">
         <select id="f_category">
-          <option value="">전체 카테고리</option>
+          <option value="">{{ _("전체 카테고리") }}</option>
           <option value="general">general</option>
           <option value="bug">bug</option>
           <option value="ux">ux</option>
@@ -54,14 +54,14 @@
         </select>
 
         <select id="f_resolved">
-          <option value="">전체 상태</option>
-          <option value="false">미해결 </option>
-          <option value="true">해결</option>
+          <option value="">{{ _("전체 상태") }}</option>
+          <option value="false">{{ _("미해결") }} </option>
+          <option value="true">{{ _("해결") }}</option>
         </select>
 
-        <input type="text" id="f_q" placeholder="이메일/유저/내용 검색" />
-        <button class="btn" id="btn_apply">적용</button>
-        <button class="btn" id="btn_reset">초기화</button>
+        <input type="text" id="f_q" placeholder="{{ _("이메일/유저/내용 검색") }}" />
+        <button class="btn" id="btn_apply">{{ _("적용") }}</button>
+        <button class="btn" id="btn_reset">{{ _("초기화") }}</button>
 
         <span class="muted" id="count_label" style="margin-left:auto;"></span>
       </div>
@@ -69,11 +69,11 @@
 
     <!-- 목록 -->
     <section class="card">
-      <div id="list_box"><div class="empty">불러오는 중…</div></div>
+      <div id="list_box"><div class="empty">{{ _("불러오는 중…") }}</div></div>
       <div class="pag" style="margin-top:10px;">
-        <button class="btn" id="prev_btn">이전</button>
+        <button class="btn" id="prev_btn">{{ _("이전") }}</button>
         <span class="muted" id="page_label"></span>
-        <button class="btn" id="next_btn">다음</button>
+        <button class="btn" id="next_btn">{{ _("다음") }}</button>
       </div>
     </section>
   </div>

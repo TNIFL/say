@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Lexinoa · 비밀번호 재설정 요청{% endblock %}
+{% block title %}{{ _("Lexinoa · 비밀번호 재설정 요청") }}{% endblock %}
 
 {% block head_extra %}
   <style>
@@ -112,7 +112,7 @@
       <span class="brand-title">Lexinoa</span>
     </a>
     <div class="header-actions">
-      <button id="themeToggle" class="theme-toggle">🌙 다크/라이트</button>
+      <button id="themeToggle" class="theme-toggle">{{ _("🌙 다크/라이트") }}</button>
     </div>
   </div>
 </header>
@@ -122,8 +122,8 @@
 {% block content %}
   <!-- Forgot Card -->
   <section class="card" style="max-width:520px; margin:24px auto;">
-    <h3>비밀번호 재설정</h3>
-    <p class="small hint">가입하신 이메일 주소로 재설정 링크를 보내드릴게요.</p>
+    <h3>{{ _("비밀번호 재설정") }}</h3>
+    <p class="small hint">{{ _("가입하신 이메일 주소로 재설정 링크를 보내드릴게요.") }}</p>
 
     {% if error %}
       <div class="alert" role="alert">{{ error }}</div>
@@ -136,14 +136,14 @@
     <form class="form-grid" method="post" action="/forgot" novalidate>
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="field">
-        <label for="email">이메일</label>
+        <label for="email">{{ _("이메일") }}</label>
         <input type="email" id="email" name="email" value="{{ email or '' }}" placeholder="you@example.com" required>
       </div>
       <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
       <div class="toolbar" style="margin-top:8px;">
-        <a class="link small" href="/login">로그인으로 돌아가기</a>
+        <a class="link small" href="/login">{{ _("로그인으로 돌아가기") }}</a>
         <span class="spacer"></span>
-        <button class="btn" type="submit">이메일로 링크 받기</button>
+        <button class="btn" type="submit">{{ _("이메일로 링크 받기") }}</button>
       </div>
     </form>
     {% endif %}

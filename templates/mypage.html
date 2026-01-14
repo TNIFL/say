@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}마이페이지 | Lexinoa{% endblock %}
+{% block title %}{{ _("마이페이지 | Lexinoa") }}{% endblock %}
 
 {% block head_extra %}
   <style>
@@ -81,11 +81,11 @@
 
 {% block content %}
   <div class="container">
-    <h1 style="margin: 8px 0 12px;">마이페이지</h1>
+    <h1 style="margin: 8px 0 12px;">{{ _("마이페이지") }}</h1>
 
     <!-- 계정 정보 -->
     <section class="card">
-      <h3>계정</h3>
+      <h3>{{ _("계정") }}</h3>
 
       <!-- 상단: 이메일/유저ID/티어 -->
       <div class="account-top">
@@ -106,19 +106,19 @@
       <!-- 닉네임 변경 -->
       <div class="nick-card">
         <div class="nick-head">
-          <div class="nick-title">닉네임</div>
-          <div class="nick-desc">서비스에서 표시되는 이름입니다. 최대 20자.</div>
+          <div class="nick-title">{{ _("닉네임") }}</div>
+          <div class="nick-desc">{{ _("서비스에서 표시되는 이름입니다. 최대 20자.") }}</div>
         </div>
 
         <div class="nick-current">
-          <span class="muted">현재:</span>
+          <span class="muted">{{ _("현재:") }}</span>
           <strong>{{ user.display_name or user.email.split('@')[0] }}</strong>
         </div>
 
         <form class="nick-form" action="{{ url_for('mypage.mypage_update_nickname') }}" method="post">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-          <label class="nick-label" for="display_name">새 닉네임</label>
+          <label class="nick-label" for="display_name">{{ _("새 닉네임") }}</label>
 
           <div class="nick-row">
             <input
@@ -128,13 +128,13 @@
               name="display_name"
               maxlength="20"
               value="{{ user.display_name or user.email.split('@')[0] }}"
-              placeholder="예: yysasas1002"
+              placeholder="{{ _("예: yysasas1002") }}"
               autocomplete="off"
             />
-            <button type="submit" class="btn nick-btn">변경</button>
+            <button type="submit" class="btn nick-btn">{{ _("변경") }}</button>
           </div>
 
-          <div class="nick-hint muted">영문/숫자/._- 만 권장합니다.</div>
+          <div class="nick-hint muted">{{ _("영문/숫자/._- 만 권장합니다.") }}</div>
         </form>
       </div>
 
@@ -142,9 +142,9 @@
       <div class="muted" style="margin-top:10px;">
         이메일 인증:
         {% if user.email_verified %}
-          <span class="status-green">완료</span>
+          <span class="status-green">{{ _("완료") }}</span>
         {% else %}
-          <span class="status-red">미완료</span>
+          <span class="status-red">{{ _("미완료") }}</span>
         {% endif %}
       </div>
 
@@ -152,8 +152,8 @@
       <form action="/verify/send" method="post" style="margin-top:10px;">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <input type="hidden" name="next" value="/mypage">
-        <button type="submit" class="btn small">인증 메일 보내기</button>
-        <span class="small muted">구독 이용 전 인증이 필요합니다.</span>
+        <button type="submit" class="btn small">{{ _("인증 메일 보내기") }}</button>
+        <span class="small muted">{{ _("구독 이용 전 인증이 필요합니다.") }}</span>
       </form>
       {% endif %}
     </section>
@@ -163,9 +163,9 @@
 
     <!-- 사용량 (공통: 심플 진행바만) -->
     <section class="card">
-      <h3>이번 달 사용량</h3>
+      <h3>{{ _("이번 달 사용량") }}</h3>
       <div class="kv">
-        <div>사용: <strong>{{ used }}</strong> / {{ limit }} 회</div>
+        <div>{{ _("사용:") }} <strong>{{ used }}</strong> / {{ limit }} 회</div>
         <div class="spacer"></div>
         <div class="muted mini">남은: {{ remaining }} 회 · 등급: {{ tier|upper }}</div>
       </div>
@@ -179,10 +179,10 @@
 
     <!-- 직업 / 직업 설명 -->
     <section class="card" id="jobCard">
-      <h3>직업 / 직업 설명</h3>
-      <p class="small">직업에 따라 자연스러운 말투와 표현 방식이 다를 수 있습니다.</p>
-      <p class="small">입력하신 직업 정보는 문장을 더 자연스럽게 순화하는 데 활용됩니다.</p>
-      <p class="small">(선택사항)</p>
+      <h3>{{ _("직업 / 직업 설명") }}</h3>
+      <p class="small">{{ _("직업에 따라 자연스러운 말투와 표현 방식이 다를 수 있습니다.") }}</p>
+      <p class="small">{{ _("입력하신 직업 정보는 문장을 더 자연스럽게 순화하는 데 활용됩니다.") }}</p>
+      <p class="small">{{ _("(선택사항)") }}</p>
 
       {% set _job = (user.user_job or '') %}
       {% set _job_detail = (user.user_job_detail or '') %}
@@ -190,19 +190,19 @@
 
       {% if has_job %}
         <div class="hint" style="margin-top:10px;">
-          <div class="mini"><strong>직업</strong>: {{ _job }}</div>
+          <div class="mini"><strong>{{ _("직업") }}</strong>: {{ _job }}</div>
           {% if (_job_detail|trim) != '' %}
-            <div class="mini" style="margin-top:6px;"><strong>직업 설명</strong>: {{ _job_detail }}</div>
+            <div class="mini" style="margin-top:6px;"><strong>{{ _("직업 설명") }}</strong>: {{ _job_detail }}</div>
           {% endif %}
         </div>
 
         <div class="toolbar" style="margin-top:10px;">
-          <button type="button" class="btn ghost small" id="jobToggleBtn">수정</button>
+          <button type="button" class="btn ghost small" id="jobToggleBtn">{{ _("수정") }}</button>
           <span class="spacer"></span>
 
           <form action="{{ url_for('mypage.mypage_delete_job') }}" method="post" style="margin:0;">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button type="submit" class="btn ghost small" onclick="return confirm('직업 정보를 삭제할까요?')">삭제</button>
+            <button type="submit" class="btn ghost small" onclick="return confirm('직업 정보를 삭제할까요?')">{{ _("삭제") }}</button>
           </form>
         </div>
       {% endif %}
@@ -214,25 +214,25 @@
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
           <div style="display:grid; gap:6px;">
-            <label class="small" for="user-job">직업</label>
+            <label class="small" for="user-job">{{ _("직업") }}</label>
             <input
               type="text"
               id="user-job"
               name="user-job"
-              placeholder="예: 개발자, 디자이너, 대학생, 마케터"
+              placeholder="{{ _("예: 개발자, 디자이너, 대학생, 마케터") }}"
               maxlength="50"
               value="{% if not has_job %}{{ _job }}{% endif %}"
               style="width:100%;"
             >
-            <div class="small muted">최대 50자</div>
+            <div class="small muted">{{ _("최대 50자") }}</div>
           </div>
 
           <div style="display:grid; gap:6px;">
-            <label class="small" for="user-job-detail">직업 설명</label>
+            <label class="small" for="user-job-detail">{{ _("직업 설명") }}</label>
             <textarea
               id="user-job-detail"
               name="user-job-detail"
-              placeholder="본인 직업에 대해 자유롭게 설명해주세요. (100자 이내)"
+              placeholder="{{ _("본인 직업에 대해 자유롭게 설명해주세요. (100자 이내)") }}"
               maxlength="100"
               rows="2"
               style="width:100%; resize:none; padding:12px; border-radius:12px; border:1px solid var(--border); background:transparent; color:var(--text);"
@@ -242,11 +242,11 @@
 
           <div class="toolbar" style="margin-top:4px;">
             {% if has_job %}
-              <button type="button" class="btn ghost small" id="jobCancelBtn">닫기</button>
+              <button type="button" class="btn ghost small" id="jobCancelBtn">{{ _("닫기") }}</button>
             {% endif %}
             <span class="spacer"></span>
             <button type="submit" class="btn small" id="jobSaveBtn">
-              <span class="btn-label">저장</span>
+              <span class="btn-label">{{ _("저장") }}</span>
             </button>
           </div>
         </form>
@@ -306,15 +306,15 @@
 
     <!-- 내 문의 / 피드백 -->
     <section class="card">
-      <h3>내 문의 / 피드백</h3>
+      <h3>{{ _("내 문의 / 피드백") }}</h3>
       {% if my_feedbacks %}
         <table class="table">
           <thead>
             <tr>
-              <th style="width:110px">작성일</th>
-              <th>내용</th>
-              <th style="width:110px">상태</th>
-              <th>관리자 답변</th>
+              <th style="width:110px">{{ _("작성일") }}</th>
+              <th>{{ _("내용") }}</th>
+              <th style="width:110px">{{ _("상태") }}</th>
+              <th>{{ _("관리자 답변") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -324,9 +324,9 @@
               <td>{{ f.message }}</td>
               <td>
                 {% if f.admin_reply %}
-                  <span class="badge" style="color:#22c55e;border-color:#22c55e;">답변완료</span>
+                  <span class="badge" style="color:#22c55e;border-color:#22c55e;">{{ _("답변완료") }}</span>
                 {% else %}
-                  <span class="badge" style="color:#ef4444;border-color:#ef4444;">대기</span>
+                  <span class="badge" style="color:#ef4444;border-color:#ef4444;">{{ _("대기") }}</span>
                 {% endif %}
               </td>
               <td>
@@ -336,7 +336,7 @@
                     <div class="small muted" style="margin-top:4px;">{{ f.replied_at.astimezone().strftime('%Y-%m-%d %H:%M') }}</div>
                   {% endif %}
                 {% else %}
-                  <span class="muted small">아직 답변이 등록되지 않았습니다.</span>
+                  <span class="muted small">{{ _("아직 답변이 등록되지 않았습니다.") }}</span>
                 {% endif %}
               </td>
             </tr>
@@ -344,7 +344,7 @@
           </tbody>
         </table>
       {% else %}
-        <div class="muted">등록한 피드백이 없습니다.</div>
+        <div class="muted">{{ _("등록한 피드백이 없습니다.") }}</div>
       {% endif %}
     </section>
 
@@ -352,7 +352,7 @@
 
     <!-- 최근 방문 (5개) -->
     <section class="card">
-      <h3>최근 방문</h3>
+      <h3>{{ _("최근 방문") }}</h3>
       {% if visits %}
         <ul class="small" style="margin:0; padding-left:16px;">
           {% for v in visits %}
@@ -363,7 +363,7 @@
           {% endfor %}
         </ul>
       {% else %}
-        <div class="muted">기록이 없습니다.</div>
+        <div class="muted">{{ _("기록이 없습니다.") }}</div>
       {% endif %}
     </section>
 
@@ -371,7 +371,7 @@
 
     <!-- 구독 / 결제 -->
     <section class="card">
-      <h3>구독 / 결제</h3>
+      <h3>{{ _("구독 / 결제") }}</h3>
 
       {% if active_sub %}
         {% set _status = (active_sub.status or '') %}
@@ -383,18 +383,18 @@
         <div class="kv" style="align-items:flex-start;">
           <div style="flex:1;">
             <div class="mini">
-              상태:
+              {{ _("상태:") }}
               <strong>{{ _status }}</strong>
-              · 플랜: <strong>{{ _plan }}</strong>
+              {{ _("· 플랜:") }} <strong>{{ _plan }}</strong>
             </div>
 
             {% if _cancel_at_period_end %}
               <div class="muted mini" style="margin-top:6px;">
-                해지 예약됨 — <strong>{{ _period_end or '—' }}</strong> 까지 이용 가능하며, 다음 결제부터 과금이 중단됩니다.
+                {{ _("해지 예약됨 —") }} <strong>{{ _period_end or '—' }}</strong> {{ _("까지 이용 가능하며, 다음 결제부터 과금이 중단됩니다.") }}
               </div>
             {% else %}
               <div class="muted mini" style="margin-top:6px;">
-                다음 결제일: <strong>{{ _next or '—' }}</strong>
+                {{ _("다음 결제일:") }} <strong>{{ _next or '—' }}</strong>
               </div>
             {% endif %}
           </div>
@@ -403,8 +403,8 @@
             <form action="{{ url_for('api_nicepay_pm.change_payment_method') }}" method="post" style="margin:0;">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               <button type="submit" class="btn ghost small" disabled
-                      title="나이스페이먼츠 심사 완료 후 제공됩니다.">
-                결제수단 변경 (준비중)
+                      title="{{ _("나이스페이먼츠 심사 완료 후 제공됩니다.") }}">
+                {{ _("결제수단 변경 (준비중)") }}
               </button>
             </form>
 
@@ -413,7 +413,7 @@
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <button type="submit" class="btn small"
                         onclick="return confirm('해지 예약을 취소하고 구독을 계속 유지할까요?');">
-                  해지 예약 취소
+                  {{ _("해지 예약 취소") }}
                 </button>
               </form>
             {% else %}
@@ -421,7 +421,7 @@
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <button type="submit" class="btn danger small"
                         onclick="return confirm('구독을 취소할까요?\n\n지금 취소해도 현재 결제 기간이 끝날 때까지 Pro를 계속 이용할 수 있으며,\n다음 결제일부터 과금이 중단됩니다.');">
-                  구독 취소
+                  {{ _("구독 취소") }}
                 </button>
               </form>
             {% endif %}
@@ -429,14 +429,14 @@
         </div>
 
       {% else %}
-        <p class="muted">활성 구독이 없습니다.</p>
-        <a class="btn small" href="{{ url_for('subscribe.subscribe_page') }}">구독 알아보기</a>
+        <p class="muted">{{ _("활성 구독이 없습니다.") }}</p>
+        <a class="btn small" href="{{ url_for('subscribe.subscribe_page') }}">{{ _("구독 알아보기") }}</a>
       {% endif %}
 
       {% if payments %}
         <div style="height:8px"></div>
         <table class="table">
-          <thead><tr><th>시각</th><th>금액</th><th>통화</th><th>상태</th></tr></thead>
+          <thead><tr><th>{{ _("시각") }}</th><th>{{ _("금액") }}</th><th>{{ _("통화") }}</th><th>{{ _("상태") }}</th></tr></thead>
           <tbody>
             {% for p in payments %}
             <tr>
@@ -456,45 +456,45 @@
            ========================= -->
       <hr class="divider-strong">
 
-      <section class="danger-box" aria-label="계정 삭제">
+      <section class="danger-box" aria-label="{{ _("계정 삭제") }}">
         <div class="danger-title">
-          <h4>계정 삭제</h4>
-          <span class="badge" style="color:#ef4444;border-color:#ef4444;">주의</span>
+          <h4>{{ _("계정 삭제") }}</h4>
+          <span class="badge" style="color:#ef4444;border-color:#ef4444;">{{ _("주의") }}</span>
         </div>
 
         {% if user.deleted_at %}
           <p class="small danger-help">
-            현재 계정은 <strong>탈퇴 유예 상태</strong>입니다. (복구 가능)
+            {{ _("현재 계정은") }} <strong>{{ _("탈퇴 유예 상태") }}</strong>{{ _("입니다. (복구 가능)") }}
             <br>
-            완전 삭제 예정일: <strong>{{ user.purge_after }}</strong>
+            {{ _("완전 삭제 예정일:") }} <strong>{{ user.purge_after }}</strong>
           </p>
 
           <div class="toolbar" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
             <button type="button" class="btn small" id="btnRestoreAccount">
-              계정 복구
+              {{ _("계정 복구") }}
             </button>
 
             <span class="spacer"></span>
 
             <span class="small muted">
-              복구 시 기존 데이터는 되돌아오지만, 구독은 자동 복구되지 않습니다. (재구독 필요)
+              {{ _("복구 시 기존 데이터는 되돌아오지만, 구독은 자동 복구되지 않습니다. (재구독 필요)") }}
             </span>
           </div>
 
         {% else %}
           <p class="small danger-help">
-            계정을 삭제하면 즉시 로그아웃되며, <strong>30일 동안 복구</strong>할 수 있습니다.
+            {{ _("계정을 삭제하면 즉시 로그아웃되며,") }} <strong>{{ _("30일 동안 복구") }}</strong>{{ _("할 수 있습니다.") }}
             <br>
-            30일이 지나면 계정과 사용 기록은 영구적으로 삭제되며 복구할 수 없습니다.
+            {{ _("30일이 지나면 계정과 사용 기록은 영구적으로 삭제되며 복구할 수 없습니다.") }}
           </p>
 
           <div class="kv" style="margin-top:10px;">
-            <input class="inline-input" id="deleteConfirmInput" type="text" placeholder="DELETE 입력">
+            <input class="inline-input" id="deleteConfirmInput" type="text" placeholder="{{ _("DELETE 입력") }}">
             <button type="button" class="btn danger small" id="btnDeleteAccount">
-              계정 삭제 (30일 유예)
+              {{ _("계정 삭제 (30일 유예)") }}
             </button>
             <span class="spacer"></span>
-            <span class="small muted">실수 방지를 위해 DELETE를 입력해야 합니다.</span>
+            <span class="small muted">{{ _("실수 방지를 위해 DELETE를 입력해야 합니다.") }}</span>
           </div>
         {% endif %}
       </section>
@@ -588,4 +588,3 @@
     </section>
   </div>
 {% endblock %}
-```

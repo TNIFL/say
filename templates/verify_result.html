@@ -1,22 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}이메일 인증 결과 | Lexinoa{% endblock %}
+{% block title %}{{ _("이메일 인증 결과 | Lexinoa") }}{% endblock %}
 
 {% block content %}
 <div class="main" style="max-width:720px; margin:24px auto; padding:16px;">
   <div class="card">
     {% if ok %}
-      <h3>인증 완료</h3>
+      <h3>{{ _("인증 완료") }}</h3>
       <p>{{ message }}</p>
-      <a class="btn" href="/subscribe">구독 페이지로 이동</a>
+      <a class="btn" href="/subscribe">{{ _("구독 페이지로 이동") }}</a>
       <span class="spacer"></span>
-      <a class="btn secondary" href="/mypage">마이페이지</a>
+      <a class="btn secondary" href="/mypage">{{ _("마이페이지") }}</a>
     {% else %}
-      <h3>인증 실패</h3>
+      <h3>{{ _("인증 실패") }}</h3>
       <p>{{ message }}</p>
-      <a class="btn" href="/verify/require">다시 보내기</a>
+      <a class="btn" href="/verify/require">{{ _("다시 보내기") }}</a>
       <span class="spacer"></span>
-      <a class="btn secondary" href="/">홈으로</a>
+      <a class="btn secondary" href="/">{{ _("홈으로") }}</a>
     {% endif %}
   </div>
 </div>

@@ -1,26 +1,26 @@
 {% extends "base.html" %}
 
-{% block title %}구독 실패 | Lexinoa{% endblock %}
+{% block title %}{{ _("구독 실패 | Lexinoa") }}{% endblock %}
 
 {% block content %}
   <div style="max-width:720px;margin:40px auto;padding:16px;">
     <div class="card" style="padding:20px;">
-      <h2 style="margin:0 0 8px;">구독 진행 실패</h2>
+      <h2 style="margin:0 0 8px;">{{ _("구독 진행 실패") }}</h2>
       <p class="muted" style="margin:0 0 14px;">
-        사유: <strong>{{ reason or 'unknown' }}</strong>
+        {{ _("사유:") }} <strong>{{ reason or 'unknown' }}</strong>
       </p>
 
       {% if reason == "bid_missing" %}
         <div class="muted" style="line-height:1.7;">
-          카드 등록(빌키 발급) 과정에서 BID(빌키)를 받지 못했습니다.<br>
-          결제창 응답 파라미터(POST/QUERY)에서 BID 키명이 무엇인지 확인해야 합니다.
+          {{ _("카드 등록(빌키 발급) 과정에서 BID(빌키)를 받지 못했습니다.") }}<br>
+          {{ _("결제창 응답 파라미터(POST/QUERY)에서 BID 키명이 무엇인지 확인해야 합니다.") }}
         </div>
       {% endif %}
 
       <div style="height:14px;"></div>
 
-      <a class="btn" href="/subscribe/checkout">다시 시도</a>
-      <a class="btn ghost" href="/subscribe" style="margin-left:8px;">가격 페이지</a>
+      <a class="btn" href="/subscribe/checkout">{{ _("다시 시도") }}</a>
+      <a class="btn ghost" href="/subscribe" style="margin-left:8px;">{{ _("가격 페이지") }}</a>
     </div>
   </div>
 {% endblock %}

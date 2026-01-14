@@ -36,3 +36,6 @@ python-dateutil>=2.9.0
 certifi
 
 Authlib==1.3.0
+# --- i18n 추가 ---
+Flask-Babel>=4.0.0
+Babel>=2.14.0

@@ -129,159 +129,159 @@
   {% set pay_error = session.pop('pay_error', None) %}
   {% if request.args.get('pay') == 'failed' and pay_error %}
     <div class="banner error" role="alert">
-      <strong>결제 실패</strong> — {{ pay_error.message }}
+      <strong>{{ _("결제 실패") }}</strong> — {{ pay_error.message }}
       {% if pay_error.code %}<div class="small" style="opacity:.7">코드: {{ pay_error.code }}</div>{% endif %}
     </div>
   {% endif %}
   <br>
   <!-- Hero -->
   <section class="card" style="text-align:center; padding:28px 18px;">
-    <div class="badge gold">성능은 모두 동일 · 사용 범위와 자동화에서 차이가 납니다</div>
-    <h1 id="pageTitle" style="margin:10px 0 6px 0; font-size:28px; letter-spacing:.2px;">구독 & 가격</h1>
-    <p class="muted" style="margin:0 auto; max-width:720px">비로그인 5회/일 · Free 30회/월 · Pro 사실상 무제한(공정 이용 1,000회). 채널 자동 감지, 다국어 문화 보정, 템플릿 무제한 등 생산성 기능은 Pro에서 제공됩니다.</p>
+    <div class="badge gold">{{ _("성능은 모두 동일 · 사용 범위와 자동화에서 차이가 납니다") }}</div>
+    <h1 id="pageTitle" style="margin:10px 0 6px 0; font-size:28px; letter-spacing:.2px;">{{ _("구독 & 가격") }}</h1>
+    <p class="muted" style="margin:0 auto; max-width:720px">{{ _("비로그인 5회/일 · Free 30회/월 · Pro 사실상 무제한(공정 이용 1,000회). 채널 자동 감지, 다국어 문화 보정, 템플릿 무제한 등 생산성 기능은 Pro에서 제공됩니다.") }}</p>
   </section>
   <br>
   <!-- Plans -->
   <section class="row cols-3">
     <!-- Guest -->
     <div class="plan card">
-      <div class="badge">체험용</div>
-      <h3 style="margin:6px 0 2px">비로그인</h3>
-      <div class="price">₩0 <span class="unit">/ 하루</span></div>
+      <div class="badge">{{ _("체험용") }}</div>
+      <h3 style="margin:6px 0 2px">{{ _("비로그인") }}</h3>
+      <div class="price">₩0 <span class="unit">{{ _("/ 하루") }}</span></div>
       <ul class="list">
         <br>
-        <li><span class="check">✓</span><span>하루 5회 체험</span></li>
-        <li><span class="check">✓</span><span>로그인 없이 바로 사용</span></li>
-        <li><span class="check">✓</span><span>동일한 성능</span></li>
-        <li><span class="check">–</span><span>히스토리/템플릿 저장은 미지원</span></li>
+        <li><span class="check">✓</span><span>{{ _("하루 5회 체험") }}</span></li>
+        <li><span class="check">✓</span><span>{{ _("로그인 없이 바로 사용") }}</span></li>
+        <li><span class="check">✓</span><span>{{ _("동일한 성능") }}</span></li>
+        <li><span class="check">–</span><span>{{ _("히스토리/템플릿 저장은 미지원") }}</span></li>
       </ul>
       <div style="display:flex; gap:8px; margin-top:6px;">
-        <a class="btn secondary" href="/">지금 체험</a>
-        <a class="btn ghost" href="{{ url_for('auth.login_page') }}">로그인</a>
+        <a class="btn secondary" href="/">{{ _("지금 체험") }}</a>
+        <a class="btn ghost" href="{{ url_for('auth.login_page') }}">{{ _("로그인") }}</a>
       </div>
     </div>
 
     <!-- Free -->
     <div class="plan card">
-      <div class="badge">기본 계정</div>
+      <div class="badge">{{ _("기본 계정") }}</div>
       <h3 style="margin:6px 0 2px">Free</h3>
-      <div class="price">₩0 <span class="unit">/ 월</span></div>
+      <div class="price">₩0 <span class="unit">{{ _("/ 월") }}</span></div>
       <ul class="list">
         <br>
-        <li><span class="check">✓</span><span>월 30회 사용</span></li>
-        <li><span class="check">✓</span><span>히스토리 7일 보관</span></li>
-        <li><span class="check">✓</span><span>동일한 성능</span></li>
-        <li><span class="check">–</span><span>채널 자동 감지/템플릿 무제한은 Pro에서</span></li>
+        <li><span class="check">✓</span><span>{{ _("월 30회 사용") }}</span></li>
+        <li><span class="check">✓</span><span>{{ _("히스토리 7일 보관") }}</span></li>
+        <li><span class="check">✓</span><span>{{ _("동일한 성능") }}</span></li>
+        <li><span class="check">–</span><span>{{ _("채널 자동 감지/템플릿 무제한은 Pro에서") }}</span></li>
       </ul>
       <div style="display:flex; gap:8px; margin-top:6px;">
         {% if session.get('user') %}
-          <a class="btn secondary" href="/">바로 사용</a>
+          <a class="btn secondary" href="/">{{ _("바로 사용") }}</a>
         {% else %}
-          <a class="btn" href="{{ url_for('auth.signup') }}">회원가입</a>
+          <a class="btn" href="{{ url_for('auth.signup') }}">{{ _("회원가입") }}</a>
         {% endif %}
       </div>
     </div>
 
     <!-- Pro -->
     <div class="plan card recommended">
-      <div class="badge gold">추천</div>
+      <div class="badge gold">{{ _("추천") }}</div>
       <h3 style="margin:6px 0 2px">Pro</h3>
-      <div class="price">₩4,900 <span class="unit">/ 월</span></div>
+      <div class="price">₩4,900 <span class="unit">{{ _("/ 월") }}</span></div>
       <ul class="list">
-        <li><span class="check">✓</span><span>사실상 무제한 (공정 이용 1,000회/월)</span></li>
-        <li><span class="check">✓</span><span>Gmail/Slack/Naver 등 <b>자동 감지(확장 프로그램)</b></span></li>
-        <li><span class="check">✓</span><span>언어 번역 + <b>문화적 맥락 보정 / 추후 추가 예정</b></span></li>
-        <li><span class="check">✓</span><span><b>템플릿 무제한</b></span></li>
-        <li><span class="check">✓</span><span>히스토리 무제한</span></li>
+        <li><span class="check">✓</span><span>{{ _("사실상 무제한 (공정 이용 1,000회/월)") }}</span></li>
+        <li><span class="check">✓</span><span>{{ _("Gmail/Slack/Naver 등") }} <b>{{ _("자동 감지(확장 프로그램)") }}</b></span></li>
+        <li><span class="check">✓</span><span>{{ _("언어 번역 +") }} <b>{{ _("문화적 맥락 보정 / 추후 추가 예정") }}</b></span></li>
+        <li><span class="check">✓</span><span><b>{{ _("템플릿 무제한") }}</b></span></li>
+        <li><span class="check">✓</span><span>{{ _("히스토리 무제한") }}</span></li>
       </ul>
       <div style="display:flex; gap:8px; margin-top:6px;">
-        <a class="btn" href="/subscribe/checkout">지금 구독하기</a>
-        <a class="btn secondary" href="/">기능 먼저 보기</a>
+        <a class="btn" href="/subscribe/checkout">{{ _("지금 구독하기") }}</a>
+        <a class="btn secondary" href="/">{{ _("기능 먼저 보기") }}</a>
       </div>
     </div>
   </section>
   <br>
   <!-- Feature Highlights -->
   <section class="card">
-    <h3 style="margin:0 0 4px">왜 Pro일까?</h3>
+    <h3 style="margin:0 0 4px">{{ _("왜 Pro일까?") }}</h3>
     <div class="row cols-3" style="margin-top:6px;">
       <div class="card" style="padding:14px">
-        <strong>자동 맥락 감지</strong>
-        <p class="small muted">mail/messenger/notion 등 채널에 맞는 톤을 자동 추천. 클릭 없이 바로 적용.</p>
+        <strong>{{ _("자동 맥락 감지") }}</strong>
+        <p class="small muted">{{ _("mail/messenger/notion 등 채널에 맞는 톤을 자동 추천. 클릭 없이 바로 적용.") }}</p>
       </div>
       <div class="card" style="padding:14px">
-        <strong>실시간 비교 프리뷰</strong>
-        <p class="small muted">3가지의 옵션을 동시에 제공.</p>
+        <strong>{{ _("실시간 비교 프리뷰") }}</strong>
+        <p class="small muted">{{ _("3가지의 옵션을 동시에 제공.") }}</p>
       </div>
       <div class="card" style="padding:14px">
-        <strong>템플릿 라이브러리</strong>
-        <p class="small muted">내 문장 습관을 저장·재사용. 변수 치환과 폴더로 팀 문서처럼 정리.</p>
+        <strong>{{ _("템플릿 라이브러리") }}</strong>
+        <p class="small muted">{{ _("내 문장 습관을 저장·재사용. 변수 치환과 폴더로 팀 문서처럼 정리.") }}</p>
       </div>
     </div>
   </section>
   <br>
   <section class="card">
-    <h3 style="margin:0 0 4px">크롬 확장 기능</h3>
+    <h3 style="margin:0 0 4px">{{ _("크롬 확장 기능") }}</h3>
     <div class="row cols-1" style="margin-top:6px;">
       <div class="card">
-        <strong>크롬 확장 기능으로 어디서나 사용가능</strong>
-        <p class="small muted">확장 탭 에서 사용 가능하며, 원하는 문장을 드래그 해서 사용 가능합니다.</p>
-        <p class="small muted">모든 플랜이 이용 가능하지만 사용 횟수와 편의성은 기존 Lexinoa 페이지를 따릅니다.</p>
-        <p class="small muted"><a href="https://chromewebstore.google.com/detail/lexinoa-%EB%AC%B8%EC%9E%A5-%EC%88%9C%ED%99%94-%EB%8F%84%EC%9A%B0%EB%AF%B8/ggmgbbhaidapcbjkmelimhbpagpiejje?hl=ko">크롬 확장 추가하기</a></p>
+        <strong>{{ _("크롬 확장 기능으로 어디서나 사용가능") }}</strong>
+        <p class="small muted">{{ _("확장 탭 에서 사용 가능하며, 원하는 문장을 드래그 해서 사용 가능합니다.") }}</p>
+        <p class="small muted">{{ _("모든 플랜이 이용 가능하지만 사용 횟수와 편의성은 기존 Lexinoa 페이지를 따릅니다.") }}</p>
+        <p class="small muted"><a href="https://chromewebstore.google.com/detail/lexinoa-%EB%AC%B8%EC%9E%A5-%EC%88%9C%ED%99%94-%EB%8F%84%EC%9A%B0%EB%AF%B8/ggmgbbhaidapcbjkmelimhbpagpiejje?hl=ko">{{ _("크롬 확장 추가하기") }}</a></p>
       </div>
     </div>
   </section>
   <br>
   <!-- Comparison Table -->
   <section class="card">
-    <h3 style="margin:0 0 4px">플랜 비교</h3>
-    <table aria-label="플랜 비교표">
+    <h3 style="margin:0 0 4px">{{ _("플랜 비교") }}</h3>
+    <table aria-label="{{ _("플랜 비교표") }}">
       <thead>
         <tr>
-          <th>항목</th>
-          <th>비로그인</th>
+          <th>{{ _("항목") }}</th>
+          <th>{{ _("비로그인") }}</th>
           <th>Free</th>
           <th>Pro</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td>이용 횟수</td><td>5회/일</td><td>30회/월</td><td>1,000회/월</td></tr>
-        <tr><td>크롬 확장</td><td>가능</td><td>가능</td><td>가능</td></tr>
-        <tr><td>성능</td><td colspan="3">모두 동일</td></tr>
-        <tr><td>자동 톤 감지</td><td>—</td><td>—</td><td>자동 적용</td></tr>
-        <tr><td>다국어/문화 보정</td><td>—</td><td>—</td><td>한→영 + 문화 보정 (추가 예정)</td></tr>
-        <tr><td>템플릿</td><td>—</td><td>—</td><td>무제한</td></tr>
-        <tr><td>히스토리</td><td>—</td><td>7일</td><td>무제한 + 검색</td></tr>
+        <tr><td>{{ _("이용 횟수") }}</td><td>{{ _("5회/일") }}</td><td>{{ _("30회/월") }}</td><td>{{ _("1,000회/월") }}</td></tr>
+        <tr><td>{{ _("크롬 확장") }}</td><td>{{ _("가능") }}</td><td>{{ _("가능") }}</td><td>{{ _("가능") }}</td></tr>
+        <tr><td>{{ _("성능") }}</td><td colspan="3">{{ _("모두 동일") }}</td></tr>
+        <tr><td>{{ _("자동 톤 감지") }}</td><td>—</td><td>—</td><td>{{ _("자동 적용") }}</td></tr>
+        <tr><td>{{ _("다국어/문화 보정") }}</td><td>—</td><td>—</td><td>{{ _("한→영 + 문화 보정 (추가 예정)") }}</td></tr>
+        <tr><td>{{ _("템플릿") }}</td><td>—</td><td>—</td><td>{{ _("무제한") }}</td></tr>
+        <tr><td>{{ _("히스토리") }}</td><td>—</td><td>{{ _("7일") }}</td><td>{{ _("무제한 + 검색") }}</td></tr>
       </tbody>
     </table>
   </section>
   <br>
   <!-- FAQ -->
   <section class="card">
-    <h3 style="margin:0 0 6px">자주 묻는 질문</h3>
+    <h3 style="margin:0 0 6px">{{ _("자주 묻는 질문") }}</h3>
     <div class="stack">
       <div class="faq-item">
-        <div class="faq-q"><span>Free도 Pro와 같은 성능인가요?</span><button class="btn ghost small" type="button">자세히</button></div>
-        <div class="faq-a">네. 품질은 동일합니다. Pro는 자동화·저장·다국어 등 여러 기능이 추가됩니다.</div>
+        <div class="faq-q"><span>{{ _("Free도 Pro와 같은 성능인가요?") }}</span><button class="btn ghost small" type="button">{{ _("자세히") }}</button></div>
+        <div class="faq-a">{{ _("네. 품질은 동일합니다. Pro는 자동화·저장·다국어 등 여러 기능이 추가됩니다.") }}</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q"><span>결제는 어떻게 취소하나요?</span><button class="btn ghost small" type="button">자세히</button></div>
-        <div class="faq-a">마이페이지 &gt; 구독 관리에서 언제든 해지할 수 있으며, 다음 결제일부터 과금이 중단됩니다.</div>
+        <div class="faq-q"><span>{{ _("결제는 어떻게 취소하나요?") }}</span><button class="btn ghost small" type="button">{{ _("자세히") }}</button></div>
+        <div class="faq-a">{{ _("마이페이지 &gt; 구독 관리에서 언제든 해지할 수 있으며, 다음 결제일부터 과금이 중단됩니다.") }}</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q"><span>회사/팀으로도 사용할 수 있나요?</span><button class="btn ghost small" type="button">자세히</button></div>
-        <div class="faq-a">현재 팀 플랜은 계획되어있지 않으나 추후 추가 할 가능성이 있습니다. 필요 시 문의해주세요.</div>
+        <div class="faq-q"><span>{{ _("회사/팀으로도 사용할 수 있나요?") }}</span><button class="btn ghost small" type="button">{{ _("자세히") }}</button></div>
+        <div class="faq-a">{{ _("현재 팀 플랜은 계획되어있지 않으나 추후 추가 할 가능성이 있습니다. 필요 시 문의해주세요.") }}</div>
       </div>
     </div>
   </section>
   <br>
   <!-- CTA -->
   <section class="card" style="text-align:center; padding:24px 16px">
-    <h3 style="margin:0 0 6px">지금 바로 Pro로 업그레이드</h3>
-    <p class="muted" style="margin:0 0 12px">동일한 성능, 더 똑똑한 흐름. 한 달 4,900원으로 시간 절약을 시작하세요.</p>
+    <h3 style="margin:0 0 6px">{{ _("지금 바로 Pro로 업그레이드") }}</h3>
+    <p class="muted" style="margin:0 0 12px">{{ _("동일한 성능, 더 똑똑한 흐름. 한 달 4,900원으로 시간 절약을 시작하세요.") }}</p>
     <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
-      <a class="btn" href="/subscribe/checkout">지금 구독하기</a>
-      <a class="btn secondary" href="/">기능 먼저 사용해보기</a>
+      <a class="btn" href="/subscribe/checkout">{{ _("지금 구독하기") }}</a>
+      <a class="btn secondary" href="/">{{ _("기능 먼저 사용해보기") }}</a>
     </div>
   </section>
 {% endblock %}

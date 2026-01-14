@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="{{ CURRENT_LANG }}">
 <head>
   <meta charset="UTF-8" />
-  <title>{% block title %}Lexinoa{% endblock %} - 문장 교정</title>
+  <title>{% block title %}Lexinoa{% endblock %} - {{ _("문장 교정") }}</title>
+
   <meta name="description"
         content="{% block meta_description %}
-  상황에 맞게 문장을 자연스럽게 다듬어주는 문장 순화 도구. 카테고리와 톤만 선택하면 바로 결과를 얻을 수 있습니다.
+  {{ _("상황에 맞게 문장을 자연스럽게 다듬어주는 문장 순화 도구. 카테고리와 톤만 선택하면 바로 결과를 얻을 수 있습니다.") }}
   {% endblock %}">
+
   <meta name="color-scheme" content="dark light">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/mainpage.css') }}">
@@ -25,24 +27,41 @@
         </a>
 
         <div class="header-actions" style="display:flex; align-items:center; gap:8px; min-width:0;">
+
+          {# 언어 스위치: 드롭다운 (현재 페이지 유지) #}
+            <div style="display:flex; align-items:center;">
+              <select id="lang-select-web" class="btn ghost small" aria-label="Language">
+                <option value="{{ url_for('i18n.set_language', lang_code='ko', next=NEXT_URL) }}"
+                        {% if CURRENT_LANG == 'ko' %}selected{% endif %}>
+                  한국어
+                </option>
+                <option value="{{ url_for('i18n.set_language', lang_code='en', next=NEXT_URL) }}"
+                        {% if CURRENT_LANG == 'en' %}selected{% endif %}>
+                  English
+                </option>
+              </select>
+            </div>
+
           {% if g.is_admin %}
-          <a class="btn ghost" href="{{ url_for('admin.admin_analytics_page') }}">어드민 분석</a>
+          <a class="btn ghost" href="{{ url_for('admin.admin_analytics_page') }}">{{ _("어드민 분석") }}</a>
           {% endif %}
-          <button id="themeToggle" class="theme-toggle">🌙 다크/라이트</button>
-          {# <a class="btn ghost" href="{{ url_for('summarize.summarize_page') }}">요약·정리</a> #}
-          <a class="btn ghost" href="{{ url_for('feedback.feedback') }}">피드백</a>
-          <a class="btn ghost" href="{{ url_for('subscribe.subscribe_page') }}">구독</a>
-          <a class="btn ghost" href="{{ url_for('learn.learn_index') }}">가이드</a>
+
+          <button id="themeToggle" class="theme-toggle">🌙 {{ _("다크/라이트") }}</button>
+
+          <a class="btn ghost" href="{{ url_for('feedback.feedback') }}">{{ _("피드백") }}</a>
+          <a class="btn ghost" href="{{ url_for('subscribe.subscribe_page') }}">{{ _("구독") }}</a>
+          <a class="btn ghost" href="{{ url_for('learn.learn_index') }}">{{ _("가이드") }}</a>
 
           {% if session.get('user') %}
-            <a class="btn ghost" href="{{ url_for('history.user_history') }}">기록보기</a>
-            <a class="btn ghost" href="{{ url_for('mypage_overview') if false else '/mypage' }}">마이페이지</a>
-            <span class="small" style="max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; opacity:.8;" title="{{ session.get('user').user_id }}">
+            <a class="btn ghost" href="{{ url_for('history.user_history') }}">{{ _("기록보기") }}</a>
+            <a class="btn ghost" href="{{ url_for('mypage_overview') if false else '/mypage' }}">{{ _("마이페이지") }}</a>
+            <span class="small" style="max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; opacity:.8;"
+                  title="{{ session.get('user').user_id }}">
               {{ session.get('user').display_name or session.get('user').user_id }}
             </span>
-            <a class="btn ghost" href="{{ url_for('auth.logout') }}">로그아웃</a>
+            <a class="btn ghost" href="{{ url_for('auth.logout') }}">{{ _("로그아웃") }}</a>
           {% else %}
-            <a class="btn ghost" href="{{ url_for('auth.login_page') }}">로그인</a>
+            <a class="btn ghost" href="{{ url_for('auth.login_page') }}">{{ _("로그인") }}</a>
           {% endif %}
         </div>
       </div>
@@ -53,18 +72,15 @@
 
   <footer style="margin:24px auto; max-width:1100px; padding:0 16px; opacity:.85;">
     <div style="border-top:1px solid var(--border); padding-top:12px; display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end;">
-      <a href="/terms" class="small" style="text-decoration:none; color:var(--muted);">이용약관</a>
+      <a href="/terms" class="small" style="text-decoration:none; color:var(--muted);">{{ _("이용약관") }}</a>
       <span class="small" style="color:var(--muted);">·</span>
-      <a href="/privacy" class="small" style="text-decoration:none; color:var(--muted);">개인정보 처리방침</a>
+      <a href="/privacy" class="small" style="text-decoration:none; color:var(--muted);">{{ _("개인정보 처리방침") }}</a>
       <span class="small" style="color:var(--muted);">·</span>
-      <a href="/disclaimer" class="small" style="text-decoration:none; color:var(--muted);">면책 고지</a>
+      <a href="/disclaimer" class="small" style="text-decoration:none; color:var(--muted);">{{ _("면책 고지") }}</a>
     </div>
   </footer>
 
-  {# 공통 JS 파일들 #}
   <script src="{{ url_for('static', filename='js/theme-toggle.js') }}" defer></script>
-  
-  {# 페이지별 추가 스크립트 #}
   {% block scripts %}{% endblock %}
 </body>
 </html>

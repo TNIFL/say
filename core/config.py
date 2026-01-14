@@ -139,3 +139,10 @@ class Config:
 
     # 허용 스코프(서비스 키) — 여기 추가하면 확장 가능 (summarize 없앨지 고민중)
     USAGE_SCOPES = {"rewrite", "summarize"}
+
+    # -------------------------
+    # i18n (Flask-Babel)
+    # -------------------------
+    LANGUAGES = ["ko", "en"]
+    BABEL_DEFAULT_LOCALE = "ko"
+    BABEL_DEFAULT_TIMEZONE = "Asia/Seoul"

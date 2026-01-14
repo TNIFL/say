@@ -1,26 +1,26 @@
 {% extends "base.html" %}
-{% block title %}이메일 인증 필요{% endblock %}
+{% block title %}{{ _("이메일 인증 필요") }}{% endblock %}
 
 {% block content %}
   <div class="container" style="max-width:520px; margin:40px auto;">
-    <h2>이메일 인증이 필요합니다</h2>
+    <h2>{{ _("이메일 인증이 필요합니다") }}</h2>
     <p>
-      <strong>{{ email }}</strong> 로 인증 메일을 보냈습니다.<br>
-      메일의 인증 링크를 클릭하면 회원가입이 완료됩니다.
+      <strong>{{ email }}</strong> {{ _("로 인증 메일을 보냈습니다.") }}<br>
+      {{ _("메일의 인증 링크를 클릭하면 회원가입이 완료됩니다.") }}
     </p>
 
     {% if sent is defined and not sent %}
       <p style="margin-top:12px; color:#b00020;">
-        인증 메일 전송에 실패했습니다. 잠시 후 다시 시도해 주세요.
+        {{ _("인증 메일 전송에 실패했습니다. 잠시 후 다시 시도해 주세요.") }}
       </p>
     {% endif %}
 
     <div style="margin-top:16px;">
-      <a class="btn" href="{{ url_for('auth.login_page') }}">로그인으로 돌아가기</a>
+      <a class="btn" href="{{ url_for('auth.login_page') }}">{{ _("로그인으로 돌아가기") }}</a>
     </div>
 
     <div style="margin-top:12px; font-size:14px; opacity:0.8;">
-      스팸함/프로모션함도 확인해 주세요.
+      {{ _("스팸함/프로모션함도 확인해 주세요.") }}
     </div>
   </div>
 {% endblock %}

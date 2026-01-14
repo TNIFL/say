@@ -2,15 +2,15 @@
 
 {% block learn_main %}
 
-{% if not active_section %}
+{% if not active_section_key %}
   <div class="row cols-2">
     {% for sec in nav %}
-      <a href="{{ url_for('learn.learn_index', section=sec['section']) }}" style="text-decoration:none; color:inherit;">
+      <a href="{{ url_for('learn.learn_index', section=sec['section_key']) }}" style="text-decoration:none; color:inherit;">
         <div class="card">
-          <h3 style="margin:0 0 6px 0;">{{ sec["section"] }}</h3>
+          <h3 style="margin:0 0 6px 0;">{{ sec["section_label"] }}</h3>
           <div class="small">{{ sec.get("desc","") }}</div>
           <div class="small" style="margin-top:10px;">
-            {{ sec["items"]|length }}개의 가이드
+            {{ sec["items"]|length }} {{ _("개의 가이드") }}
           </div>
         </div>
       </a>
@@ -19,15 +19,15 @@
 
 {% else %}
   {% for sec in nav %}
-    {% if sec["section"] == active_section %}
+    {% if sec["section_key"] == active_section_key %}
       <div class="card">
         <div class="toolbar">
           <div>
-            <h3 style="margin:0 0 6px 0;">{{ sec["section"] }}</h3>
+            <h3 style="margin:0 0 6px 0;">{{ sec["section_label"] }}</h3>
             <div class="small">{{ sec.get("desc","") }}</div>
           </div>
           <span class="spacer"></span>
-          <a class="btn secondary" href="{{ url_for('learn.learn_index') }}">섹션 전체</a>
+          <a class="btn secondary" href="{{ url_for('learn.learn_index') }}">{{ _("섹션 전체") }}</a>
         </div>
       </div>
 

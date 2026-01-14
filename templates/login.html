@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Lexinoa · 로그인{% endblock %}
+{% block title %}{{ _("Lexinoa · 로그인") }}{% endblock %}
 
 {% block head_extra %}
   <style>
@@ -219,7 +219,7 @@
         <span class="brand-title">Lexinoa</span>
       </a>
       <div class="header-actions">
-        <button id="themeToggle" class="theme-toggle">🌙 다크/라이트</button>
+        <button id="themeToggle" class="theme-toggle">{{ _("🌙 다크/라이트") }}</button>
       </div>
     </div>
   </header>
@@ -229,8 +229,8 @@
   <div class="main">
     <!-- Login Card -->
     <section class="card" style="max-width:520px; margin:24px auto;">
-      <h3>로그인</h3>
-      <p class="small hint">계정으로 로그인해 주세요. 비밀번호는 서버로 안전하게 전송됩니다.</p>
+      <h3>{{ _("로그인") }}</h3>
+      <p class="small hint">{{ _("계정으로 로그인해 주세요. 비밀번호는 서버로 안전하게 전송됩니다.") }}</p>
 
       <!-- 서버에서 전달한 에러/성공 메시지 -->
       {% if error %}
@@ -244,35 +244,35 @@
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <div class="field">
           <label for="user_id">ID</label>
-          <input type="text" id="user_id" name="user_id" placeholder="아이디를 입력하세요." value="{{ user_id or '' }}" required />
+          <input type="text" id="user_id" name="user_id" placeholder="{{ _("아이디를 입력하세요.") }}" value="{{ user_id or '' }}" required />
         </div>
 
         <div class="field">
-          <label for="password">비밀번호</label>
+          <label for="password">{{ _("비밀번호") }}</label>
           <div class="pwd-wrap">
             <input type="password" id="password" name="password" placeholder="••••••••" required />
-            <button class="pwd-toggle" type="button" id="pwdToggle" aria-controls="password" aria-pressed="false">보기</button>
+            <button class="pwd-toggle" type="button" id="pwdToggle" aria-controls="password" aria-pressed="false">{{ _("보기") }}</button>
           </div>
         </div>
 
         <div class="form-footer">
           <label style="display:inline-flex; align-items:center; gap:8px;">
             <input type="checkbox" name="remember" value="on" {% if remember %}checked{% endif %} />
-            <span class="small">로그인 상태 유지</span>
+            <span class="small">{{ _("로그인 상태 유지") }}</span>
           </label>
-          <a class="link small" href="/forgot">비밀번호 재설정</a>
+          <a class="link small" href="/forgot">{{ _("비밀번호 재설정") }}</a>
         </div>
 
         <div class="toolbar" style="margin-top:8px;">
-          <span class="small">계정이 없으신가요? <a class="link" href="/signup">회원가입</a></span>
+          <span class="small">{{ _("계정이 없으신가요?") }} <a class="link" href="/signup">{{ _("회원가입") }}</a></span>
           <span class="spacer"></span>
-          <button class="btn" type="submit">로그인</button>
+          <button class="btn" type="submit">{{ _("로그인") }}</button>
         </div>
       </form>
     <div class="google-btn-wrap">
       <a class="google-btn" href="/auth/login/google" aria-label="Sign in with Google">
         <span class="google-icon" aria-hidden="true"></span>
-        <span class="google-text">Google로 로그인</span>
+        <span class="google-text">{{ _("Google로 로그인") }}</span>
       </a>
     </div>
 

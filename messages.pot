@@ -1,0 +1,2263 @@
+# Translations template for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-01-14 19:09+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: app.py:121 templates/base.html:5
+msgid "문장 교정"
+msgstr ""
+
+#: routes/web/feedback.py:30
+msgid "피드백 내용을 입력해 주세요."
+msgstr ""
+
+#: routes/web/feedback.py:42
+msgid "소중한 의견 감사합니다! 반영에 노력하겠습니다."
+msgstr ""
+
+#: routes/web/feedback.py:55
+msgid "저장 중 오류가 발생했습니다."
+msgstr ""
+
+#: routes/web/learn.py:17
+msgid "빠른 시작"
+msgstr ""
+
+#: routes/web/learn.py:18
+msgid "문장만 넣고, 옵션만 클릭해서 끝내는 가장 빠른 사용법"
+msgstr ""
+
+#: routes/web/learn.py:22
+msgid "10초 시작 (프롬프트 없이)"
+msgstr ""
+
+#: routes/web/learn.py:23
+msgid "Lexinoa는 프롬프트를 안 씁니다. 문장 + 옵션 선택만으로 결과를 컨트롤합니다."
+msgstr ""
+
+#: routes/web/learn.py:25
+msgid "핵심 원칙"
+msgstr ""
+
+#: routes/web/learn.py:26
+msgid "사용자는 ‘문장’만 제공하고, 결과 방향은 옵션으로 결정합니다."
+msgstr ""
+
+#: routes/web/learn.py:27
+msgid "카테고리 1개 + 톤 1개 + 체크 0~2개로 시작하면 대부분 1회에 끝납니다."
+msgstr ""
+
+#: routes/web/learn.py:28
+msgid "잘 안 맞으면 ‘문장을 더 쓰는’ 게 아니라 옵션을 바꿉니다."
+msgstr ""
+
+#: routes/web/learn.py:30
+msgid "웹에서 가장 빠른 흐름"
+msgstr ""
+
+#: routes/web/learn.py:31
+msgid "문장을 붙여넣기"
+msgstr ""
+
+#: routes/web/learn.py:32
+msgid "카테고리 1개 선택 (요청/리마인드/사과/거절/감사 등)"
+msgstr ""
+
+#: routes/web/learn.py:33
+msgid "톤 1개 선택 (부드럽게/단호하지만 예의/공식)"
+msgstr ""
+
+#: routes/web/learn.py:34
+msgid "필요할 때만 체크: 존댓말 / 완충문 / 이모지"
+msgstr ""
+
+#: routes/web/learn.py:35
+msgid "결과 선택 → 복사/사용"
+msgstr ""
+
+#: routes/web/learn.py:37
+msgid "결과가 마음에 안 들면(프롬프트 금지)"
+msgstr ""
+
+#: routes/web/learn.py:38
+msgid "요청인데 차갑다 → 톤을 ‘부드럽게’로"
+msgstr ""
+
+#: routes/web/learn.py:39
+msgid "리마인드가 약하다 → 톤을 ‘단호하지만 예의’로"
+msgstr ""
+
+#: routes/web/learn.py:40
+msgid "거절이 날카롭다 → 카테고리를 ‘거절/대안’ 쪽으로"
+msgstr ""
+
+#: routes/web/learn.py:41
+msgid "메신저에서 딱딱하다 → ‘완충문’ 체크 ON"
+msgstr ""
+
+#: routes/web/learn.py:47
+msgid "추천 옵션 조합 (프리셋)"
+msgstr ""
+
+#: routes/web/learn.py:48
+msgid "자주 쓰는 조합만 저장/기억하면 대부분 클릭 몇 번으로 끝납니다."
+msgstr ""
+
+#: routes/web/learn.py:50
+msgid "메신저(카톡/슬랙)"
+msgstr ""
+
+#: routes/web/learn.py:51
+msgid "부드러운 요청"
+msgstr ""
+
+#: routes/web/learn.py:51
+msgid "카테고리: 요청 / 톤: 부드럽게 / 완충문 ON / 이모지 OFF"
+msgstr ""
+
+#: routes/web/learn.py:52
+msgid "부드러운 리마인드"
+msgstr ""
+
+#: routes/web/learn.py:52
+msgid "카테고리: 리마인드 / 톤: 부드럽게 / 완충문 ON"
+msgstr ""
+
+#: routes/web/learn.py:54
+msgid "이메일/대외"
+msgstr ""
+
+#: routes/web/learn.py:55
+msgid "공식 요청"
+msgstr ""
+
+#: routes/web/learn.py:55
+msgid "카테고리: 요청 / 톤: 공식 / 존댓말 ON / 완충문 OFF"
+msgstr ""
+
+#: routes/web/learn.py:56 routes/web/learn.py:80
+msgid "사과/정정"
+msgstr ""
+
+#: routes/web/learn.py:56
+msgid "카테고리: 사과/정정 / 톤: 공식 / 존댓말 ON"
+msgstr ""
+
+#: routes/web/learn.py:58
+msgid "단호한 커뮤니케이션"
+msgstr ""
+
+#: routes/web/learn.py:59
+msgid "원칙 안내/불가"
+msgstr ""
+
+#: routes/web/learn.py:59
+msgid "카테고리: 거절/대안 / 톤: 단호하지만 예의 / 존댓말 ON"
+msgstr ""
+
+#: routes/web/learn.py:60
+msgid "기한 리마인드"
+msgstr ""
+
+#: routes/web/learn.py:60
+msgid "카테고리: 리마인드 / 톤: 단호하지만 예의 / 완충문 OFF"
+msgstr ""
+
+#: routes/web/learn.py:69
+msgid "옵션 사용법"
+msgstr ""
+
+#: routes/web/learn.py:70
+msgid "프롬프트 대신 옵션으로 결과를 원하는 방향으로 고정하는 법"
+msgstr ""
+
+#: routes/web/learn.py:74
+msgid "카테고리 선택이 80%입니다"
+msgstr ""
+
+#: routes/web/learn.py:75
+msgid "Lexinoa는 ‘의도’를 카테고리로 먼저 고정해서 가장 빠르게 안정적인 결과를 냅니다."
+msgstr ""
+
+#: routes/web/learn.py:77
+msgid "카테고리 선택 기준"
+msgstr ""
+
+#: routes/web/learn.py:78 templates/mainpage.html:156
+#: templates/mainpage.html:270
+msgid "요청"
+msgstr ""
+
+#: routes/web/learn.py:78
+msgid "상대에게 행동을 부탁하는 문장"
+msgstr ""
+
+#: routes/web/learn.py:79
+msgid "리마인드"
+msgstr ""
+
+#: routes/web/learn.py:79
+msgid "진행/답장을 재촉하되 마찰을 줄이는 문장"
+msgstr ""
+
+#: routes/web/learn.py:80
+msgid "혼선/실수를 수습하고 신뢰를 회복하는 문장"
+msgstr ""
+
+#: routes/web/learn.py:81 templates/mainpage.html:160
+msgid "거절/대안"
+msgstr ""
+
+#: routes/web/learn.py:81
+msgid "불가를 전달하되 대안을 제시하는 문장"
+msgstr ""
+
+#: routes/web/learn.py:82
+msgid "감사/칭찬"
+msgstr ""
+
+#: routes/web/learn.py:82
+msgid "관계를 강화하고 분위기를 좋게 만드는 문장"
+msgstr ""
+
+#: routes/web/learn.py:84
+msgid "자주 생기는 오해 해결"
+msgstr ""
+
+#: routes/web/learn.py:85
+msgid "‘요청’인데 결과가 명령처럼 보임 → 톤을 ‘부드럽게’ + 완충문 ON"
+msgstr ""
+
+#: routes/web/learn.py:86
+msgid "‘리마인드’가 너무 약함 → 톤을 ‘단호하지만 예의’"
+msgstr ""
+
+#: routes/web/learn.py:87
+msgid "‘거절’이 공격적으로 보임 → ‘대안’ 성격 카테고리 선택 + 존댓말 ON"
+msgstr ""
+
+#: routes/web/learn.py:93
+msgid "톤은 ‘인상’을 결정합니다"
+msgstr ""
+
+#: routes/web/learn.py:94
+msgid "같은 내용도 톤에 따라 공격/정중/공식으로 읽힙니다. 프롬프트 대신 톤으로 조정하세요."
+msgstr ""
+
+#: routes/web/learn.py:96
+msgid "톤 추천"
+msgstr ""
+
+#: routes/web/learn.py:97 templates/mainpage.html:173
+#: templates/mainpage.html:281
+msgid "부드럽게"
+msgstr ""
+
+#: routes/web/learn.py:97
+msgid "메신저/동료/감정 마찰 방지"
+msgstr ""
+
+#: routes/web/learn.py:98
+msgid "단호하지만 예의"
+msgstr ""
+
+#: routes/web/learn.py:98
+msgid "기한/원칙/기준이 필요한 상황"
+msgstr ""
+
+#: routes/web/learn.py:99
+msgid "공식"
+msgstr ""
+
+#: routes/web/learn.py:99
+msgid "고객/외부/이메일/문서"
+msgstr ""
+
+#: routes/web/learn.py:101
+msgid "실전 팁"
+msgstr ""
+
+#: routes/web/learn.py:102
+msgid "대부분은 ‘부드럽게’로 시작 → 필요할 때만 단호/공식으로 이동"
+msgstr ""
+
+#: routes/web/learn.py:103
+msgid "이메일은 ‘공식 + 존댓말 ON’이 기본"
+msgstr ""
+
+#: routes/web/learn.py:109
+msgid "체크 옵션(존댓말·완충문·이모지) 사용법"
+msgstr ""
+
+#: routes/web/learn.py:110
+msgid "체크는 분위기를 한 번에 바꾸는 스위치입니다. 과하면 오히려 어색해질 수 있습니다."
+msgstr ""
+
+#: routes/web/learn.py:112
+msgid "체크 옵션 가이드"
+msgstr ""
+
+#: routes/web/learn.py:113
+msgid "존댓말"
+msgstr ""
+
+#: routes/web/learn.py:113
+msgid "상사/고객/외부면 ON. 내부 친한 사이면 OFF도 가능"
+msgstr ""
+
+#: routes/web/learn.py:114
+msgid "완충문"
+msgstr ""
+
+#: routes/web/learn.py:114
+msgid "메신저/재촉/요청에서 ON이 강력. 너무 길어지면 OFF"
+msgstr ""
+
+#: routes/web/learn.py:115
+msgid "이모지"
+msgstr ""
+
+#: routes/web/learn.py:115
+msgid "내부 분위기 완화용. 고객/상사/공식 문서에서는 OFF"
+msgstr ""
+
+#: routes/web/learn.py:117
+msgid "가장 많이 쓰는 조합"
+msgstr ""
+
+#: routes/web/learn.py:118
+msgid "카톡/슬랙: 부드럽게 + 완충문 ON + 이모지 OFF(기본)"
+msgstr ""
+
+#: routes/web/learn.py:119
+msgid "고객/이메일: 공식 + 존댓말 ON + 이모지 OFF"
+msgstr ""
+
+#: routes/web/learn.py:128
+msgid "확장프로그램"
+msgstr ""
+
+#: routes/web/learn.py:129
+msgid "페이지 이동 없이 그 자리에서 순화하는 것이 핵심"
+msgstr ""
+
+#: routes/web/learn.py:133
+msgid "우클릭 순화 (가장 빠른 흐름)"
+msgstr ""
+
+#: routes/web/learn.py:134
+msgid "웹페이지에서 문장 드래그 → 우클릭 → 옵션만 선택 → 즉시 사용"
+msgstr ""
+
+#: routes/web/learn.py:136 routes/web/learn.py:153
+msgid "사용 방법"
+msgstr ""
+
+#: routes/web/learn.py:137
+msgid "문장을 드래그로 선택"
+msgstr ""
+
+#: routes/web/learn.py:138
+msgid "우클릭 → Lexinoa 순화"
+msgstr ""
+
+#: routes/web/learn.py:139
+msgid "팝업에서 카테고리/톤/체크만 선택"
+msgstr ""
+
+#: routes/web/learn.py:140
+msgid "결과 복사 또는 교체"
+msgstr ""
+
+#: routes/web/learn.py:142
+msgid "언제 최고인가"
+msgstr ""
+
+#: routes/web/learn.py:143
+msgid "메일/채팅/폼 입력 도중: 페이지를 옮기지 않고 바로 다듬고 싶을 때"
+msgstr ""
+
+#: routes/web/learn.py:144
+msgid "전체 글이 아니라 ‘문장 일부만’ 빠르게 고치고 싶을 때"
+msgstr ""
+
+#: routes/web/learn.py:150
+msgid "드래그로 바로 순화 (흐름 유지)"
+msgstr ""
+
+#: routes/web/learn.py:151
+msgid "작성 흐름을 끊지 않는 것이 확장의 가치입니다."
+msgstr ""
+
+#: routes/web/learn.py:154
+msgid "문장 드래그"
+msgstr ""
+
+#: routes/web/learn.py:155
+msgid "뜬 UI에서 옵션만 선택"
+msgstr ""
+
+#: routes/web/learn.py:156
+msgid "결과를 즉시 반영"
+msgstr ""
+
+#: routes/web/learn.py:158
+msgid "옵션 선택 팁"
+msgstr ""
+
+#: routes/web/learn.py:159
+msgid "메신저면: 완충문 ON을 먼저"
+msgstr ""
+
+#: routes/web/learn.py:160
+msgid "이메일이면: 공식 + 존댓말 ON"
+msgstr ""
+
+#: routes/web/learn.py:161
+msgid "재촉이면: 리마인드 카테고리를 우선"
+msgstr ""
+
+#: routes/web/learn.py:170 templates/subscribe.html:253
+msgid "템플릿"
+msgstr ""
+
+#: routes/web/learn.py:171
+msgid "프롬프트가 아니라 ‘옵션 조합’을 저장해서 반복을 없앰"
+msgstr ""
+
+#: routes/web/learn.py:175
+msgid "템플릿 = 옵션 조합 저장"
+msgstr ""
+
+#: routes/web/learn.py:176
+msgid "자주 쓰는 카테고리/톤/체크 조합을 저장해두면 다음부터는 클릭 몇 번으로 끝납니다."
+msgstr ""
+
+#: routes/web/learn.py:178
+msgid "추천 템플릿"
+msgstr ""
+
+#: routes/web/learn.py:179
+msgid "업무 요청(부드럽게)"
+msgstr ""
+
+#: routes/web/learn.py:179
+msgid "요청 / 부드럽게 / 완충문 ON / 이모지 OFF"
+msgstr ""
+
+#: routes/web/learn.py:180
+msgid "고객 안내(공식)"
+msgstr ""
+
+#: routes/web/learn.py:180
+msgid "요청 또는 안내 / 공식 / 존댓말 ON / 이모지 OFF"
+msgstr ""
+
+#: routes/web/learn.py:181
+msgid "기한 리마인드(단호)"
+msgstr ""
+
+#: routes/web/learn.py:181
+msgid "리마인드 / 단호하지만 예의 / 완충문 OFF"
+msgstr ""
+
+#: routes/web/learn.py:183
+msgid "사용 흐름"
+msgstr ""
+
+#: routes/web/learn.py:184 templates/mainpage.html:114
+#: templates/mainpage.html:129
+msgid "템플릿 선택"
+msgstr ""
+
+#: routes/web/learn.py:185
+msgid "문장만 붙여넣기(또는 드래그)"
+msgstr ""
+
+#: routes/web/learn.py:186
+msgid "필요하면 톤만 변경해 미세 조정"
+msgstr ""
+
+#: templates/admin_analytics.html:3 templates/admin_analytics.html:23
+#: templates/admin_usage.html:22
+msgid "어드민 대시보드"
+msgstr ""
+
+#: templates/admin_analytics.html:25 templates/admin_usage.html:24
+msgid "방문자 수"
+msgstr ""
+
+#: templates/admin_analytics.html:26 templates/admin_usage.html:25
+#: templates/admin_usage.html:29
+msgid "사용량 수"
+msgstr ""
+
+#: templates/admin_analytics.html:27 templates/admin_usage.html:26
+msgid "문의/피드백"
+msgstr ""
+
+#: templates/admin_analytics.html:31
+msgid "핵심 지표"
+msgstr ""
+
+#: templates/admin_analytics.html:33
+msgid "오늘 방문"
+msgstr ""
+
+#: templates/admin_analytics.html:38
+msgid "이번 주 방문"
+msgstr ""
+
+#: templates/admin_analytics.html:43
+msgid "이번 달 방문"
+msgstr ""
+
+#: templates/admin_analytics.html:50
+msgid "필터"
+msgstr ""
+
+#: templates/admin_analytics.html:52
+msgid "기간"
+msgstr ""
+
+#: templates/admin_analytics.html:56
+msgid "경로"
+msgstr ""
+
+#: templates/admin_analytics.html:58 templates/learn/_layout.html:36
+msgid "전체"
+msgstr ""
+
+#: templates/admin_analytics.html:66
+msgid "유저"
+msgstr ""
+
+#: templates/admin_analytics.html:67
+msgid "user_id 또는 email"
+msgstr ""
+
+#: templates/admin_analytics.html:68 templates/admin_feedback.html:63
+msgid "적용"
+msgstr ""
+
+#: templates/admin_analytics.html:69 templates/admin_feedback.html:64
+#: templates/mainpage.html:124 templates/mainpage.html:138
+msgid "초기화"
+msgstr ""
+
+#: templates/admin_analytics.html:71
+msgid "※ 필터는 아래 “방문 시계열”에만 반영됩니다. 상단 KPI는 전체 기준입니다."
+msgstr ""
+
+#: templates/admin_analytics.html:75
+msgid "방문 시계열"
+msgstr ""
+
+#: templates/admin_analytics.html:76
+msgid "최근 방문 추이"
+msgstr ""
+
+#: templates/admin_analytics.html:77 templates/admin_feedback.html:72
+#: templates/admin_usage.html:54
+msgid "불러오는 중…"
+msgstr ""
+
+#: templates/admin_feedback.html:3
+msgid "어드민 · 피드백"
+msgstr ""
+
+#: templates/admin_feedback.html:35
+msgid "피드백 관리"
+msgstr ""
+
+#: templates/admin_feedback.html:38
+msgid "방문자 대시보드"
+msgstr ""
+
+#: templates/admin_feedback.html:39
+msgid "사용량 대시보드"
+msgstr ""
+
+#: templates/admin_feedback.html:40 templates/base.html:57
+#: templates/mypage.html:84 templates/verify_result.html:13
+msgid "마이페이지"
+msgstr ""
+
+#: templates/admin_feedback.html:48
+msgid "전체 카테고리"
+msgstr ""
+
+#: templates/admin_feedback.html:57
+msgid "전체 상태"
+msgstr ""
+
+#: templates/admin_feedback.html:58
+msgid "미해결"
+msgstr ""
+
+#: templates/admin_feedback.html:59
+msgid "해결"
+msgstr ""
+
+#: templates/admin_feedback.html:62
+msgid "이메일/유저/내용 검색"
+msgstr ""
+
+#: templates/admin_feedback.html:74
+msgid "이전"
+msgstr ""
+
+#: templates/admin_feedback.html:76
+msgid "다음"
+msgstr ""
+
+#: templates/admin_feedback_detail.html:3
+msgid "어드민 · 피드백 상세"
+msgstr ""
+
+#: templates/admin_feedback_detail.html:24
+msgid "저장됨"
+msgstr ""
+
+#: templates/admin_feedback_detail.html:34 templates/mypage.html:314
+msgid "작성일"
+msgstr ""
+
+#: templates/admin_feedback_detail.html:35 templates/feedback.html:114
+#: templates/history.html:139 templates/mainpage.html:261
+msgid "카테고리"
+msgstr ""
+
+#: templates/admin_feedback_detail.html:36
+msgid "작성자"
+msgstr ""
+
+#: templates/admin_feedback_detail.html:37
+msgid "페이지"
+msgstr ""
+
+#: templates/admin_feedback_detail.html:41 templates/mypage.html:327
+msgid "답변완료"
+msgstr ""
+
+#: templates/admin_feedback_detail.html:46 templates/mypage.html:329
+msgid "대기"
+msgstr ""
+
+#: templates/admin_feedback_detail.html:51
+msgid "문의/피드백 내용"
+msgstr ""
+
+#: templates/admin_feedback_detail.html:58 templates/mypage.html:317
+msgid "관리자 답변"
+msgstr ""
+
+#: templates/admin_feedback_detail.html:60
+msgid "관리자 답변을 입력하세요. 비워서 저장하면 답변이 제거됩니다."
+msgstr ""
+
+#: templates/admin_feedback_detail.html:62 templates/mainpage.html:312
+#: templates/mypage.html:249
+msgid "저장"
+msgstr ""
+
+#: templates/admin_feedback_detail.html:63
+msgid "목록으로"
+msgstr ""
+
+#: templates/admin_usage.html:3
+msgid "어드민 · 사용량 분석"
+msgstr ""
+
+#: templates/admin_usage.html:30
+msgid "사용량 지표"
+msgstr ""
+
+#: templates/admin_usage.html:32
+msgid "오늘 사용량"
+msgstr ""
+
+#: templates/admin_usage.html:36
+msgid "이번 주 사용량"
+msgstr ""
+
+#: templates/admin_usage.html:40 templates/mypage.html:166
+msgid "이번 달 사용량"
+msgstr ""
+
+#: templates/admin_usage.html:45
+msgid "사용량 시계열"
+msgstr ""
+
+#: templates/admin_usage.html:47
+msgid "사용량 추이 그래프"
+msgstr ""
+
+#: templates/admin_usage.html:49
+msgid "오늘"
+msgstr ""
+
+#: templates/admin_usage.html:50
+msgid "이번 주"
+msgstr ""
+
+#: templates/admin_usage.html:51
+msgid "이번 달"
+msgstr ""
+
+#: templates/base.html:9
+msgid "상황에 맞게 문장을 자연스럽게 다듬어주는 문장 순화 도구. 카테고리와 톤만 선택하면 바로 결과를 얻을 수 있습니다."
+msgstr ""
+
+#: templates/base.html:46
+msgid "어드민 분석"
+msgstr ""
+
+#: templates/base.html:49
+msgid "다크/라이트"
+msgstr ""
+
+#: templates/base.html:51 templates/mainpage.html:159
+#: templates/mainpage.html:273
+msgid "피드백"
+msgstr ""
+
+#: templates/base.html:52
+msgid "구독"
+msgstr ""
+
+#: templates/base.html:53 templates/learn/_layout.html:12
+#: templates/learn/page.html:6
+msgid "가이드"
+msgstr ""
+
+#: templates/base.html:56
+msgid "기록보기"
+msgstr ""
+
+#: templates/base.html:62
+msgid "로그아웃"
+msgstr ""
+
+#: templates/base.html:64 templates/login.html:232 templates/login.html:269
+#: templates/signup.html:187 templates/subscribe.html:160
+msgid "로그인"
+msgstr ""
+
+#: templates/base.html:75 templates/reset.html:189 templates/signup.html:183
+#: templates/signup.html:197
+msgid "이용약관"
+msgstr ""
+
+#: templates/base.html:77 templates/reset.html:191 templates/signup.html:199
+msgid "개인정보 처리방침"
+msgstr ""
+
+#: templates/base.html:79 templates/reset.html:193 templates/signup.html:201
+msgid "면책 고지"
+msgstr ""
+
+#: templates/checkout.html:3
+msgid "Lexinoa · 결제 체크아웃"
+msgstr ""
+
+#: templates/checkout.html:22
+msgid "Lexinoa Pro 결제"
+msgstr ""
+
+#: templates/checkout.html:23
+msgid "← 가격으로 돌아가기"
+msgstr ""
+
+#: templates/checkout.html:28
+msgid "Pro 월 구독 결제"
+msgstr ""
+
+#: templates/checkout.html:30
+msgid "카드를 한 번만 등록하면, 이후 매달 자동으로 결제가 진행됩니다."
+msgstr ""
+
+#: templates/checkout.html:33
+msgid "현재 구독 기능을 준비 중입니다. 조금만 기다려주세요."
+msgstr ""
+
+#: templates/checkout.html:38
+msgid "카드 등록하고 결제 진행"
+msgstr ""
+
+#: templates/checkout.html:39 templates/feedback.html:148
+#: templates/mainpage.html:311
+msgid "취소"
+msgstr ""
+
+#: templates/checkout_complete.html:6
+msgid "결제 처리중…"
+msgstr ""
+
+#: templates/checkout_complete.html:7
+msgid "카드 등록 정보를 확인하고 첫 결제를 진행하고 있습니다."
+msgstr ""
+
+#: templates/disclaimer.html:3 templates/disclaimer.html:17
+msgid "Lexinoa 서비스 면책 고지"
+msgstr ""
+
+#: templates/disclaimer.html:18 templates/privacy.html:20
+#: templates/terms.html:17
+msgid "시행일: 2026년 1월 1일"
+msgstr ""
+
+#: templates/disclaimer.html:22
+msgid ""
+"본 면책 고지는 Lexinoa(이하 “회사”)가 제공하는 웹 서비스 및\\n      해당 서비스와 연동되는 브라우저 확장 "
+"프로그램을 포함한 모든 서비스(이하 “서비스”) 이용에 적용됩니다.\\n      회원은 서비스를 이용함으로써 본 고지의 내용을 "
+"충분히 이해하고 이에 동의한 것으로 간주합니다."
+msgstr ""
+
+#: templates/disclaimer.html:25
+msgid "제1조 (정보 및 콘텐츠의 성격)"
+msgstr ""
+
+#: templates/disclaimer.html:27
+msgid ""
+"서비스에서 제공되는 모든 콘텐츠는 일반적인 정보 제공 및 판단 보조 목적이며,\\n      법률·의학·재무·투자 등 전문적인 "
+"조언을 대체하지 않습니다."
+msgstr ""
+
+#: templates/disclaimer.html:30
+msgid ""
+"서비스에는 인공지능(AI) 기술을 활용한 자동 생성·요약·변환 기능이 포함될 수 있으며,\\n      해당 결과물은 오류, 누락 "
+"또는 부정확한 내용을 포함할 수 있습니다."
+msgstr ""
+
+#: templates/disclaimer.html:33
+msgid ""
+"회원은 AI 결과물을 외부에 사용하거나 의사결정에 활용하기 전에\\n      반드시 자체적인 검토와 판단을 거쳐야 하며,\\n"
+"      그에 따른 모든 책임은 회원 본인에게 있습니다."
+msgstr ""
+
+#: templates/disclaimer.html:36
+msgid "제2조 (서비스 제공의 한계)"
+msgstr ""
+
+#: templates/disclaimer.html:38
+msgid ""
+"회사는 안정적인 서비스 제공을 위해 노력하지만,\\n      서버 장애, 시스템 점검, 통신 문제, 외부 서비스 장애 등으로 "
+"인해\\n      서비스 제공이 일시적으로 중단되거나 지연될 수 있습니다."
+msgstr ""
+
+#: templates/disclaimer.html:41
+msgid "제3조 (유료 서비스 및 결제 관련 면책)"
+msgstr ""
+
+#: templates/disclaimer.html:43
+msgid ""
+"결제 및 구독 기능은 외부 결제 대행사를 통해 처리되며,\\n      결제 시스템 장애 등 회사의 직접적인 통제 범위를 벗어난 "
+"사유로 발생한 문제에 대해서는\\n      관련 법령이 허용하는 범위 내에서 회사의 책임이 제한될 수 있습니다."
+msgstr ""
+
+#: templates/disclaimer.html:46
+msgid "제4조 (책임의 제한)"
+msgstr ""
+
+#: templates/disclaimer.html:48
+msgid ""
+"회사는 관련 법령이 허용하는 범위 내에서\\n      서비스 이용으로 발생한 간접적, 부수적, 특별한 손해에 대해 책임을 "
+"제한합니다."
+msgstr ""
+
+#: templates/feedback.html:3
+msgid "Lexinoa · 피드백"
+msgstr ""
+
+#: templates/feedback.html:101
+msgid "건의사항 / 피드백"
+msgstr ""
+
+#: templates/feedback.html:102
+msgid "서비스 개선을 위해 자유롭게 의견을 남겨주세요."
+msgstr ""
+
+#: templates/feedback.html:116 templates/mainpage.html:150
+#: templates/mainpage.html:264
+msgid "일반"
+msgstr ""
+
+#: templates/feedback.html:117
+msgid "버그 신고"
+msgstr ""
+
+#: templates/feedback.html:118
+msgid "UX 제안"
+msgstr ""
+
+#: templates/feedback.html:119
+msgid "기능 아이디어"
+msgstr ""
+
+#: templates/feedback.html:120
+msgid "기타"
+msgstr ""
+
+#: templates/feedback.html:126
+msgid "아이디(선택)"
+msgstr ""
+
+#: templates/feedback.html:128
+msgid "로그인 아이디"
+msgstr ""
+
+#: templates/feedback.html:132
+msgid "이메일(선택, 답변용)"
+msgstr ""
+
+#: templates/feedback.html:140 templates/mypage.html:315
+msgid "내용"
+msgstr ""
+
+#: templates/feedback.html:141
+msgid "어떤 점이 불편했나요? 또는 어떤 기능이 있으면 좋겠나요?"
+msgstr ""
+
+#: templates/feedback.html:149
+msgid "제출"
+msgstr ""
+
+#: templates/forgot.html:3
+msgid "Lexinoa · 비밀번호 재설정 요청"
+msgstr ""
+
+#: templates/forgot.html:125 templates/login.html:263 templates/reset.html:148
+msgid "비밀번호 재설정"
+msgstr ""
+
+#: templates/forgot.html:126
+msgid "가입하신 이메일 주소로 재설정 링크를 보내드릴게요."
+msgstr ""
+
+#: templates/forgot.html:139 templates/signup.html:166
+msgid "이메일"
+msgstr ""
+
+#: templates/forgot.html:144 templates/signup_verify_pending.html:19
+msgid "로그인으로 돌아가기"
+msgstr ""
+
+#: templates/forgot.html:146
+msgid "이메일로 링크 받기"
+msgstr ""
+
+#: templates/history.html:116 templates/login.html:222 templates/reset.html:141
+#: templates/signup.html:141
+msgid "🌙 다크/라이트"
+msgstr ""
+
+#: templates/history.html:117
+msgid "메인"
+msgstr ""
+
+#: templates/history.html:127
+msgid "내 보정 기록"
+msgstr ""
+
+#: templates/history.html:128
+msgid "최근 100건까지 표시됩니다. (로그인 사용자 전용)"
+msgstr ""
+
+#: templates/history.html:131
+msgid "아직 기록이 없습니다."
+msgstr ""
+
+#: templates/history.html:137
+msgid "시간"
+msgstr ""
+
+#: templates/history.html:138 templates/mainpage.html:100
+#: templates/summarize.html:27
+msgid "입력"
+msgstr ""
+
+#: templates/history.html:140
+msgid "톤"
+msgstr ""
+
+#: templates/history.html:141
+msgid "옵션"
+msgstr ""
+
+#: templates/history.html:142 templates/mainpage.html:223
+#: templates/summarize.html:46
+msgid "출력"
+msgstr ""
+
+#: templates/history.html:179 templates/verify_notice.html:21
+msgid "돌아가기"
+msgstr ""
+
+#: templates/login.html:3
+msgid "Lexinoa · 로그인"
+msgstr ""
+
+#: templates/login.html:233
+msgid "계정으로 로그인해 주세요. 비밀번호는 서버로 안전하게 전송됩니다."
+msgstr ""
+
+#: templates/login.html:247 templates/signup.html:162
+msgid "아이디를 입력하세요."
+msgstr ""
+
+#: templates/login.html:251
+msgid "비밀번호"
+msgstr ""
+
+#: templates/login.html:254
+msgid "보기"
+msgstr ""
+
+#: templates/login.html:261
+msgid "로그인 상태 유지"
+msgstr ""
+
+#: templates/login.html:267
+msgid "계정이 없으신가요?"
+msgstr ""
+
+#: templates/login.html:267 templates/privacy.html:35 templates/signup.html:148
+#: templates/subscribe.html:180
+msgid "회원가입"
+msgstr ""
+
+#: templates/login.html:275
+msgid "Google로 로그인"
+msgstr ""
+
+#: templates/mainpage.html:3
+msgid "Lexinoa - 문장 다듬기 | 말투 교정"
+msgstr ""
+
+#: templates/mainpage.html:5
+msgid ""
+"이메일, 보고서, 카카오톡 메시지까지 더 자연스럽고 정중한 문장으로 바꿔줍니다. Lexinoa는 상황별 맞춤 어투를 실시간으로 "
+"제안하는 커뮤니케이션 보조 서비스입니다."
+msgstr ""
+
+#: templates/mainpage.html:54
+msgid "크롬 확장으로 더 빠르게"
+msgstr ""
+
+#: templates/mainpage.html:64
+msgid "드래그·우클릭으로 바로 문장 순화/말투 교정을 실행할 수 있습니다."
+msgstr ""
+
+#: templates/mainpage.html:74
+msgid "크롬 웹스토어에서 설치"
+msgstr ""
+
+#: templates/mainpage.html:78 templates/mainpage.html:251
+#: templates/mypage.html:245
+msgid "닫기"
+msgstr ""
+
+#: templates/mainpage.html:101
+msgid "전달할 문장을 아래에 입력하세요."
+msgstr ""
+
+#: templates/mainpage.html:102
+msgid "예) 왜 이렇게 늦게 보내세요? 다음부턴 제때 보내세요."
+msgstr ""
+
+#: templates/mainpage.html:108
+msgid "카테고리 & 말투 설정 (선택 시 자동 추가)"
+msgstr ""
+
+#: templates/mainpage.html:115 templates/mainpage.html:119
+#: templates/mainpage.html:130 templates/mainpage.html:134
+msgid "템플릿 선택…"
+msgstr ""
+
+#: templates/mainpage.html:116 templates/mainpage.html:131
+msgid "템플릿을 저장해서"
+msgstr ""
+
+#: templates/mainpage.html:117 templates/mainpage.html:132
+msgid "상황에 맞게 사용할 수 있습니다."
+msgstr ""
+
+#: templates/mainpage.html:118 templates/mainpage.html:133
+msgid "예) 업무, 정중하게, 존댓말 선택"
+msgstr ""
+
+#: templates/mainpage.html:121
+msgid "템플릿 추가"
+msgstr ""
+
+#: templates/mainpage.html:122
+msgid "템플릿 삭제"
+msgstr ""
+
+#: templates/mainpage.html:126
+msgid "🔒 Pro 전용"
+msgstr ""
+
+#: templates/mainpage.html:136
+msgid "구독하기"
+msgstr ""
+
+#: templates/mainpage.html:146 templates/mainpage.html:148
+msgid "카테고리 선택"
+msgstr ""
+
+#: templates/mainpage.html:149
+msgid "카테고리 선택…"
+msgstr ""
+
+#: templates/mainpage.html:151 templates/mainpage.html:265
+msgid "업무"
+msgstr ""
+
+#: templates/mainpage.html:152 templates/mainpage.html:266
+msgid "고객응대"
+msgstr ""
+
+#: templates/mainpage.html:153 templates/mainpage.html:267
+msgid "사과"
+msgstr ""
+
+#: templates/mainpage.html:154 templates/mainpage.html:268
+msgid "문의"
+msgstr ""
+
+#: templates/mainpage.html:155 templates/mainpage.html:269
+msgid "감사"
+msgstr ""
+
+#: templates/mainpage.html:157 templates/mainpage.html:271
+msgid "안내"
+msgstr ""
+
+#: templates/mainpage.html:158 templates/mainpage.html:272
+msgid "보고/결제"
+msgstr ""
+
+#: templates/mainpage.html:169 templates/mainpage.html:171
+msgid "말투 선택"
+msgstr ""
+
+#: templates/mainpage.html:172
+msgid "말투 선택…"
+msgstr ""
+
+#: templates/mainpage.html:174 templates/mainpage.html:282
+msgid "정중하게"
+msgstr ""
+
+#: templates/mainpage.html:175 templates/mainpage.html:283
+msgid "간결하게"
+msgstr ""
+
+#: templates/mainpage.html:176 templates/mainpage.html:284
+msgid "보고서체"
+msgstr ""
+
+#: templates/mainpage.html:177 templates/mainpage.html:285
+msgid "친근하게"
+msgstr ""
+
+#: templates/mainpage.html:178 templates/mainpage.html:286
+msgid "따듯하게"
+msgstr ""
+
+#: templates/mainpage.html:179 templates/mainpage.html:287
+msgid "차분하게"
+msgstr ""
+
+#: templates/mainpage.html:180 templates/mainpage.html:288
+msgid "격식있게"
+msgstr ""
+
+#: templates/mainpage.html:181 templates/mainpage.html:289
+msgid "명확하게"
+msgstr ""
+
+#: templates/mainpage.html:182 templates/mainpage.html:290
+msgid "감정 없이(중립)"
+msgstr ""
+
+#: templates/mainpage.html:194 templates/mainpage.html:297
+msgid "존댓말 유지"
+msgstr ""
+
+#: templates/mainpage.html:198 templates/mainpage.html:301
+msgid "완충문·인사 추가"
+msgstr ""
+
+#: templates/mainpage.html:202 templates/mainpage.html:305
+msgid "이모지 허용 🙂"
+msgstr ""
+
+#: templates/mainpage.html:207
+msgid "선택한 칩을 클릭하면 제거됩니다."
+msgstr ""
+
+#: templates/mainpage.html:209 templates/summarize.html:40
+msgid "단축키: ⌘/Ctrl + Enter"
+msgstr ""
+
+#: templates/mainpage.html:212
+msgid "번역하기"
+msgstr ""
+
+#: templates/mainpage.html:217
+msgid "※ 템플릿 저장·불러오기는 구독(Pro)에서 사용할 수 있습니다."
+msgstr ""
+
+#: templates/mainpage.html:225
+msgid "서버에서 처리된 결과가 여기에 표시됩니다."
+msgstr ""
+
+#: templates/mainpage.html:227
+msgid "※ 원하는 결과가 나오지 않을 수도 있습니다"
+msgstr ""
+
+#: templates/mainpage.html:250
+msgid "템플릿 저장"
+msgstr ""
+
+#: templates/mainpage.html:256
+msgid "템플릿 이름"
+msgstr ""
+
+#: templates/mainpage.html:257
+msgid "예) 업무·정중·존댓말"
+msgstr ""
+
+#: templates/mainpage.html:263 templates/mainpage.html:280
+msgid "선택 안 함"
+msgstr ""
+
+#: templates/mainpage.html:278
+msgid "말투"
+msgstr ""
+
+#: templates/mainpage.html:319
+msgid "이 사이트는 서비스 제공 및 광고를 위해 쿠키를 사용할 수 있습니다."
+msgstr ""
+
+#: templates/mainpage.html:320 templates/subscribe.html:264
+#: templates/subscribe.html:268 templates/subscribe.html:272
+msgid "자세히"
+msgstr ""
+
+#: templates/mainpage.html:321
+msgid "동의"
+msgstr ""
+
+#: templates/mainpage.html:331
+msgid "사용자 입력이 없습니다."
+msgstr ""
+
+#: templates/mypage.html:3
+msgid "마이페이지 | Lexinoa"
+msgstr ""
+
+#: templates/mypage.html:88
+msgid "계정"
+msgstr ""
+
+#: templates/mypage.html:109
+msgid "닉네임"
+msgstr ""
+
+#: templates/mypage.html:110
+msgid "서비스에서 표시되는 이름입니다. 최대 20자."
+msgstr ""
+
+#: templates/mypage.html:114
+msgid "현재:"
+msgstr ""
+
+#: templates/mypage.html:121
+msgid "새 닉네임"
+msgstr ""
+
+#: templates/mypage.html:131
+msgid "예: yysasas1002"
+msgstr ""
+
+#: templates/mypage.html:134
+msgid "변경"
+msgstr ""
+
+#: templates/mypage.html:137
+msgid "영문/숫자/._- 만 권장합니다."
+msgstr ""
+
+#: templates/mypage.html:145
+msgid "완료"
+msgstr ""
+
+#: templates/mypage.html:147
+msgid "미완료"
+msgstr ""
+
+#: templates/mypage.html:155 templates/verify_notice.html:17
+msgid "인증 메일 보내기"
+msgstr ""
+
+#: templates/mypage.html:156
+msgid "구독 이용 전 인증이 필요합니다."
+msgstr ""
+
+#: templates/mypage.html:168
+msgid "사용:"
+msgstr ""
+
+#: templates/mypage.html:182
+msgid "직업 / 직업 설명"
+msgstr ""
+
+#: templates/mypage.html:183
+msgid "직업에 따라 자연스러운 말투와 표현 방식이 다를 수 있습니다."
+msgstr ""
+
+#: templates/mypage.html:184
+msgid "입력하신 직업 정보는 문장을 더 자연스럽게 순화하는 데 활용됩니다."
+msgstr ""
+
+#: templates/mypage.html:185
+msgid "(선택사항)"
+msgstr ""
+
+#: templates/mypage.html:193 templates/mypage.html:217
+msgid "직업"
+msgstr ""
+
+#: templates/mypage.html:195 templates/mypage.html:231
+msgid "직업 설명"
+msgstr ""
+
+#: templates/mypage.html:200
+msgid "수정"
+msgstr ""
+
+#: templates/mypage.html:205
+msgid "삭제"
+msgstr ""
+
+#: templates/mypage.html:222
+msgid "예: 개발자, 디자이너, 대학생, 마케터"
+msgstr ""
+
+#: templates/mypage.html:227
+msgid "최대 50자"
+msgstr ""
+
+#: templates/mypage.html:235
+msgid "본인 직업에 대해 자유롭게 설명해주세요. (100자 이내)"
+msgstr ""
+
+#: templates/mypage.html:309
+msgid "내 문의 / 피드백"
+msgstr ""
+
+#: templates/mypage.html:316 templates/mypage.html:439
+msgid "상태"
+msgstr ""
+
+#: templates/mypage.html:339
+msgid "아직 답변이 등록되지 않았습니다."
+msgstr ""
+
+#: templates/mypage.html:347
+msgid "등록한 피드백이 없습니다."
+msgstr ""
+
+#: templates/mypage.html:355
+msgid "최근 방문"
+msgstr ""
+
+#: templates/mypage.html:366
+msgid "기록이 없습니다."
+msgstr ""
+
+#: templates/mypage.html:374
+msgid "구독 / 결제"
+msgstr ""
+
+#: templates/mypage.html:386
+msgid "상태:"
+msgstr ""
+
+#: templates/mypage.html:388
+msgid "· 플랜:"
+msgstr ""
+
+#: templates/mypage.html:393
+msgid "해지 예약됨 —"
+msgstr ""
+
+#: templates/mypage.html:393
+msgid "까지 이용 가능하며, 다음 결제부터 과금이 중단됩니다."
+msgstr ""
+
+#: templates/mypage.html:397
+msgid "다음 결제일:"
+msgstr ""
+
+#: templates/mypage.html:406
+msgid "나이스페이먼츠 심사 완료 후 제공됩니다."
+msgstr ""
+
+#: templates/mypage.html:407
+msgid "결제수단 변경 (준비중)"
+msgstr ""
+
+#: templates/mypage.html:416
+msgid "해지 예약 취소"
+msgstr ""
+
+#: templates/mypage.html:424
+msgid "구독 취소"
+msgstr ""
+
+#: templates/mypage.html:432
+msgid "활성 구독이 없습니다."
+msgstr ""
+
+#: templates/mypage.html:433
+msgid "구독 알아보기"
+msgstr ""
+
+#: templates/mypage.html:439
+msgid "시각"
+msgstr ""
+
+#: templates/mypage.html:439
+msgid "금액"
+msgstr ""
+
+#: templates/mypage.html:439
+msgid "통화"
+msgstr ""
+
+#: templates/mypage.html:459 templates/mypage.html:461
+msgid "계정 삭제"
+msgstr ""
+
+#: templates/mypage.html:462
+msgid "주의"
+msgstr ""
+
+#: templates/mypage.html:467
+msgid "현재 계정은"
+msgstr ""
+
+#: templates/mypage.html:467
+msgid "탈퇴 유예 상태"
+msgstr ""
+
+#: templates/mypage.html:467
+msgid "입니다. (복구 가능)"
+msgstr ""
+
+#: templates/mypage.html:469
+msgid "완전 삭제 예정일:"
+msgstr ""
+
+#: templates/mypage.html:474
+msgid "계정 복구"
+msgstr ""
+
+#: templates/mypage.html:480
+msgid "복구 시 기존 데이터는 되돌아오지만, 구독은 자동 복구되지 않습니다. (재구독 필요)"
+msgstr ""
+
+#: templates/mypage.html:486
+msgid "계정을 삭제하면 즉시 로그아웃되며,"
+msgstr ""
+
+#: templates/mypage.html:486
+msgid "30일 동안 복구"
+msgstr ""
+
+#: templates/mypage.html:486
+msgid "할 수 있습니다."
+msgstr ""
+
+#: templates/mypage.html:488
+msgid "30일이 지나면 계정과 사용 기록은 영구적으로 삭제되며 복구할 수 없습니다."
+msgstr ""
+
+#: templates/mypage.html:492
+msgid "DELETE 입력"
+msgstr ""
+
+#: templates/mypage.html:494
+msgid "계정 삭제 (30일 유예)"
+msgstr ""
+
+#: templates/mypage.html:497
+msgid "실수 방지를 위해 DELETE를 입력해야 합니다."
+msgstr ""
+
+#: templates/privacy.html:3 templates/privacy.html:19
+msgid "Lexinoa 개인정보 처리방침"
+msgstr ""
+
+#: templates/privacy.html:24
+msgid "Lexinoa(이하 “회사”)는 개인정보 보호법 등 관계 법령을 준수하며,\\n      이용자의 개인정보를 안전하게 보호합니다."
+msgstr ""
+
+#: templates/privacy.html:27
+msgid "제1조 (수집하는 개인정보)"
+msgstr ""
+
+#: templates/privacy.html:30
+msgid "구분"
+msgstr ""
+
+#: templates/privacy.html:31
+msgid "수집 항목"
+msgstr ""
+
+#: templates/privacy.html:32
+msgid "목적"
+msgstr ""
+
+#: templates/privacy.html:36
+msgid "이메일 주소, 비밀번호(암호화)"
+msgstr ""
+
+#: templates/privacy.html:37
+msgid "회원 식별 및 계정 관리"
+msgstr ""
+
+#: templates/privacy.html:40
+msgid "서비스 이용"
+msgstr ""
+
+#: templates/privacy.html:41
+msgid "IP 주소, 접속 로그, 이용 기록"
+msgstr ""
+
+#: templates/privacy.html:42
+msgid "보안 및 서비스 품질 개선"
+msgstr ""
+
+#: templates/privacy.html:45
+msgid "문장 순화 기능"
+msgstr ""
+
+#: templates/privacy.html:46
+msgid "사용자가 입력하거나 선택하여 전송한 텍스트"
+msgstr ""
+
+#: templates/privacy.html:47
+msgid "문장 순화 및 결과 제공"
+msgstr ""
+
+#: templates/privacy.html:50
+msgid "결제 이용"
+msgstr ""
+
+#: templates/privacy.html:51
+msgid "결제 기록"
+msgstr ""
+
+#: templates/privacy.html:52
+msgid "요금 정산"
+msgstr ""
+
+#: templates/privacy.html:56
+msgid "※ 신용카드 번호 등 결제 정보는 결제 대행사가 직접 처리하며 회사는 저장하지 않습니다."
+msgstr ""
+
+#: templates/privacy.html:57
+msgid "본 개인정보처리방침은 Lexinoa 웹 서비스 및 해당 서비스와 연동되는 브라우저 확장 프로그램에 모두 적용됩니다."
+msgstr ""
+
+#: templates/privacy.html:59
+msgid "제2조 (보유 및 이용 기간)"
+msgstr ""
+
+#: templates/privacy.html:61
+msgid ""
+"개인정보는 수집 및 이용 목적이 달성된 후 지체 없이 파기됩니다.\\n      단, 관련 법령에 따라 보관이 필요한 경우에는 해당"
+" 기간 동안 보관됩니다."
+msgstr ""
+
+#: templates/privacy.html:64
+msgid "제3조 (개인정보의 제3자 제공)"
+msgstr ""
+
+#: templates/privacy.html:66
+msgid ""
+"회사는 이용자의 개인정보를 제3자에게 판매하거나 제공하지 않습니다.\\n      다만, 서비스 제공을 위해 필요한 경우 개인정보 "
+"처리 위탁을 할 수 있습니다."
+msgstr ""
+
+#: templates/privacy.html:69
+msgid "제4조 (개인정보 처리 위탁)"
+msgstr ""
+
+#: templates/privacy.html:72
+msgid "수탁업체"
+msgstr ""
+
+#: templates/privacy.html:73
+msgid "위탁 내용"
+msgstr ""
+
+#: templates/privacy.html:76
+msgid "나이스페이먼츠㈜"
+msgstr ""
+
+#: templates/privacy.html:77
+msgid "결제 처리"
+msgstr ""
+
+#: templates/privacy.html:81
+msgid "서버 운영"
+msgstr ""
+
+#: templates/privacy.html:85
+msgid "제5조 (이용자의 권리)"
+msgstr ""
+
+#: templates/privacy.html:87
+msgid ""
+"이용자는 언제든지 자신의 개인정보에 대해 열람, 정정, 삭제, 처리 정지를 요청할 수 있으며,\\n      아래 문의처를 통해 "
+"관련 요청을 할 수 있습니다."
+msgstr ""
+
+#: templates/privacy.html:90
+msgid "제6조 (문의)"
+msgstr ""
+
+#: templates/privacy.html:92
+msgid "개인정보 관련 문의:"
+msgstr ""
+
+#: templates/reset.html:5
+msgid "Lexinoa · 비밀번호 재설정"
+msgstr ""
+
+#: templates/reset.html:149
+msgid "새 비밀번호를 입력해 주세요. (8자 이상)"
+msgstr ""
+
+#: templates/reset.html:162
+msgid "새 비밀번호"
+msgstr ""
+
+#: templates/reset.html:166
+msgid "새 비밀번호 확인"
+msgstr ""
+
+#: templates/reset.html:171
+msgid "로그인으로 이동"
+msgstr ""
+
+#: templates/reset.html:173
+msgid "변경하기"
+msgstr ""
+
+#: templates/reset.html:181
+msgid "다시 요청하기"
+msgstr ""
+
+#: templates/reset.html:186 templates/signup.html:194
+msgid "직전) -->"
+msgstr ""
+
+#: templates/signup.html:5
+msgid "Lexinoa · 회원가입"
+msgstr ""
+
+#: templates/signup.html:149
+msgid "아래 정보를 입력해 주세요."
+msgstr ""
+
+#: templates/signup.html:171
+msgid "비밀번호 (8자 이상)"
+msgstr ""
+
+#: templates/signup.html:176
+msgid "비밀번호 확인"
+msgstr ""
+
+#: templates/signup.html:182
+msgid "이용약관에 동의합니다"
+msgstr ""
+
+#: templates/signup.html:187
+msgid "이미 계정이 있으신가요?"
+msgstr ""
+
+#: templates/signup.html:189
+msgid "가입하기"
+msgstr ""
+
+#: templates/signup_verify_pending.html:2
+msgid "이메일 인증 필요"
+msgstr ""
+
+#: templates/signup_verify_pending.html:6
+msgid "이메일 인증이 필요합니다"
+msgstr ""
+
+#: templates/signup_verify_pending.html:8
+msgid "로 인증 메일을 보냈습니다."
+msgstr ""
+
+#: templates/signup_verify_pending.html:9
+msgid "메일의 인증 링크를 클릭하면 회원가입이 완료됩니다."
+msgstr ""
+
+#: templates/signup_verify_pending.html:14
+msgid "인증 메일 전송에 실패했습니다. 잠시 후 다시 시도해 주세요."
+msgstr ""
+
+#: templates/signup_verify_pending.html:23
+msgid "스팸함/프로모션함도 확인해 주세요."
+msgstr ""
+
+#: templates/subscribe.html:132
+msgid "결제 실패"
+msgstr ""
+
+#: templates/subscribe.html:139
+msgid "성능은 모두 동일 · 사용 범위와 자동화에서 차이가 납니다"
+msgstr ""
+
+#: templates/subscribe.html:140
+msgid "구독 & 가격"
+msgstr ""
+
+#: templates/subscribe.html:141
+msgid ""
+"비로그인 5회/일 · Free 30회/월 · Pro 사실상 무제한(공정 이용 1,000회). 채널 자동 감지, 다국어 문화 보정, "
+"템플릿 무제한 등 생산성 기능은 Pro에서 제공됩니다."
+msgstr ""
+
+#: templates/subscribe.html:148
+msgid "체험용"
+msgstr ""
+
+#: templates/subscribe.html:149 templates/subscribe.html:242
+msgid "비로그인"
+msgstr ""
+
+#: templates/subscribe.html:150
+msgid "/ 하루"
+msgstr ""
+
+#: templates/subscribe.html:153
+msgid "하루 5회 체험"
+msgstr ""
+
+#: templates/subscribe.html:154
+msgid "로그인 없이 바로 사용"
+msgstr ""
+
+#: templates/subscribe.html:155 templates/subscribe.html:173
+msgid "동일한 성능"
+msgstr ""
+
+#: templates/subscribe.html:156
+msgid "히스토리/템플릿 저장은 미지원"
+msgstr ""
+
+#: templates/subscribe.html:159
+msgid "지금 체험"
+msgstr ""
+
+#: templates/subscribe.html:166
+msgid "기본 계정"
+msgstr ""
+
+#: templates/subscribe.html:168 templates/subscribe.html:189
+msgid "/ 월"
+msgstr ""
+
+#: templates/subscribe.html:171
+msgid "월 30회 사용"
+msgstr ""
+
+#: templates/subscribe.html:172
+msgid "히스토리 7일 보관"
+msgstr ""
+
+#: templates/subscribe.html:174
+msgid "채널 자동 감지/템플릿 무제한은 Pro에서"
+msgstr ""
+
+#: templates/subscribe.html:178
+msgid "바로 사용"
+msgstr ""
+
+#: templates/subscribe.html:187
+msgid "추천"
+msgstr ""
+
+#: templates/subscribe.html:191
+msgid "사실상 무제한 (공정 이용 1,000회/월)"
+msgstr ""
+
+#: templates/subscribe.html:192
+msgid "Gmail/Slack/Naver 등"
+msgstr ""
+
+#: templates/subscribe.html:192
+msgid "자동 감지(확장 프로그램)"
+msgstr ""
+
+#: templates/subscribe.html:193
+msgid "언어 번역 +"
+msgstr ""
+
+#: templates/subscribe.html:193
+msgid "문화적 맥락 보정 / 추후 추가 예정"
+msgstr ""
+
+#: templates/subscribe.html:194
+msgid "템플릿 무제한"
+msgstr ""
+
+#: templates/subscribe.html:195
+msgid "히스토리 무제한"
+msgstr ""
+
+#: templates/subscribe.html:198 templates/subscribe.html:283
+msgid "지금 구독하기"
+msgstr ""
+
+#: templates/subscribe.html:199
+msgid "기능 먼저 보기"
+msgstr ""
+
+#: templates/subscribe.html:206
+msgid "왜 Pro일까?"
+msgstr ""
+
+#: templates/subscribe.html:209
+msgid "자동 맥락 감지"
+msgstr ""
+
+#: templates/subscribe.html:210
+msgid "mail/messenger/notion 등 채널에 맞는 톤을 자동 추천. 클릭 없이 바로 적용."
+msgstr ""
+
+#: templates/subscribe.html:213
+msgid "실시간 비교 프리뷰"
+msgstr ""
+
+#: templates/subscribe.html:214
+msgid "3가지의 옵션을 동시에 제공."
+msgstr ""
+
+#: templates/subscribe.html:217
+msgid "템플릿 라이브러리"
+msgstr ""
+
+#: templates/subscribe.html:218
+msgid "내 문장 습관을 저장·재사용. 변수 치환과 폴더로 팀 문서처럼 정리."
+msgstr ""
+
+#: templates/subscribe.html:224
+msgid "크롬 확장 기능"
+msgstr ""
+
+#: templates/subscribe.html:227
+msgid "크롬 확장 기능으로 어디서나 사용가능"
+msgstr ""
+
+#: templates/subscribe.html:228
+msgid "확장 탭 에서 사용 가능하며, 원하는 문장을 드래그 해서 사용 가능합니다."
+msgstr ""
+
+#: templates/subscribe.html:229
+msgid "모든 플랜이 이용 가능하지만 사용 횟수와 편의성은 기존 Lexinoa 페이지를 따릅니다."
+msgstr ""
+
+#: templates/subscribe.html:230
+msgid "크롬 확장 추가하기"
+msgstr ""
+
+#: templates/subscribe.html:237
+msgid "플랜 비교"
+msgstr ""
+
+#: templates/subscribe.html:238
+msgid "플랜 비교표"
+msgstr ""
+
+#: templates/subscribe.html:241
+msgid "항목"
+msgstr ""
+
+#: templates/subscribe.html:248
+msgid "이용 횟수"
+msgstr ""
+
+#: templates/subscribe.html:248
+msgid "5회/일"
+msgstr ""
+
+#: templates/subscribe.html:248
+msgid "30회/월"
+msgstr ""
+
+#: templates/subscribe.html:248
+msgid "1,000회/월"
+msgstr ""
+
+#: templates/subscribe.html:249
+msgid "크롬 확장"
+msgstr ""
+
+#: templates/subscribe.html:249
+msgid "가능"
+msgstr ""
+
+#: templates/subscribe.html:250
+msgid "성능"
+msgstr ""
+
+#: templates/subscribe.html:250
+msgid "모두 동일"
+msgstr ""
+
+#: templates/subscribe.html:251
+msgid "자동 톤 감지"
+msgstr ""
+
+#: templates/subscribe.html:251
+msgid "자동 적용"
+msgstr ""
+
+#: templates/subscribe.html:252
+msgid "다국어/문화 보정"
+msgstr ""
+
+#: templates/subscribe.html:252
+msgid "한→영 + 문화 보정 (추가 예정)"
+msgstr ""
+
+#: templates/subscribe.html:253
+msgid "무제한"
+msgstr ""
+
+#: templates/subscribe.html:254
+msgid "히스토리"
+msgstr ""
+
+#: templates/subscribe.html:254
+msgid "7일"
+msgstr ""
+
+#: templates/subscribe.html:254
+msgid "무제한 + 검색"
+msgstr ""
+
+#: templates/subscribe.html:261
+msgid "자주 묻는 질문"
+msgstr ""
+
+#: templates/subscribe.html:264
+msgid "Free도 Pro와 같은 성능인가요?"
+msgstr ""
+
+#: templates/subscribe.html:265
+msgid "네. 품질은 동일합니다. Pro는 자동화·저장·다국어 등 여러 기능이 추가됩니다."
+msgstr ""
+
+#: templates/subscribe.html:268
+msgid "결제는 어떻게 취소하나요?"
+msgstr ""
+
+#: templates/subscribe.html:269
+msgid "마이페이지 &gt; 구독 관리에서 언제든 해지할 수 있으며, 다음 결제일부터 과금이 중단됩니다."
+msgstr ""
+
+#: templates/subscribe.html:272
+msgid "회사/팀으로도 사용할 수 있나요?"
+msgstr ""
+
+#: templates/subscribe.html:273
+msgid "현재 팀 플랜은 계획되어있지 않으나 추후 추가 할 가능성이 있습니다. 필요 시 문의해주세요."
+msgstr ""
+
+#: templates/subscribe.html:280
+msgid "지금 바로 Pro로 업그레이드"
+msgstr ""
+
+#: templates/subscribe.html:281
+msgid "동일한 성능, 더 똑똑한 흐름. 한 달 4,900원으로 시간 절약을 시작하세요."
+msgstr ""
+
+#: templates/subscribe.html:284
+msgid "기능 먼저 사용해보기"
+msgstr ""
+
+#: templates/subscribe_fail.html:3
+msgid "구독 실패 | Lexinoa"
+msgstr ""
+
+#: templates/subscribe_fail.html:8
+msgid "구독 진행 실패"
+msgstr ""
+
+#: templates/subscribe_fail.html:10
+msgid "사유:"
+msgstr ""
+
+#: templates/subscribe_fail.html:15
+msgid "카드 등록(빌키 발급) 과정에서 BID(빌키)를 받지 못했습니다."
+msgstr ""
+
+#: templates/subscribe_fail.html:16
+msgid "결제창 응답 파라미터(POST/QUERY)에서 BID 키명이 무엇인지 확인해야 합니다."
+msgstr ""
+
+#: templates/subscribe_fail.html:22
+msgid "다시 시도"
+msgstr ""
+
+#: templates/subscribe_fail.html:23
+msgid "가격 페이지"
+msgstr ""
+
+#: templates/subscribe_success.html:3
+msgid "구독 완료 | Lexinoa"
+msgstr ""
+
+#: templates/subscribe_success.html:27
+msgid "결제/구독 처리 완료"
+msgstr ""
+
+#: templates/subscribe_success.html:29
+msgid "구독이 활성화되었습니다"
+msgstr ""
+
+#: templates/subscribe_success.html:31
+msgid "이제 Pro 기능을 사용할 수 있습니다. 마이페이지에서 구독 상태와 다음 결제일을 확인하세요."
+msgstr ""
+
+#: templates/subscribe_success.html:37
+msgid "주문번호"
+msgstr ""
+
+#: templates/subscribe_success.html:43
+msgid "마이페이지로 이동"
+msgstr ""
+
+#: templates/subscribe_success.html:44 templates/verify_result.html:19
+msgid "홈으로"
+msgstr ""
+
+#: templates/subscribe_success.html:48
+msgid "문제가 있다면 마이페이지의 “내 문의 / 피드백”을 통해 알려주세요."
+msgstr ""
+
+#: templates/summarize.html:3
+msgid "Lexinoa - 핵심 요약 / 정리"
+msgstr ""
+
+#: templates/summarize.html:19
+msgid "핵심 요약 / 정리"
+msgstr ""
+
+#: templates/summarize.html:28
+msgid "긴 글을 붙여넣으면 핵심만 간결하게 요약합니다. (최대 약 8,000자)"
+msgstr ""
+
+#: templates/summarize.html:29
+msgid "여기에 원문을 붙여 넣으세요. (최대 약 8,000자)"
+msgstr ""
+
+#: templates/summarize.html:34
+msgid "요약하기"
+msgstr ""
+
+#: templates/summarize.html:47
+msgid "결과가 여기에 표시됩니다."
+msgstr ""
+
+#: templates/summarize.html:49
+msgid "복사"
+msgstr ""
+
+#: templates/summarize.html:50
+msgid "복사됨"
+msgstr ""
+
+#: templates/summarize.html:52
+msgid "※ 결과가 항상 완벽하진 않을 수 있습니다."
+msgstr ""
+
+#: templates/terms.html:3 templates/terms.html:16
+msgid "Lexinoa 서비스 이용약관"
+msgstr ""
+
+#: templates/terms.html:20
+msgid "제1조 (목적)"
+msgstr ""
+
+#: templates/terms.html:22
+msgid "본 약관은 Lexinoa 서비스 이용에 관한 회사와 회원 간의 권리와 의무를 규정합니다."
+msgstr ""
+
+#: templates/terms.html:25
+msgid "제2조 (서비스의 성격)"
+msgstr ""
+
+#: templates/terms.html:27
+msgid ""
+"서비스는 인공지능(AI)을 활용한 기능을 포함할 수 있으며,\\n      결과물은 참고용으로 제공됩니다.\\n      회원은 "
+"결과물을 활용함에 있어 스스로의 판단과 책임 하에 사용해야 합니다."
+msgstr ""
+
+#: templates/terms.html:30
+msgid "제3조 (구독 및 결제)"
+msgstr ""
+
+#: templates/terms.html:32
+msgid ""
+"구독 서비스는 자동 갱신 방식으로 제공되며,\\n      회원은 언제든지 다음 결제일 이전에 구독을 해지할 수 있습니다.\\n"
+"      구독 해지 시 이미 결제된 이용 기간에 대한 환불은 제공되지 않습니다,\\n      단 관련 법령에 따라 환불이 "
+"요구되는 경우는 예외로 합니다."
+msgstr ""
+
+#: templates/terms.html:35
+msgid "제4조 (서비스 변경 및 중단)"
+msgstr ""
+
+#: templates/terms.html:37
+msgid "회사는 서비스의 일부 또는 전부를 변경하거나 중단할 수 있으며,\\n      이 경우 사전에 공지하도록 노력합니다."
+msgstr ""
+
+#: templates/terms.html:40
+msgid "제5조 (계약 해지)"
+msgstr ""
+
+#: templates/terms.html:42
+msgid ""
+"회원은 언제든지 서비스 이용을 중단하고 탈퇴할 수 있으며,\\n      탈퇴 시 법령상 보존 의무가 있는 정보를 제외한 개인정보는"
+" 삭제됩니다."
+msgstr ""
+
+#: templates/terms.html:45
+msgid "제6조 (책임 제한)"
+msgstr ""
+
+#: templates/terms.html:47
+msgid "회사는 고의 또는 중대한 과실이 없는 한\\n      서비스 이용으로 발생한 손해에 대해 책임을 지지 않습니다."
+msgstr ""
+
+#: templates/terms.html:50
+msgid "제7조 (관할 법원)"
+msgstr ""
+
+#: templates/terms.html:52
+msgid "서비스 이용과 관련된 분쟁은\\n      회사 소재지를 관할하는 법원을 전속 관할로 합니다."
+msgstr ""
+
+#: templates/verify_notice.html:3
+msgid "이메일 인증 | Lexinoa"
+msgstr ""
+
+#: templates/verify_notice.html:8
+msgid "이메일 인증"
+msgstr ""
+
+#: templates/verify_notice.html:10
+msgid "인증 메일을"
+msgstr ""
+
+#: templates/verify_notice.html:10
+msgid "주소로 보냈습니다. 30분 안에 메일의 링크를 눌러 인증을 완료해 주세요."
+msgstr ""
+
+#: templates/verify_notice.html:11
+msgid "수신함/스팸함을 함께 확인해 주세요."
+msgstr ""
+
+#: templates/verify_notice.html:13
+msgid "구독을 이용하려면 이메일 인증이 필요합니다. 아래 버튼을 눌러 인증 메일을 받아보세요."
+msgstr ""
+
+#: templates/verify_result.html:3
+msgid "이메일 인증 결과 | Lexinoa"
+msgstr ""
+
+#: templates/verify_result.html:9
+msgid "인증 완료"
+msgstr ""
+
+#: templates/verify_result.html:11
+msgid "구독 페이지로 이동"
+msgstr ""
+
+#: templates/verify_result.html:15
+msgid "인증 실패"
+msgstr ""
+
+#: templates/verify_result.html:17
+msgid "다시 보내기"
+msgstr ""
+
+#: templates/learn/_layout.html:3
+msgid "프롬프트를 직접 쓰지 않고, 카테고리와 체크만으로 문장을 자연스럽게 다듬는 방법을 안내합니다."
+msgstr ""
+
+#: templates/learn/_layout.html:15
+msgid "사용자는"
+msgstr ""
+
+#: templates/learn/_layout.html:15
+msgid "프롬프트를 작성하지 않습니다."
+msgstr ""
+
+#: templates/learn/_layout.html:16
+msgid "카테고리 / 톤 / 존댓말 / 완충문 / 이모지"
+msgstr ""
+
+#: templates/learn/_layout.html:16
+msgid "옵션만 선택해 가장 빠르게 결과를 얻습니다."
+msgstr ""
+
+#: templates/learn/index.html:13
+msgid "개의 가이드"
+msgstr ""
+
+#: templates/learn/index.html:30
+msgid "섹션 전체"
+msgstr ""
+
+#: templates/learn/page.html:55
+msgid "같은 섹션 더 보기"
+msgstr ""
+
+#: templates/learn/page.html:56
+msgid "프롬프트가 아니라 옵션 선택으로 결과를 조정하세요."
+msgstr ""
+
+#: templates/learn/page.html:59
+msgid "섹션 목록"
+msgstr ""
+

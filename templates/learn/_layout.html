@@ -1,38 +1,39 @@
 {% extends "base.html" %}
 
+{% set meta_desc = _("프롬프트를 직접 쓰지 않고, 카테고리와 체크만으로 문장을 자연스럽게 다듬는 방법을 안내합니다.") %}
+
 {% block content %}
-<meta name="description"
-        content="{% block meta_description %}
-  프롬프트를 직접 쓰지 않고, 카테고리와 체크만으로 문장을 자연스럽게 다듬는 방법을 안내합니다.
-  {% endblock %}">
+<meta name="description" content="{{ meta_desc }}">
+
 <div class="main stack">
 
   <div class="card">
     <div class="small">LEXINOA</div>
-    <h3 style="margin:6px 0 6px 0;">가이드</h3>
+    <h3 style="margin:6px 0 6px 0;">{{ _("가이드") }}</h3>
+
     <div class="small" style="max-width: 860px;">
-      사용자는 <b>프롬프트를 작성하지 않습니다.</b>
-      <b>카테고리 / 톤 / 존댓말 / 완충문 / 이모지</b> 옵션만 선택해 가장 빠르게 결과를 얻습니다.
+      {{ _("사용자는") }} <b>{{ _("프롬프트를 작성하지 않습니다.") }}</b>
+      <b>{{ _("카테고리 / 톤 / 존댓말 / 완충문 / 이모지") }}</b> {{ _("옵션만 선택해 가장 빠르게 결과를 얻습니다.") }}
     </div>
 
     <div class="chipbox" style="margin-top:12px;">
       {% for sec in nav %}
         <a class="chip"
-           href="{{ url_for('learn.learn_index', section=sec['section']) }}"
+           href="{{ url_for('learn.learn_index', section=sec['section_key']) }}"
            style="
              text-decoration:none;
-             {% if active_section==sec['section'] %}
+             {% if active_section_key == sec['section_key'] %}
                background: color-mix(in srgb, var(--accent) 14%, transparent);
                border-color: var(--accent);
              {% else %}
                border-color: var(--border);
              {% endif %}
            ">
-          {{ sec["section"] }}
+          {{ sec["section_label"] }}
         </a>
       {% endfor %}
       <span class="spacer"></span>
-      <a class="btn secondary" href="{{ url_for('learn.learn_index') }}">전체</a>
+      <a class="btn secondary" href="{{ url_for('learn.learn_index') }}">{{ _("전체") }}</a>
     </div>
   </div>
 

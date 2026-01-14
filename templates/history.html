@@ -113,8 +113,8 @@
         <span class="brand-title">Lexinoa</span>
       </a>
       <div class="header-actions">
-        <button id="themeToggle" class="theme-toggle">🌙 다크/라이트</button>
-        <a class="btn ghost" href="/">메인</a>
+        <button id="themeToggle" class="theme-toggle">{{ _("🌙 다크/라이트") }}</button>
+        <a class="btn ghost" href="/">{{ _("메인") }}</a>
 
       </div>
     </div>
@@ -124,22 +124,22 @@
 {% block content %}
   <!-- History Card -->
   <section class="card" style="margin-top:16px;">
-    <h3>내 보정 기록</h3>
-    <p class="small">최근 100건까지 표시됩니다. (로그인 사용자 전용)</p>
+    <h3>{{ _("내 보정 기록") }}</h3>
+    <p class="small">{{ _("최근 100건까지 표시됩니다. (로그인 사용자 전용)") }}</p>
 
     {% if logs|length == 0 %}
-      <p class="small" style="margin-top:8px; color:var(--muted);">아직 기록이 없습니다.</p>
+      <p class="small" style="margin-top:8px; color:var(--muted);">{{ _("아직 기록이 없습니다.") }}</p>
     {% else %}
       <div style="overflow:auto; border:1px solid var(--border); border-radius:12px; margin-top:8px;">
         <table class="table">
           <thead>
             <tr>
-              <th class="nowrap">시간</th>
-              <th>입력</th>
-              <th>카테고리</th>
-              <th>톤</th>
-              <th class="nowrap">옵션</th>
-              <th>출력</th>
+              <th class="nowrap">{{ _("시간") }}</th>
+              <th>{{ _("입력") }}</th>
+              <th>{{ _("카테고리") }}</th>
+              <th>{{ _("톤") }}</th>
+              <th class="nowrap">{{ _("옵션") }}</th>
+              <th>{{ _("출력") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -176,7 +176,7 @@
 
     <div class="toolbar" style="margin-top:8px;">
       <span class="spacer"></span>
-      <a class="btn ghost" href="/">돌아가기</a>
+      <a class="btn ghost" href="/">{{ _("돌아가기") }}</a>
     </div>
   </section>
 {% endblock %}
