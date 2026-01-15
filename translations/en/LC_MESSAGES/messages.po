@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-01-14 19:09+0900\n"
+"POT-Creation-Date: 2026-01-15 15:21+0900\n"
 "PO-Revision-Date: 2026-01-14 04:55+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -34,10 +34,6 @@ msgstr "Thank you for your feedback. We’ll do our best to incorporate it."
 msgid "저장 중 오류가 발생했습니다."
 msgstr "An error occurred while saving."
 
-# If your code uses: _("저장 중 오류가 발생했습니다: %(error)s", error=str(e))
-msgid "저장 중 오류가 발생했습니다: %(error)s"
-msgstr "An error occurred while saving: %(error)s"
-
 #: routes/web/learn.py:17
 msgid "빠른 시작"
 msgstr "Quick Start"
@@ -52,7 +48,9 @@ msgstr "Start in 10 Seconds (No Prompts)"
 
 #: routes/web/learn.py:23
 msgid "Lexinoa는 프롬프트를 안 씁니다. 문장 + 옵션 선택만으로 결과를 컨트롤합니다."
-msgstr "Lexinoa doesn’t use prompts. You control the outcome with your sentence plus a few option selections."
+msgstr ""
+"Lexinoa doesn’t use prompts. You control the outcome with your sentence "
+"plus a few option selections."
 
 #: routes/web/learn.py:25
 msgid "핵심 원칙"
@@ -60,7 +58,9 @@ msgstr "Core Principles"
 
 #: routes/web/learn.py:26
 msgid "사용자는 ‘문장’만 제공하고, 결과 방향은 옵션으로 결정합니다."
-msgstr "You provide only the sentence; options determine the direction of the result."
+msgstr ""
+"You provide only the sentence; options determine the direction of the "
+"result."
 
 #: routes/web/learn.py:27
 msgid "카테고리 1개 + 톤 1개 + 체크 0~2개로 시작하면 대부분 1회에 끝납니다."
@@ -154,7 +154,7 @@ msgstr "Formal Request"
 msgid "카테고리: 요청 / 톤: 공식 / 존댓말 ON / 완충문 OFF"
 msgstr "Category: Request / Tone: Formal / Honorifics ON / Softening phrases OFF"
 
-#: routes/web/learn.py:56
+#: routes/web/learn.py:56 routes/web/learn.py:80
 msgid "사과/정정"
 msgstr "Apology / Correction"
 
@@ -196,11 +196,18 @@ msgstr "Category Choice Is 80% of the Result"
 
 #: routes/web/learn.py:75
 msgid "Lexinoa는 ‘의도’를 카테고리로 먼저 고정해서 가장 빠르게 안정적인 결과를 냅니다."
-msgstr "Lexinoa first locks your intent via category to produce stable results quickly."
+msgstr ""
+"Lexinoa first locks your intent via category to produce stable results "
+"quickly."
 
 #: routes/web/learn.py:77
 msgid "카테고리 선택 기준"
 msgstr "How to Choose a Category"
+
+#: routes/web/learn.py:78 templates/mainpage.html:156
+#: templates/mainpage.html:270
+msgid "요청"
+msgstr "request"
 
 #: routes/web/learn.py:78
 msgid "상대에게 행동을 부탁하는 문장"
@@ -217,6 +224,10 @@ msgstr "A sentence that nudges progress or replies while reducing friction."
 #: routes/web/learn.py:80
 msgid "혼선/실수를 수습하고 신뢰를 회복하는 문장"
 msgstr "A sentence that resolves confusion or mistakes and restores trust."
+
+#: routes/web/learn.py:81 templates/mainpage.html:160
+msgid "거절/대안"
+msgstr "refusal/alternative"
 
 #: routes/web/learn.py:81
 msgid "불가를 전달하되 대안을 제시하는 문장"
@@ -236,7 +247,9 @@ msgstr "Fix Common Misinterpretations"
 
 #: routes/web/learn.py:85
 msgid "‘요청’인데 결과가 명령처럼 보임 → 톤을 ‘부드럽게’ + 완충문 ON"
-msgstr "It’s a request but reads like a command → Tone “Gentle” + Softening phrases ON"
+msgstr ""
+"It’s a request but reads like a command → Tone “Gentle” + Softening "
+"phrases ON"
 
 #: routes/web/learn.py:86
 msgid "‘리마인드’가 너무 약함 → 톤을 ‘단호하지만 예의’"
@@ -244,7 +257,9 @@ msgstr "Reminder is too weak → Tone “Firm but Polite”"
 
 #: routes/web/learn.py:87
 msgid "‘거절’이 공격적으로 보임 → ‘대안’ 성격 카테고리 선택 + 존댓말 ON"
-msgstr "Decline feels aggressive → choose a more “Alternative”-oriented category + Honorifics ON"
+msgstr ""
+"Decline feels aggressive → choose a more “Alternative”-oriented category "
+"+ Honorifics ON"
 
 #: routes/web/learn.py:93
 msgid "톤은 ‘인상’을 결정합니다"
@@ -252,11 +267,18 @@ msgstr "Tone Determines the Impression"
 
 #: routes/web/learn.py:94
 msgid "같은 내용도 톤에 따라 공격/정중/공식으로 읽힙니다. 프롬프트 대신 톤으로 조정하세요."
-msgstr "The same content can feel harsh, polite, or formal depending on tone. Adjust with tone instead of prompts."
+msgstr ""
+"The same content can feel harsh, polite, or formal depending on tone. "
+"Adjust with tone instead of prompts."
 
 #: routes/web/learn.py:96
 msgid "톤 추천"
 msgstr "Recommended Tones"
+
+#: routes/web/learn.py:97 templates/mainpage.html:173
+#: templates/mainpage.html:281
+msgid "부드럽게"
+msgstr "soft"
 
 #: routes/web/learn.py:97
 msgid "메신저/동료/감정 마찰 방지"
@@ -296,7 +318,9 @@ msgstr "How to Use Toggles (Honorifics / Softening phrases / Emojis)"
 
 #: routes/web/learn.py:110
 msgid "체크는 분위기를 한 번에 바꾸는 스위치입니다. 과하면 오히려 어색해질 수 있습니다."
-msgstr "Toggles are switches that change the vibe instantly. Overusing them can feel awkward."
+msgstr ""
+"Toggles are switches that change the vibe instantly. Overusing them can "
+"feel awkward."
 
 #: routes/web/learn.py:112
 msgid "체크 옵션 가이드"
@@ -308,7 +332,9 @@ msgstr "Honorifics"
 
 #: routes/web/learn.py:113
 msgid "상사/고객/외부면 ON. 내부 친한 사이면 OFF도 가능"
-msgstr "Turn ON for managers/customers/external. OFF can work for close internal chats."
+msgstr ""
+"Turn ON for managers/customers/external. OFF can work for close internal "
+"chats."
 
 #: routes/web/learn.py:114
 msgid "완충문"
@@ -354,7 +380,7 @@ msgstr "Right-click Refinement (Fastest Flow)"
 msgid "웹페이지에서 문장 드래그 → 우클릭 → 옵션만 선택 → 즉시 사용"
 msgstr "Select text on a webpage → right-click → choose options → use instantly."
 
-#: routes/web/learn.py:136
+#: routes/web/learn.py:136 routes/web/learn.py:153
 msgid "사용 방법"
 msgstr "How to Use"
 
@@ -380,11 +406,15 @@ msgstr "When It’s Best"
 
 #: routes/web/learn.py:143
 msgid "메일/채팅/폼 입력 도중: 페이지를 옮기지 않고 바로 다듬고 싶을 때"
-msgstr "While writing email/chat/forms: when you want to refine without leaving the page."
+msgstr ""
+"While writing email/chat/forms: when you want to refine without leaving "
+"the page."
 
 #: routes/web/learn.py:144
 msgid "전체 글이 아니라 ‘문장 일부만’ 빠르게 고치고 싶을 때"
-msgstr "When you want to quickly fix only part of the text, not the entire message."
+msgstr ""
+"When you want to quickly fix only part of the text, not the entire "
+"message."
 
 #: routes/web/learn.py:150
 msgid "드래그로 바로 순화 (흐름 유지)"
@@ -422,6 +452,10 @@ msgstr "For email: Formal + Honorifics ON"
 msgid "재촉이면: 리마인드 카테고리를 우선"
 msgstr "For nudges: prioritize the Reminder category"
 
+#: routes/web/learn.py:170 templates/subscribe.html:253
+msgid "템플릿"
+msgstr "Add template"
+
 #: routes/web/learn.py:171
 msgid "프롬프트가 아니라 ‘옵션 조합’을 저장해서 반복을 없앰"
 msgstr "Eliminate repetition by saving option combos instead of writing prompts."
@@ -432,7 +466,9 @@ msgstr "Templates = Saved Option Combos"
 
 #: routes/web/learn.py:176
 msgid "자주 쓰는 카테고리/톤/체크 조합을 저장해두면 다음부터는 클릭 몇 번으로 끝납니다."
-msgstr "Save your frequent category/tone/toggle combos, and next time it’s done in a few clicks."
+msgstr ""
+"Save your frequent category/tone/toggle combos, and next time it’s done "
+"in a few clicks."
 
 #: routes/web/learn.py:178
 msgid "추천 템플릿"
@@ -465,6 +501,11 @@ msgstr "Reminder / Firm but Polite / Softening phrases OFF"
 #: routes/web/learn.py:183
 msgid "사용 흐름"
 msgstr "Workflow"
+
+#: routes/web/learn.py:184 templates/mainpage.html:114
+#: templates/mainpage.html:129
+msgid "템플릿 선택"
+msgstr "Select a template…"
 
 #: routes/web/learn.py:185
 msgid "문장만 붙여넣기(또는 드래그)"
@@ -543,7 +584,9 @@ msgstr "Reset"
 
 #: templates/admin_analytics.html:71
 msgid "※ 필터는 아래 “방문 시계열”에만 반영됩니다. 상단 KPI는 전체 기준입니다."
-msgstr "Note: Filters apply only to the “Visits over time” chart below. The KPIs above are overall totals."
+msgstr ""
+"Note: Filters apply only to the “Visits over time” chart below. The KPIs "
+"above are overall totals."
 
 #: templates/admin_analytics.html:75
 msgid "방문 시계열"
@@ -574,7 +617,7 @@ msgstr "Visitors Dashboard"
 msgid "사용량 대시보드"
 msgstr "Usage Dashboard"
 
-#: templates/admin_feedback.html:40 templates/base.html:57
+#: templates/admin_feedback.html:40 templates/base.html:58
 #: templates/mypage.html:84 templates/verify_result.html:13
 msgid "마이페이지"
 msgstr "My Page"
@@ -703,7 +746,9 @@ msgstr "This Month"
 
 #: templates/base.html:9
 msgid "상황에 맞게 문장을 자연스럽게 다듬어주는 문장 순화 도구. 카테고리와 톤만 선택하면 바로 결과를 얻을 수 있습니다."
-msgstr "A sentence refinement tool that rewrites your text naturally for the situation. Just choose a category and tone to get instant results."
+msgstr ""
+"A sentence refinement tool that rewrites your text naturally for the "
+"situation. Just choose a category and tone to get instant results."
 
 #: templates/base.html:46
 msgid "어드민 분석"
@@ -718,43 +763,42 @@ msgstr "Dark / Light"
 msgid "피드백"
 msgstr "Feedback"
 
-#: templates/base.html:51 templates/mainpage.html:160
-#: templates/mainpage.html:273
-msgid "거절/대안"
-msgstr "refusal/alternative"
-
 #: templates/base.html:52
 msgid "구독"
 msgstr "Subscription"
 
-#: templates/base.html:53 templates/learn/_layout.html:12
+#: templates/base.html:53
+msgid "블로그"
+msgstr "Blog"
+
+#: templates/base.html:54 templates/learn/_layout.html:12
 #: templates/learn/page.html:6
 msgid "가이드"
 msgstr "Guide"
 
-#: templates/base.html:56
+#: templates/base.html:57
 msgid "기록보기"
 msgstr "History"
 
-#: templates/base.html:62
+#: templates/base.html:63
 msgid "로그아웃"
 msgstr "Log out"
 
-#: templates/base.html:64 templates/login.html:232 templates/login.html:269
+#: templates/base.html:65 templates/login.html:232 templates/login.html:269
 #: templates/signup.html:187 templates/subscribe.html:160
 msgid "로그인"
 msgstr "Log in"
 
-#: templates/base.html:75 templates/reset.html:189 templates/signup.html:183
+#: templates/base.html:76 templates/reset.html:189 templates/signup.html:183
 #: templates/signup.html:197
 msgid "이용약관"
 msgstr "Terms of Service"
 
-#: templates/base.html:77 templates/reset.html:191 templates/signup.html:199
+#: templates/base.html:78 templates/reset.html:191 templates/signup.html:199
 msgid "개인정보 처리방침"
 msgstr "Privacy Policy"
 
-#: templates/base.html:79 templates/reset.html:193 templates/signup.html:201
+#: templates/base.html:80 templates/reset.html:193 templates/signup.html:201
 msgid "면책 고지"
 msgstr "Disclaimer"
 
@@ -776,7 +820,9 @@ msgstr "Pro Monthly Subscription"
 
 #: templates/checkout.html:30
 msgid "카드를 한 번만 등록하면, 이후 매달 자동으로 결제가 진행됩니다."
-msgstr "Register your card once and payments will be processed automatically each month."
+msgstr ""
+"Register your card once and payments will be processed automatically each"
+" month."
 
 #: templates/checkout.html:33
 msgid "현재 구독 기능을 준비 중입니다. 조금만 기다려주세요."
@@ -814,10 +860,11 @@ msgid ""
 "프로그램을 포함한 모든 서비스(이하 “서비스”) 이용에 적용됩니다.\\n      회원은 서비스를 이용함으로써 본 고지의 내용을 "
 "충분히 이해하고 이에 동의한 것으로 간주합니다."
 msgstr ""
-"This disclaimer applies to all services provided by Lexinoa (the “Company”), "
-"including the web service and any browser extension programs connected to the service "
-"(collectively, the “Service”).\\n"
-"By using the Service, members are deemed to have fully understood and agreed to this notice."
+"This disclaimer applies to all services provided by Lexinoa (the "
+"“Company”), including the web service and any browser extension programs "
+"connected to the service (collectively, the “Service”).\\nBy using the "
+"Service, members are deemed to have fully understood and agreed to this "
+"notice."
 
 #: templates/disclaimer.html:25
 msgid "제1조 (정보 및 콘텐츠의 성격)"
@@ -828,24 +875,27 @@ msgid ""
 "서비스에서 제공되는 모든 콘텐츠는 일반적인 정보 제공 및 판단 보조 목적이며,\\n      법률·의학·재무·투자 등 전문적인 "
 "조언을 대체하지 않습니다."
 msgstr ""
-"All content provided through the Service is for general informational purposes and decision support, "
-"and does not replace professional advice such as legal, medical, financial, or investment advice."
+"All content provided through the Service is for general informational "
+"purposes and decision support, and does not replace professional advice "
+"such as legal, medical, financial, or investment advice."
 
 #: templates/disclaimer.html:30
 msgid ""
 "서비스에는 인공지능(AI) 기술을 활용한 자동 생성·요약·변환 기능이 포함될 수 있으며,\\n      해당 결과물은 오류, 누락 "
 "또는 부정확한 내용을 포함할 수 있습니다."
 msgstr ""
-"The Service may include AI-based features such as automatic generation, summarization, and rewriting. "
-"Results may contain errors, omissions, or inaccuracies."
+"The Service may include AI-based features such as automatic generation, "
+"summarization, and rewriting. Results may contain errors, omissions, or "
+"inaccuracies."
 
 #: templates/disclaimer.html:33
 msgid ""
 "회원은 AI 결과물을 외부에 사용하거나 의사결정에 활용하기 전에\\n      반드시 자체적인 검토와 판단을 거쳐야 하며,\\n"
 "      그에 따른 모든 책임은 회원 본인에게 있습니다."
 msgstr ""
-"Before using AI results externally or relying on them for decision-making, members must review and assess them independently. "
-"All responsibility for such use rests with the member."
+"Before using AI results externally or relying on them for decision-"
+"making, members must review and assess them independently. All "
+"responsibility for such use rests with the member."
 
 #: templates/disclaimer.html:36
 msgid "제2조 (서비스 제공의 한계)"
@@ -856,8 +906,9 @@ msgid ""
 "회사는 안정적인 서비스 제공을 위해 노력하지만,\\n      서버 장애, 시스템 점검, 통신 문제, 외부 서비스 장애 등으로 "
 "인해\\n      서비스 제공이 일시적으로 중단되거나 지연될 수 있습니다."
 msgstr ""
-"While the Company strives to provide stable service, availability may be temporarily interrupted or delayed due to server failures, "
-"system maintenance, network issues, or outages of external services."
+"While the Company strives to provide stable service, availability may be "
+"temporarily interrupted or delayed due to server failures, system "
+"maintenance, network issues, or outages of external services."
 
 #: templates/disclaimer.html:41
 msgid "제3조 (유료 서비스 및 결제 관련 면책)"
@@ -868,8 +919,10 @@ msgid ""
 "결제 및 구독 기능은 외부 결제 대행사를 통해 처리되며,\\n      결제 시스템 장애 등 회사의 직접적인 통제 범위를 벗어난 "
 "사유로 발생한 문제에 대해서는\\n      관련 법령이 허용하는 범위 내에서 회사의 책임이 제한될 수 있습니다."
 msgstr ""
-"Payments and subscriptions are processed through external payment providers. The Company’s liability may be limited to the extent "
-"permitted by applicable law for issues arising from causes beyond the Company’s direct control, such as payment system failures."
+"Payments and subscriptions are processed through external payment "
+"providers. The Company’s liability may be limited to the extent permitted"
+" by applicable law for issues arising from causes beyond the Company’s "
+"direct control, such as payment system failures."
 
 #: templates/disclaimer.html:46
 msgid "제4조 (책임의 제한)"
@@ -880,7 +933,9 @@ msgid ""
 "회사는 관련 법령이 허용하는 범위 내에서\\n      서비스 이용으로 발생한 간접적, 부수적, 특별한 손해에 대해 책임을 "
 "제한합니다."
 msgstr ""
-"To the extent permitted by applicable law, the Company limits liability for indirect, incidental, or special damages arising from use of the Service."
+"To the extent permitted by applicable law, the Company limits liability "
+"for indirect, incidental, or special damages arising from use of the "
+"Service."
 
 #: templates/feedback.html:3
 msgid "Lexinoa · 피드백"
@@ -1056,8 +1111,9 @@ msgid ""
 "이메일, 보고서, 카카오톡 메시지까지 더 자연스럽고 정중한 문장으로 바꿔줍니다. Lexinoa는 상황별 맞춤 어투를 실시간으로 "
 "제안하는 커뮤니케이션 보조 서비스입니다."
 msgstr ""
-"It transforms emails, reports, and even KakaoTalk messages into more natural and polite sentences. "
-"Lexinoa is a communication assistance service that suggests context-specific tone in real time."
+"It transforms emails, reports, and even KakaoTalk messages into more "
+"natural and polite sentences. Lexinoa is a communication assistance "
+"service that suggests context-specific tone in real time."
 
 #: templates/mainpage.html:54
 msgid "크롬 확장으로 더 빠르게"
@@ -1149,10 +1205,6 @@ msgstr "Inquiry"
 msgid "감사"
 msgstr "Thanks"
 
-#: templates/mainpage.html:157 templates/mainpage.html:270
-msgid "요청"
-msgstr "request"
-
 #: templates/mainpage.html:157 templates/mainpage.html:271
 msgid "안내"
 msgstr "Information"
@@ -1168,10 +1220,6 @@ msgstr "Select tone"
 #: templates/mainpage.html:172
 msgid "말투 선택…"
 msgstr "Select a tone…"
-
-#: templates/mainpage.html:174 templates/mainpage.html:282
-msgid "부드럽게"
-msgstr "soft"
 
 #: templates/mainpage.html:174 templates/mainpage.html:282
 msgid "정중하게"
@@ -1318,7 +1366,7 @@ msgstr "Update"
 msgid "영문/숫자/._- 만 권장합니다."
 msgstr "Letters, numbers, and . _ - are recommended."
 
-#: templates/mypage.html:143
+#: templates/mypage.html:143 templates/verify_notice.html:8
 msgid "이메일 인증"
 msgstr "Email verification"
 
@@ -1500,7 +1548,9 @@ msgstr "Restore account"
 
 #: templates/mypage.html:480
 msgid "복구 시 기존 데이터는 되돌아오지만, 구독은 자동 복구되지 않습니다. (재구독 필요)"
-msgstr "Restoring brings back your data, but your subscription is not automatically restored. (Re-subscription required)"
+msgstr ""
+"Restoring brings back your data, but your subscription is not "
+"automatically restored. (Re-subscription required)"
 
 #: templates/mypage.html:486
 msgid "계정을 삭제하면 즉시 로그아웃되며,"
@@ -1516,7 +1566,9 @@ msgstr "."
 
 #: templates/mypage.html:488
 msgid "30일이 지나면 계정과 사용 기록은 영구적으로 삭제되며 복구할 수 없습니다."
-msgstr "After 30 days, your account and usage history will be permanently deleted and cannot be restored."
+msgstr ""
+"After 30 days, your account and usage history will be permanently deleted"
+" and cannot be restored."
 
 #: templates/mypage.html:492
 msgid "DELETE 입력"
@@ -1536,7 +1588,9 @@ msgstr "Lexinoa Privacy Policy"
 
 #: templates/privacy.html:24
 msgid "Lexinoa(이하 “회사”)는 개인정보 보호법 등 관계 법령을 준수하며,\\n      이용자의 개인정보를 안전하게 보호합니다."
-msgstr "Lexinoa (the “Company”) complies with applicable privacy laws and protects users personal information."
+msgstr ""
+"Lexinoa (the “Company”) complies with applicable privacy laws and "
+"protects users personal information."
 
 #: templates/privacy.html:27
 msgid "제1조 (수집하는 개인정보)"
@@ -1600,11 +1654,15 @@ msgstr "Billing and settlement"
 
 #: templates/privacy.html:56
 msgid "※ 신용카드 번호 등 결제 정보는 결제 대행사가 직접 처리하며 회사는 저장하지 않습니다."
-msgstr "Note: Payment details such as credit card numbers are processed by the payment provider and are not stored by the Company."
+msgstr ""
+"Note: Payment details such as credit card numbers are processed by the "
+"payment provider and are not stored by the Company."
 
 #: templates/privacy.html:57
 msgid "본 개인정보처리방침은 Lexinoa 웹 서비스 및 해당 서비스와 연동되는 브라우저 확장 프로그램에 모두 적용됩니다."
-msgstr "This Privacy Policy applies to the Lexinoa web service and any browser extensions connected to the service."
+msgstr ""
+"This Privacy Policy applies to the Lexinoa web service and any browser "
+"extensions connected to the service."
 
 #: templates/privacy.html:59
 msgid "제2조 (보유 및 이용 기간)"
@@ -1615,8 +1673,9 @@ msgid ""
 "개인정보는 수집 및 이용 목적이 달성된 후 지체 없이 파기됩니다.\\n      단, 관련 법령에 따라 보관이 필요한 경우에는 해당"
 " 기간 동안 보관됩니다."
 msgstr ""
-"Personal information is destroyed without delay once the purpose of collection and use has been fulfilled."
-"However, if retention is required under applicable laws, it will be retained for the required period."
+"Personal information is destroyed without delay once the purpose of "
+"collection and use has been fulfilled.However, if retention is required "
+"under applicable laws, it will be retained for the required period."
 
 #: templates/privacy.html:64
 msgid "제3조 (개인정보의 제3자 제공)"
@@ -1627,8 +1686,9 @@ msgid ""
 "회사는 이용자의 개인정보를 제3자에게 판매하거나 제공하지 않습니다.\\n      다만, 서비스 제공을 위해 필요한 경우 개인정보 "
 "처리 위탁을 할 수 있습니다."
 msgstr ""
-"The Company does not sell or provide users personal information to third parties."
-"However, the Company may outsource processing of personal information when necessary to provide the Service."
+"The Company does not sell or provide users personal information to third "
+"parties.However, the Company may outsource processing of personal "
+"information when necessary to provide the Service."
 
 #: templates/privacy.html:69
 msgid "제4조 (개인정보 처리 위탁)"
@@ -1663,8 +1723,9 @@ msgid ""
 "이용자는 언제든지 자신의 개인정보에 대해 열람, 정정, 삭제, 처리 정지를 요청할 수 있으며,\\n      아래 문의처를 통해 "
 "관련 요청을 할 수 있습니다."
 msgstr ""
-"Users may request access, correction, deletion, or suspension of processing of their personal information at any time.\\n"
-"Requests can be made through the contact information below."
+"Users may request access, correction, deletion, or suspension of "
+"processing of their personal information at any time.\\nRequests can be "
+"made through the contact information below."
 
 #: templates/privacy.html:90
 msgid "제6조 (문의)"
@@ -1775,8 +1836,10 @@ msgid ""
 "비로그인 5회/일 · Free 30회/월 · Pro 사실상 무제한(공정 이용 1,000회). 채널 자동 감지, 다국어 문화 보정, "
 "템플릿 무제한 등 생산성 기능은 Pro에서 제공됩니다."
 msgstr ""
-"Guest: 5/day · Free: 30/month · Pro: effectively unlimited (fair use: 1,000/month). "
-"Productivity features such as channel auto-detection, multilingual cultural adaptation, and unlimited templates are available in Pro."
+"Guest: 5/day · Free: 30/month · Pro: effectively unlimited (fair use: "
+"1,000/month). Productivity features such as channel auto-detection, "
+"multilingual cultural adaptation, and unlimited templates are available "
+"in Pro."
 
 #: templates/subscribe.html:148
 msgid "체험용"
@@ -1884,7 +1947,9 @@ msgstr "Automatic context detection"
 
 #: templates/subscribe.html:210
 msgid "mail/messenger/notion 등 채널에 맞는 톤을 자동 추천. 클릭 없이 바로 적용."
-msgstr "Automatically recommends the right tone for channels like mail/messenger/notion. Apply instantly without extra clicks."
+msgstr ""
+"Automatically recommends the right tone for channels like "
+"mail/messenger/notion. Apply instantly without extra clicks."
 
 #: templates/subscribe.html:213
 msgid "실시간 비교 프리뷰"
@@ -1900,7 +1965,9 @@ msgstr "Template library"
 
 #: templates/subscribe.html:218
 msgid "내 문장 습관을 저장·재사용. 변수 치환과 폴더로 팀 문서처럼 정리."
-msgstr "Save and reuse your wording patterns. Organize like team docs with variables and folders."
+msgstr ""
+"Save and reuse your wording patterns. Organize like team docs with "
+"variables and folders."
 
 #: templates/subscribe.html:224
 msgid "크롬 확장 기능"
@@ -1912,11 +1979,15 @@ msgstr "Use anywhere with the Chrome extension"
 
 #: templates/subscribe.html:228
 msgid "확장 탭 에서 사용 가능하며, 원하는 문장을 드래그 해서 사용 가능합니다."
-msgstr "Use it in the extension tab, or select the text you want and run it instantly."
+msgstr ""
+"Use it in the extension tab, or select the text you want and run it "
+"instantly."
 
 #: templates/subscribe.html:229
 msgid "모든 플랜이 이용 가능하지만 사용 횟수와 편의성은 기존 Lexinoa 페이지를 따릅니다."
-msgstr "All plans can use it, but usage limits and convenience follow the standard Lexinoa page rules."
+msgstr ""
+"All plans can use it, but usage limits and convenience follow the "
+"standard Lexinoa page rules."
 
 #: templates/subscribe.html:230
 msgid "크롬 확장 추가하기"
@@ -2008,7 +2079,9 @@ msgstr "Is Free the same quality as Pro?"
 
 #: templates/subscribe.html:265
 msgid "네. 품질은 동일합니다. Pro는 자동화·저장·다국어 등 여러 기능이 추가됩니다."
-msgstr "Yes. Quality is the same. Pro adds automation, saving, multilingual features, and more."
+msgstr ""
+"Yes. Quality is the same. Pro adds automation, saving, multilingual "
+"features, and more."
 
 #: templates/subscribe.html:268
 msgid "결제는 어떻게 취소하나요?"
@@ -2016,7 +2089,9 @@ msgstr "How do I cancel payment?"
 
 #: templates/subscribe.html:269
 msgid "마이페이지 &gt; 구독 관리에서 언제든 해지할 수 있으며, 다음 결제일부터 과금이 중단됩니다."
-msgstr "You can cancel anytime from My Page &gt; Subscription management, and billing will stop from the next billing date."
+msgstr ""
+"You can cancel anytime from My Page &gt; Subscription management, and "
+"billing will stop from the next billing date."
 
 #: templates/subscribe.html:272
 msgid "회사/팀으로도 사용할 수 있나요?"
@@ -2024,7 +2099,9 @@ msgstr "Can a company/team use it?"
 
 #: templates/subscribe.html:273
 msgid "현재 팀 플랜은 계획되어있지 않으나 추후 추가 할 가능성이 있습니다. 필요 시 문의해주세요."
-msgstr "A team plan is not currently planned, but may be added later. Please contact us if needed."
+msgstr ""
+"A team plan is not currently planned, but may be added later. Please "
+"contact us if needed."
 
 #: templates/subscribe.html:280
 msgid "지금 바로 Pro로 업그레이드"
@@ -2056,7 +2133,9 @@ msgstr "We did not receive the BID (billing key) during card registration."
 
 #: templates/subscribe_fail.html:16
 msgid "결제창 응답 파라미터(POST/QUERY)에서 BID 키명이 무엇인지 확인해야 합니다."
-msgstr "Check which key name is used for BID in the payment response parameters (POST/QUERY)."
+msgstr ""
+"Check which key name is used for BID in the payment response parameters "
+"(POST/QUERY)."
 
 #: templates/subscribe_fail.html:22
 msgid "다시 시도"
@@ -2080,7 +2159,9 @@ msgstr "Your subscription is active"
 
 #: templates/subscribe_success.html:31
 msgid "이제 Pro 기능을 사용할 수 있습니다. 마이페이지에서 구독 상태와 다음 결제일을 확인하세요."
-msgstr "You can now use Pro features. Check your subscription status and next billing date in My Page."
+msgstr ""
+"You can now use Pro features. Check your subscription status and next "
+"billing date in My Page."
 
 #: templates/subscribe_success.html:37
 msgid "주문번호"
@@ -2096,7 +2177,9 @@ msgstr "Go home"
 
 #: templates/subscribe_success.html:48
 msgid "문제가 있다면 마이페이지의 “내 문의 / 피드백”을 통해 알려주세요."
-msgstr "If you run into any issues, let us know via “My inquiries / feedback” in My Page."
+msgstr ""
+"If you run into any issues, let us know via “My inquiries / feedback” in "
+"My Page."
 
 #: templates/summarize.html:3
 msgid "Lexinoa - 핵심 요약 / 정리"
@@ -2108,7 +2191,9 @@ msgstr "Key Summary"
 
 #: templates/summarize.html:28
 msgid "긴 글을 붙여넣으면 핵심만 간결하게 요약합니다. (최대 약 8,000자)"
-msgstr "Paste a long text and we’ll summarize only the key points. (Up to ~8,000 characters)"
+msgstr ""
+"Paste a long text and we’ll summarize only the key points. (Up to ~8,000 "
+"characters)"
 
 #: templates/summarize.html:29
 msgid "여기에 원문을 붙여 넣으세요. (최대 약 8,000자)"
@@ -2144,7 +2229,9 @@ msgstr "Article 1 (Purpose)"
 
 #: templates/terms.html:22
 msgid "본 약관은 Lexinoa 서비스 이용에 관한 회사와 회원 간의 권리와 의무를 규정합니다."
-msgstr "These terms define the rights and obligations between the Company and members regarding use of the Lexinoa service."
+msgstr ""
+"These terms define the rights and obligations between the Company and "
+"members regarding use of the Lexinoa service."
 
 #: templates/terms.html:25
 msgid "제2조 (서비스의 성격)"
@@ -2155,8 +2242,9 @@ msgid ""
 "서비스는 인공지능(AI)을 활용한 기능을 포함할 수 있으며,\\n      결과물은 참고용으로 제공됩니다.\\n      회원은 "
 "결과물을 활용함에 있어 스스로의 판단과 책임 하에 사용해야 합니다."
 msgstr ""
-"The Service may include AI-powered features, and results are provided for reference only."
-"Members must use the results based on their own judgment and responsibility."
+"The Service may include AI-powered features, and results are provided for"
+" reference only.Members must use the results based on their own judgment "
+"and responsibility."
 
 #: templates/terms.html:30
 msgid "제3조 (구독 및 결제)"
@@ -2168,8 +2256,10 @@ msgid ""
 "      구독 해지 시 이미 결제된 이용 기간에 대한 환불은 제공되지 않습니다,\\n      단 관련 법령에 따라 환불이 "
 "요구되는 경우는 예외로 합니다."
 msgstr ""
-"Subscriptions renew automatically, and members may cancel at any time before the next billing date."
-"No refunds are provided for already-paid periods upon cancellation, except where refunds are required by applicable law."
+"Subscriptions renew automatically, and members may cancel at any time "
+"before the next billing date.No refunds are provided for already-paid "
+"periods upon cancellation, except where refunds are required by "
+"applicable law."
 
 #: templates/terms.html:35
 msgid "제4조 (서비스 변경 및 중단)"
@@ -2177,7 +2267,9 @@ msgstr "Article 4 (Service Changes and Suspension)"
 
 #: templates/terms.html:37
 msgid "회사는 서비스의 일부 또는 전부를 변경하거나 중단할 수 있으며,\\n      이 경우 사전에 공지하도록 노력합니다."
-msgstr "The Company may change or suspend part or all of the Service, and will make reasonable efforts to provide prior notice."
+msgstr ""
+"The Company may change or suspend part or all of the Service, and will "
+"make reasonable efforts to provide prior notice."
 
 #: templates/terms.html:40
 msgid "제5조 (계약 해지)"
@@ -2188,8 +2280,9 @@ msgid ""
 "회원은 언제든지 서비스 이용을 중단하고 탈퇴할 수 있으며,\\n      탈퇴 시 법령상 보존 의무가 있는 정보를 제외한 개인정보는"
 " 삭제됩니다."
 msgstr ""
-"Members may stop using the Service and withdraw at any time."
-"Upon withdrawal, personal information will be deleted except for data that must be retained under applicable law."
+"Members may stop using the Service and withdraw at any time.Upon "
+"withdrawal, personal information will be deleted except for data that "
+"must be retained under applicable law."
 
 #: templates/terms.html:45
 msgid "제6조 (책임 제한)"
@@ -2197,7 +2290,9 @@ msgstr "Article 6 (Limitation of Liability)"
 
 #: templates/terms.html:47
 msgid "회사는 고의 또는 중대한 과실이 없는 한\\n      서비스 이용으로 발생한 손해에 대해 책임을 지지 않습니다."
-msgstr "Unless there is willful misconduct or gross negligence, the Company is not liable for damages arising from use of the Service."
+msgstr ""
+"Unless there is willful misconduct or gross negligence, the Company is "
+"not liable for damages arising from use of the Service."
 
 #: templates/terms.html:50
 msgid "제7조 (관할 법원)"
@@ -2205,15 +2300,14 @@ msgstr "Article 7 (Governing Jurisdiction)"
 
 #: templates/terms.html:52
 msgid "서비스 이용과 관련된 분쟁은\\n      회사 소재지를 관할하는 법원을 전속 관할로 합니다."
-msgstr "Disputes related to the Service are subject to the exclusive jurisdiction of the court that has jurisdiction over the Company’s principal place of business."
+msgstr ""
+"Disputes related to the Service are subject to the exclusive jurisdiction"
+" of the court that has jurisdiction over the Company’s principal place of"
+" business."
 
 #: templates/verify_notice.html:3
 msgid "이메일 인증 | Lexinoa"
 msgstr "Email verification | Lexinoa"
-
-#: templates/verify_notice.html:8
-msgid "이메일 인증"
-msgstr "Email verification"
 
 #: templates/verify_notice.html:10
 msgid "인증 메일을"
@@ -2221,7 +2315,9 @@ msgstr "We sent a verification email"
 
 #: templates/verify_notice.html:10
 msgid "주소로 보냈습니다. 30분 안에 메일의 링크를 눌러 인증을 완료해 주세요."
-msgstr "to this address. Please click the link in the email within 30 minutes to complete verification."
+msgstr ""
+"to this address. Please click the link in the email within 30 minutes to "
+"complete verification."
 
 #: templates/verify_notice.html:11
 msgid "수신함/스팸함을 함께 확인해 주세요."
@@ -2229,7 +2325,9 @@ msgstr "Please check both your inbox and spam folder."
 
 #: templates/verify_notice.html:13
 msgid "구독을 이용하려면 이메일 인증이 필요합니다. 아래 버튼을 눌러 인증 메일을 받아보세요."
-msgstr "Email verification is required to use subscriptions. Click the button below to receive a verification email."
+msgstr ""
+"Email verification is required to use subscriptions. Click the button "
+"below to receive a verification email."
 
 #: templates/verify_result.html:3
 msgid "이메일 인증 결과 | Lexinoa"
@@ -2253,7 +2351,9 @@ msgstr "Resend"
 
 #: templates/learn/_layout.html:3
 msgid "프롬프트를 직접 쓰지 않고, 카테고리와 체크만으로 문장을 자연스럽게 다듬는 방법을 안내합니다."
-msgstr "Learn how to refine sentences naturally without writing prompts—just select a category and options."
+msgstr ""
+"Learn how to refine sentences naturally without writing prompts—just "
+"select a category and options."
 
 #: templates/learn/_layout.html:15
 msgid "사용자는"
@@ -2305,3 +2405,8 @@ msgstr "Section list"
 
 #~ msgid "desc"
 #~ msgstr ""
+
+# If your code uses: _("저장 중 오류가 발생했습니다: %(error)s", error=str(e))
+#~ msgid "저장 중 오류가 발생했습니다: %(error)s"
+#~ msgstr "An error occurred while saving: %(error)s"
+

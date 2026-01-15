@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {% if lang == "en" %}
+    Blog
+  {% else %}
+    블로그
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="stack">
+
+  <section class="card">
+    <h3 style="margin:0;">
+      {% if lang == "en" %}
+        Blog
+      {% else %}
+        블로그
+      {% endif %}
+    </h3>
+    <div class="small" style="margin-top:6px;">
+      {% if lang == "en" %}
+        Writing tips and updates about work communication.
+      {% else %}
+        업무 커뮤니케이션과 글쓰기에 대한 글을 공유합니다.
+      {% endif %}
+    </div>
+  </section>
+
+  {% for p in posts %}
+    <article class="card">
+      <h3 style="margin:0;">
+        <a
+          href="{{ ('/en' if lang == 'en' else '') + '/blog/' + p.slug }}"
+          style="color:inherit; text-decoration:none;"
+        >
+          {{ p.title }}
+        </a>
+      </h3>
+
+      {% if p.description %}
+        <p class="small" style="margin:10px 0 0 0;">
+          {{ p.description }}
+        </p>
+      {% endif %}
+
+      <div style="margin-top:12px;">
+        <a
+          class="btn ghost"
+          href="{{ ('/en' if lang == 'en' else '') + '/blog/' + p.slug }}"
+        >
+          {% if lang == "en" %}
+            Read
+          {% else %}
+            읽기
+          {% endif %}
+        </a>
+      </div>
+    </article>
+  {% endfor %}
+
+</div>
+{% endblock %}

@@ -43,18 +43,11 @@ def load_current_user():
 
     if not uid:
         g.current_user = None
-        print("[AUTH][load_current_user] guest")
         return None
 
     user = User.query.filter_by(user_id=uid).first()
     g.current_user = user
 
-    print(
-        "[AUTH][load_current_user]",
-        "uid=", uid,
-        "found=", bool(user),
-        "email=", getattr(user, "email", None)
-    )
     return user
 
 

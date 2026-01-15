@@ -50,6 +50,7 @@
 
           <a class="btn ghost" href="{{ url_for('feedback.feedback') }}">{{ _("피드백") }}</a>
           <a class="btn ghost" href="{{ url_for('subscribe.subscribe_page') }}">{{ _("구독") }}</a>
+          <a class="btn ghost" href="{{ '/en/blog' if (CURRENT_LANG or '').startswith('en') else '/blog' }}">{{ _("블로그") }}</a>
           <a class="btn ghost" href="{{ url_for('learn.learn_index') }}">{{ _("가이드") }}</a>
 
           {% if session.get('user') %}

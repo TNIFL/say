@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-01-14 19:09+0900\n"
+"POT-Creation-Date: 2026-01-15 15:21+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -592,7 +592,7 @@ msgstr ""
 msgid "사용량 대시보드"
 msgstr ""
 
-#: templates/admin_feedback.html:40 templates/base.html:57
+#: templates/admin_feedback.html:40 templates/base.html:58
 #: templates/mypage.html:84 templates/verify_result.html:13
 msgid "마이페이지"
 msgstr ""
@@ -740,34 +740,38 @@ msgstr ""
 msgid "구독"
 msgstr ""
 
-#: templates/base.html:53 templates/learn/_layout.html:12
+#: templates/base.html:53
+msgid "블로그"
+msgstr ""
+
+#: templates/base.html:54 templates/learn/_layout.html:12
 #: templates/learn/page.html:6
 msgid "가이드"
 msgstr ""
 
-#: templates/base.html:56
+#: templates/base.html:57
 msgid "기록보기"
 msgstr ""
 
-#: templates/base.html:62
+#: templates/base.html:63
 msgid "로그아웃"
 msgstr ""
 
-#: templates/base.html:64 templates/login.html:232 templates/login.html:269
+#: templates/base.html:65 templates/login.html:232 templates/login.html:269
 #: templates/signup.html:187 templates/subscribe.html:160
 msgid "로그인"
 msgstr ""
 
-#: templates/base.html:75 templates/reset.html:189 templates/signup.html:183
+#: templates/base.html:76 templates/reset.html:189 templates/signup.html:183
 #: templates/signup.html:197
 msgid "이용약관"
 msgstr ""
 
-#: templates/base.html:77 templates/reset.html:191 templates/signup.html:199
+#: templates/base.html:78 templates/reset.html:191 templates/signup.html:199
 msgid "개인정보 처리방침"
 msgstr ""
 
-#: templates/base.html:79 templates/reset.html:193 templates/signup.html:201
+#: templates/base.html:80 templates/reset.html:193 templates/signup.html:201
 msgid "면책 고지"
 msgstr ""
 
@@ -1304,6 +1308,10 @@ msgstr ""
 
 #: templates/mypage.html:137
 msgid "영문/숫자/._- 만 권장합니다."
+msgstr ""
+
+#: templates/mypage.html:143 templates/verify_notice.html:8
+msgid "이메일 인증"
 msgstr ""
 
 #: templates/mypage.html:145
@@ -2179,10 +2187,6 @@ msgstr ""
 
 #: templates/verify_notice.html:3
 msgid "이메일 인증 | Lexinoa"
-msgstr ""
-
-#: templates/verify_notice.html:8
-msgid "이메일 인증"
 msgstr ""
 
 #: templates/verify_notice.html:10
