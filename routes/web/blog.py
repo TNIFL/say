@@ -323,6 +323,226 @@ POSTS = {
 <p>상대가 ‘읽는 사람’이 아니라 ‘일을 진행시키는 사람’이라는 관점으로 구조를 잡으면, 회신 속도가 눈에 띄게 달라집니다.</p>
 """.strip(),
         },
+        # 11) 메일 보내기 전 점검
+        {
+            "slug": "before-send-tone-check",
+            "title": "메일 보내기 전, 말투 한 번 더 확인하세요",
+            "description": "보내기 버튼을 누르기 전 10초 점검으로 오해를 줄이는 방법. 요청·마감·피드백 메일에서 특히 효과적인 문장 구조와 예시를 정리했습니다.",
+            "content_html": """
+    <h1>메일 보내기 전, 말투 한 번 더 확인하세요</h1>
+    <p>업무 메일은 내용보다 ‘말투’에서 오해가 생기는 경우가 많습니다. 같은 요청이라도 문장 구조가 조금만 달라지면 상대가 느끼는 압박과 협업 태도가 크게 달라집니다.</p>
+    
+    <h2>왜 ‘보내기 전 점검’이 필요한가</h2>
+    <ul>
+      <li><strong>표정과 억양이 없다</strong>: 짧은 문장은 쉽게 지시처럼 읽힙니다.</li>
+      <li><strong>상대는 맥락을 모른다</strong>: 내가 급한 이유를 상대가 추측해야 합니다.</li>
+      <li><strong>회신이 늦어지면 일이 멈춘다</strong>: 오해가 생기면 확인 질문이 늘고, 속도가 떨어집니다.</li>
+    </ul>
+    
+    <h2>10초 점검 체크리스트</h2>
+    <ul>
+      <li><strong>내가 원하는 행동이 한 문장에 명확한가</strong>: 확인/승인/공유/회신 중 무엇인지</li>
+      <li><strong>왜 지금 필요한지 한 줄이 있는가</strong>: 일정, 의사결정, 다음 단계와 연결</li>
+      <li><strong>완충 표현이 있는가</strong>: “가능하시면”, “편하실 때”, “확인 부탁드립니다”</li>
+      <li><strong>마감이 있다면 최소한으로 제시했는가</strong>: “오늘 중”, “오후 3시 전”처럼 짧게</li>
+    </ul>
+    
+    <h2>가장 안전한 문장 구조</h2>
+    <p><strong>상황 1줄 → 요청 1줄 → (필요하면) 시간 1줄</strong></p>
+    <ul>
+      <li>상황: “내일 일정 반영 때문에 확인이 필요합니다.”</li>
+      <li>요청: “가능하실 때 승인 여부를 알려주시면 감사하겠습니다.”</li>
+      <li>시간: “가능하시면 오늘 오후 5시 전 확인 부탁드립니다.”</li>
+    </ul>
+    
+    <h2>짧은 예시</h2>
+    <p><strong>전:</strong> “오늘 안에 주세요.”<br>
+    <strong>후:</strong> “오늘 중 반영이 필요해서 확인 부탁드립니다. 가능하시면 오늘 안에 공유 부탁드립니다.”</p>
+    
+    <h2>마무리</h2>
+    <p>메일을 길게 쓰라는 뜻이 아닙니다. 같은 내용이라도 ‘의도 신호’를 한 줄만 더하면 오해가 줄고, 회신 속도가 빨라집니다. 문장을 보내기 전 10초만 점검해도 협업 비용이 내려갑니다.</p>
+    <p>문장을 붙여 넣고 상황에 맞게 말투를 정리하고 싶다면, 렉시노아로 한 번 더 다듬어 보세요.</p>
+    """.strip(),
+        },
+
+        # 12) 이대로 보내도 괜찮을까요?
+        {
+            "slug": "is-this-email-ok-to-send",
+            "title": "업무 메일, 이대로 보내도 괜찮을까요?",
+            "description": "‘무례해 보일까’ ‘압박처럼 들릴까’가 걱정될 때 확인해야 하는 4가지 포인트와, 바로 적용 가능한 대체 문장을 제공합니다.",
+            "content_html": """
+    <h1>업무 메일, 이대로 보내도 괜찮을까요?</h1>
+    <p>업무 메일을 작성하고도 마지막에 불안해지는 이유는 대개 하나입니다. 내용은 맞는데, 상대가 어떻게 받아들일지 확신이 없기 때문입니다.</p>
+    
+    <h2>불안해지는 메일의 공통점</h2>
+    <ul>
+      <li><strong>요청이 지시처럼 보인다</strong>: “하세요”, “주세요” 형태가 짧게 끝남</li>
+      <li><strong>상대 사정이 지워진다</strong>: 완충 없이 마감만 강조</li>
+      <li><strong>맥락이 생략된다</strong>: 상대가 ‘왜 지금’인지 추측해야 함</li>
+      <li><strong>다음 단계가 불명확하다</strong>: 확인 후 무엇이 달라지는지 안 보임</li>
+    </ul>
+    
+    <h2>보내기 전 4가지 확인</h2>
+    <ul>
+      <li><strong>관계</strong>: 상사/동료/외부 파트너에 맞는 톤인가</li>
+      <li><strong>상황</strong>: 일정/의사결정/장애 대응 등 급한 이유가 한 줄로 설명되는가</li>
+      <li><strong>요청</strong>: 무엇을 해주면 되는지 명확한가</li>
+      <li><strong>마감</strong>: 정말 필요할 때만, 최소한으로 제시했는가</li>
+    </ul>
+    
+    <h2>바로 쓰는 대체 문장</h2>
+    <ul>
+      <li>“확인해 주세요” → “가능하실 때 확인 부탁드립니다.”</li>
+      <li>“빨리 부탁드립니다” → “일정 반영 때문에 확인이 필요합니다. 가능하시면 오늘 중 부탁드립니다.”</li>
+      <li>“왜 안 됐나요?” → “진행 상황 확인이 필요해서요. 현재 상태 공유 부탁드립니다.”</li>
+    </ul>
+    
+    <h2>예시</h2>
+    <p><strong>전:</strong> “자료 아직인가요? 오늘 안에 주세요.”<br>
+    <strong>후:</strong> “일정 조율 때문에 진행 상황 확인이 필요합니다. 가능하시면 오늘 중으로 자료 공유 부탁드립니다.”</p>
+    
+    <h2>마무리</h2>
+    <p>‘정중한 표현’ 자체가 목적이 아니라, 상대가 방어적으로 읽지 않게 만드는 것이 목적입니다. 상황과 요청을 한 줄씩만 보완해도 문장의 체감 온도는 달라집니다.</p>
+    <p>초안을 빠르게 다듬고 싶다면, 렉시노아로 문장을 넣고 말투를 정리해 보세요.</p>
+    """.strip(),
+        },
+
+        # 13) 메일 말투 점검 5초
+        {
+            "slug": "tone-check-in-five-seconds",
+            "title": "메일 말투 점검, 5초면 충분합니다",
+            "description": "업무 메일에서 오해를 만드는 핵심은 ‘부족한 정보’입니다. 5초 점검 규칙(상황·요청·다음 단계)으로 말투를 안정적으로 만드는 방법을 안내합니다.",
+            "content_html": """
+    <h1>메일 말투 점검, 5초면 충분합니다</h1>
+    <p>메일에서 말투가 거칠게 보이는 이유는 대부분 ‘예의가 부족해서’가 아니라 ‘정보가 부족해서’입니다. 상대는 텍스트만 보고 의도를 추정해야 하므로, 짧은 문장이 오해를 만들기 쉽습니다.</p>
+    
+    <h2>5초 점검 규칙</h2>
+    <ul>
+      <li><strong>상황</strong>: 왜 지금 이 메시지를 보내는가</li>
+      <li><strong>요청</strong>: 상대가 해야 할 행동은 무엇인가</li>
+      <li><strong>다음 단계</strong>: 확인/회신 후 무엇이 진행되는가</li>
+    </ul>
+    
+    <h2>점검 전후 차이</h2>
+    <p><strong>전:</strong> “검토해서 회신 주세요.”<br>
+    <strong>후:</strong> “오늘 의사결정이 필요해서요. 가능하실 때 검토 후 의견 회신 부탁드립니다. 회신 주시면 그 방향으로 바로 반영하겠습니다.”</p>
+    
+    <h2>자주 쓰는 문장 3가지 리모델링</h2>
+    <ul>
+      <li><strong>요청</strong>: “확인 부탁드립니다” → “일정 반영 때문에 확인 부탁드립니다.”</li>
+      <li><strong>리마인드</strong>: “확인차 연락드립니다” → “다음 단계 진행을 위해 진행 상황 확인이 필요합니다.”</li>
+      <li><strong>승인</strong>: “승인 바랍니다” → “오늘 중 확정이 필요합니다. 가능하시면 승인 부탁드립니다.”</li>
+    </ul>
+    
+    <h2>마무리</h2>
+    <p>완벽한 문장을 쓰는 것보다, 오해가 생길 요소를 제거하는 것이 더 중요합니다. 상황·요청·다음 단계를 한 줄씩만 보완하면 말투가 안정되고, 회신도 빨라집니다.</p>
+    <p>문장을 빠르게 점검하고 싶다면, 렉시노아로 초안을 다듬어 보세요.</p>
+    """.strip(),
+        },
+
+        # 14) 직장인 이메일 말투 자동 정리
+        {
+            "slug": "work-email-tone-polish",
+            "title": "직장인 이메일 말투, ‘내용은 그대로’ 두고 부드럽게 만드는 법",
+            "description": "내용을 바꾸지 않고도 말투를 부드럽게 만들 수 있습니다. 완충 표현, 이유 한 줄, 요청의 명확화로 오해를 줄이는 실전 방법을 정리했습니다.",
+            "content_html": """
+    <h1>직장인 이메일 말투, ‘내용은 그대로’ 두고 부드럽게 만드는 법</h1>
+    <p>업무에서 중요한 것은 빠르게 전하는 것이지만, 빠름이 곧 거칠음이 되면 협업 비용이 늘어납니다. 핵심은 ‘내용을 바꾸지 않고 말투만 정리’하는 것입니다.</p>
+    
+    <h2>말투를 부드럽게 만드는 3가지 레버</h2>
+    <ul>
+      <li><strong>완충 표현</strong>: 부탁의 형태를 만들어 긴장도를 낮춥니다.</li>
+      <li><strong>이유 한 줄</strong>: 상대가 ‘왜 지금’인지 이해하면 압박으로 덜 느낍니다.</li>
+      <li><strong>요청 명확화</strong>: 상대가 해야 할 행동이 분명하면 불필요한 왕복이 줄어듭니다.</li>
+    </ul>
+    
+    <h2>자주 발생하는 오해 패턴</h2>
+    <ul>
+      <li>“오늘까지”처럼 결론만 있는 메시지</li>
+      <li>“확인”처럼 다음 행동이 없는 회신</li>
+      <li>상대 책임을 전제로 읽히는 표현</li>
+    </ul>
+    
+    <h2>전/후 예시</h2>
+    <p><strong>전:</strong> “자료 보내주세요. 오늘까지요.”<br>
+    <strong>후:</strong> “오늘 중 반영이 필요해서요. 가능하시면 자료를 오늘까지 공유 부탁드립니다.”</p>
+    
+    <p><strong>전:</strong> “확인했습니다.”<br>
+    <strong>후:</strong> “확인했습니다. 말씀하신 방향으로 반영해서 진행하겠습니다.”</p>
+    
+    <h2>마무리</h2>
+    <p>업무에서는 문장을 꾸미는 것보다 ‘오해를 줄이는 구조’를 갖추는 것이 훨씬 효과적입니다. 내용은 유지하되, 상대가 방어적으로 읽지 않게 만드는 신호를 한 줄만 더해보세요.</p>
+    <p>초안을 빠르게 정리하려면 렉시노아로 문장을 다듬어 보실 수 있습니다.</p>
+    """.strip(),
+        },
+
+        # 15) 리마인드(회신 받기)
+        {
+            "slug": "reminder-that-gets-replies",
+            "title": "리마인드 메일, 재촉처럼 안 들리면서 회신 받는 방법",
+            "description": "회신이 필요하지만 재촉은 부담스러울 때, ‘맥락-요청-시간’ 3단 구성으로 정중하면서도 효과적으로 답을 받는 문장 템플릿을 제공합니다.",
+            "content_html": """
+    <h1>리마인드 메일, 재촉처럼 안 들리면서 회신 받는 방법</h1>
+    <p>회신이 늦어지면 확인이 필요합니다. 하지만 말투가 거칠어지면 오히려 답이 늦어지거나 관계 비용이 생길 수 있습니다. 리마인드는 ‘재촉’이 아니라 ‘조율’로 읽히게 만들어야 합니다.</p>
+    
+    <h2>리마인드가 싫게 들리는 순간</h2>
+    <ul>
+      <li><strong>원하는 행동이 없다</strong>: “확인차 연락드립니다”만 있는 경우</li>
+      <li><strong>상대 탓처럼 보인다</strong>: “아직도 안 됐나요?” 같은 표현</li>
+      <li><strong>마감만 강조된다</strong>: 이유 없이 “오늘까지”만 반복</li>
+    </ul>
+    
+    <h2>답이 오는 3단 구성</h2>
+    <ul>
+      <li><strong>맥락 1줄</strong>: “다음 일정 반영 때문에 확인이 필요합니다.”</li>
+      <li><strong>요청 1줄</strong>: “가능하실 때 진행 상태 공유 부탁드립니다.”</li>
+      <li><strong>시간 1줄(필요 시)</strong>: “가능하시면 오늘 오후 5시 전 부탁드립니다.”</li>
+    </ul>
+    
+    <h2>문장 템플릿</h2>
+    <ul>
+      <li>“일정 조율 때문에 확인이 필요합니다. 가능하실 때 현재 진행 상태 공유 부탁드립니다.”</li>
+      <li>“다음 단계 진행을 위해 승인 여부 확인이 필요합니다. 가능하시면 오늘 중 회신 부탁드립니다.”</li>
+      <li>“의사결정이 필요한 부분이 있어요. 편하실 때 의견 부탁드립니다.”</li>
+    </ul>
+    
+    <h2>마무리</h2>
+    <p>리마인드에서 중요한 것은 ‘상대가 해야 할 일’을 명확하게 하되, 감정이 섞인 신호를 빼는 것입니다. 맥락과 요청을 한 줄씩만 보강해도 회신율이 달라집니다.</p>
+    <p>문장을 상황에 맞게 빠르게 정리하고 싶다면 렉시노아로 다듬어 보세요.</p>
+    """.strip(),
+        },
+
+        # 16) 통계/흐름 기반(과장 없이)
+        {
+            "slug": "ai-tone-check-trend",
+            "title": "요즘은 메일 보내기 전에 ‘말투 점검’을 한 번 더 합니다",
+            "description": "업무 커뮤니케이션이 텍스트 중심으로 바뀌면서 ‘말투 점검’이 생산성의 일부가 됐습니다. 오해를 줄이고 회신 속도를 올리는 실전 기준을 정리했습니다.",
+            "content_html": """
+    <h1>요즘은 메일 보내기 전에 ‘말투 점검’을 한 번 더 합니다</h1>
+    <p>업무 커뮤니케이션이 텍스트 중심으로 옮겨오면서, 말투는 ‘매너’가 아니라 ‘효율’의 문제가 됐습니다. 오해가 생기면 일정이 밀리고, 확인 질문이 늘고, 결국 일이 느려집니다.</p>
+    
+    <h2>말투 점검이 곧 생산성인 이유</h2>
+    <ul>
+      <li><strong>오해 비용 감소</strong>: 불필요한 감정 소모와 설명이 줄어듭니다.</li>
+      <li><strong>회신 속도 증가</strong>: 요청과 다음 단계가 명확해집니다.</li>
+      <li><strong>협업 신뢰 유지</strong>: 문장 하나로 관계가 삐걱거리는 상황을 예방합니다.</li>
+    </ul>
+    
+    <h2>점검 기준은 복잡하지 않습니다</h2>
+    <ul>
+      <li><strong>상황 한 줄</strong>: 왜 지금 필요한지</li>
+      <li><strong>요청 한 줄</strong>: 무엇을 원하고, 어떤 형태의 답이 필요한지</li>
+      <li><strong>다음 단계 한 줄</strong>: 회신 후 무엇이 진행되는지</li>
+    </ul>
+    
+    <h2>예시</h2>
+    <p><strong>전:</strong> “이거 수정하세요.”<br>
+    <strong>후:</strong> “이 부분이 다음 단계에 영향이 있어서 확인이 필요합니다. 가능하시면 해당 부분 수정 후 다시 공유 부탁드립니다.”</p>
+    
+    <h2>마무리</h2>
+    <p>말투 점검은 “더 공손하게”가 아니라 “더 명확하게”에 가깝습니다. 문장 구조를 정리하면 오해가 줄고, 협업이 빨라집니다. 초안을 빠르게 다듬고 싶다면 렉시노아로 말투를 점검해 보세요.</p>
+    """.strip(),
+        },
     ],
 
     "en": [
@@ -619,6 +839,184 @@ Request: Could you approve by 5pm today?<br>
 Reason: We need to align dependencies for tomorrow’s launch.”</p>
 """.strip(),
         },
+ # 11) Before-send check
+    {
+        "slug": "before-send-tone-check",
+        "title": "Before You Hit Send: A 10-Second Tone Check",
+        "description": "A simple pre-send checklist to reduce misread tone in work emails—without making your message longer than it needs to be.",
+        "content_html": """
+<h1>Before You Hit Send: A 10-Second Tone Check</h1>
+<p>In work email, misunderstandings often come from tone—not content. The goal isn’t to sound “extra polite.” It’s to prevent your message from reading as cold, demanding, or impatient.</p>
+
+<h2>Why a pre-send check matters</h2>
+<ul>
+  <li><strong>Email removes voice</strong>: short lines can read like commands.</li>
+  <li><strong>Recipients lack context</strong>: they guess your intent.</li>
+  <li><strong>Misread tone slows work</strong>: clarifying back-and-forth increases.</li>
+</ul>
+
+<h2>The 10-second checklist</h2>
+<ul>
+  <li><strong>Action</strong>: Is the ask explicit (approve/confirm/share/reply)?</li>
+  <li><strong>Reason</strong>: Is there a one-line “why now”?</li>
+  <li><strong>Softener</strong>: Do you have “if possible / when you can” where appropriate?</li>
+  <li><strong>Timing</strong>: If there’s a deadline, is it minimal and necessary?</li>
+</ul>
+
+<h2>A safe structure</h2>
+<p><strong>Context → Request → (Optional) Timing</strong></p>
+
+<h2>Example</h2>
+<p><strong>Before:</strong> “Send it today.”<br>
+<strong>After:</strong> “We need this to stay on schedule—could you share it today if possible?”</p>
+
+<p>If you want to do this quickly every time, Lexinoa can help you polish tone while keeping your original meaning.</p>
+""".strip(),
+    },
+
+    # 12) Is this OK to send?
+    {
+        "slug": "is-this-email-ok-to-send",
+        "title": "Is This Email OK to Send? 4 Checks for Work Tone",
+        "description": "If you’re worried your email sounds too harsh, run these four checks and use the ready-to-copy alternatives.",
+        "content_html": """
+<h1>Is This Email OK to Send? 4 Checks for Work Tone</h1>
+<p>If you hesitate right before sending, it’s usually not because the content is wrong. It’s because you’re unsure how it will land.</p>
+
+<h2>Common reasons emails feel “off”</h2>
+<ul>
+  <li><strong>Request reads like a command</strong></li>
+  <li><strong>No context</strong> (the recipient has to guess why it’s urgent)</li>
+  <li><strong>Overemphasis on deadlines</strong></li>
+  <li><strong>No next step</strong> (the thread stalls)</li>
+</ul>
+
+<h2>Four pre-send checks</h2>
+<ul>
+  <li><strong>Relationship:</strong> does the tone fit the recipient?</li>
+  <li><strong>Situation:</strong> do you include a one-line reason?</li>
+  <li><strong>Request:</strong> is the action explicit?</li>
+  <li><strong>Deadline:</strong> only if necessary, and keep it minimal.</li>
+</ul>
+
+<h2>Quick swaps</h2>
+<ul>
+  <li>“Check this.” → “Could you take a look when you have a moment?”</li>
+  <li>“ASAP.” → “We’re aligning the timeline—could you reply today if possible?”</li>
+  <li>“Why isn’t this done?” → “Quick status check so we can plan the next step—where are we at?”</li>
+</ul>
+
+<p>If you want to apply these consistently, Lexinoa can rewrite tone while keeping your intent intact.</p>
+""".strip(),
+    },
+
+    # 13) 5-second tone check
+    {
+        "slug": "tone-check-in-five-seconds",
+        "title": "A 5-Second Tone Check That Prevents Misreads",
+        "description": "Most “rude-sounding” emails aren’t rude—they’re missing intent signals. Use this 3-point check: reason, action, next step.",
+        "content_html": """
+<h1>A 5-Second Tone Check That Prevents Misreads</h1>
+<p>Many emails sound harsh not because you’re being rude, but because the message is missing key intent signals.</p>
+
+<h2>The 3-point check</h2>
+<ul>
+  <li><strong>Reason:</strong> why this matters now</li>
+  <li><strong>Action:</strong> what you need the recipient to do</li>
+  <li><strong>Next step:</strong> what happens after they respond</li>
+</ul>
+
+<h2>Example</h2>
+<p><strong>Before:</strong> “Review and reply.”<br>
+<strong>After:</strong> “We need to decide today to keep the timeline—could you review and share your recommendation? I’ll proceed based on your reply.”</p>
+
+<p>Want this as a one-click habit? Lexinoa can help you apply it instantly.</p>
+""".strip(),
+    },
+
+    # 14) Keep meaning, soften tone
+    {
+        "slug": "keep-meaning-soften-tone",
+        "title": "Keep the Meaning, Soften the Tone: A Practical Guide",
+        "description": "You don’t need to rewrite your whole email. Add a softener, a one-line reason, and an explicit ask—tone improves immediately.",
+        "content_html": """
+<h1>Keep the Meaning, Soften the Tone: A Practical Guide</h1>
+<p>Speed matters at work. But when speed turns into bluntness, you pay for it later in delays and friction. The fix is to keep your meaning and adjust the delivery.</p>
+
+<h2>Three levers that change tone fast</h2>
+<ul>
+  <li><strong>Softener:</strong> “when you can,” “if possible,” “could you…”</li>
+  <li><strong>One-line reason:</strong> connects urgency to a real constraint</li>
+  <li><strong>Explicit ask:</strong> confirm/approve/share/reply</li>
+</ul>
+
+<h2>Before/After</h2>
+<p><strong>Before:</strong> “Send the file today.”<br>
+<strong>After:</strong> “We need it to keep the schedule—could you send the file today if possible?”</p>
+
+<p>Lexinoa helps you do this consistently without overthinking each sentence.</p>
+""".strip(),
+    },
+
+    # 15) Follow-up that gets replies
+    {
+        "slug": "reminder-that-gets-replies",
+        "title": "Follow-Ups That Get Replies Without Sounding Pushy",
+        "description": "Use a simple structure—context, action, timing—to turn follow-ups into coordination instead of pressure.",
+        "content_html": """
+<h1>Follow-Ups That Get Replies Without Sounding Pushy</h1>
+<p>Follow-ups are necessary, but vague pings create friction. The goal is to make your message read as coordination, not blame.</p>
+
+<h2>What makes follow-ups feel pushy</h2>
+<ul>
+  <li>No clear action</li>
+  <li>Implicit blame (“Did you see my email?”)</li>
+  <li>Deadline without context</li>
+</ul>
+
+<h2>A structure that works</h2>
+<ul>
+  <li><strong>Context:</strong> why you’re checking now</li>
+  <li><strong>Action:</strong> what you need (status/approval/confirmation)</li>
+  <li><strong>Timing (optional):</strong> only if necessary</li>
+</ul>
+
+<h2>Examples</h2>
+<ul>
+  <li>“We’re finalizing the schedule—could you share a quick status update when you can?”</li>
+  <li>“To keep dependencies aligned, could you confirm by end of day if possible?”</li>
+</ul>
+
+<p>Lexinoa can generate a clean follow-up in your preferred tone and level of formality.</p>
+""".strip(),
+    },
+
+    # 16) Trend / productivity framing
+    {
+        "slug": "ai-tone-check-trend",
+        "title": "Why Tone Checks Are Becoming Part of Productivity",
+        "description": "As work communication becomes more text-heavy, tone affects speed. Clear intent signals reduce misreads and increase reply rates.",
+        "content_html": """
+<h1>Why Tone Checks Are Becoming Part of Productivity</h1>
+<p>Tone is not just “politeness.” In text-based work, tone impacts speed: misread intent creates extra threads, delays, and friction.</p>
+
+<h2>How tone affects execution</h2>
+<ul>
+  <li><strong>Less misinterpretation</strong> → fewer clarification cycles</li>
+  <li><strong>Clear asks</strong> → faster replies</li>
+  <li><strong>Lower defensiveness</strong> → smoother collaboration</li>
+</ul>
+
+<h2>The simple standard</h2>
+<ul>
+  <li>One-line reason</li>
+  <li>Explicit action</li>
+  <li>Optional timing only when needed</li>
+</ul>
+
+<p>If you want to do this consistently, Lexinoa can help you polish tone quickly while preserving your intent.</p>
+""".strip(),
+    },
     ],
 }
 

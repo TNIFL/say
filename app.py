@@ -13,10 +13,6 @@ from core.extensions import init_extensions, oauth
 from core.hooks import register_hooks
 from security.headers import init_security_headers
 
-from flask_babel import gettext, get_locale
-
-from core.extensions import babel
-
 
 def create_app():
     app = Flask(__name__)
@@ -75,8 +71,6 @@ def create_app():
     routes.register_routes(app)
     register_hooks(app)
 
-    # app.py 또는 create_app() 안쪽 (app 생성 후)
-    import traceback
     from flask import request
 
     @app.after_request
@@ -97,9 +91,6 @@ def create_app():
                 print("[400 DEBUG] logging failed:", e)
         return resp
 
-    # 로그에서 DB URL 확인
-    # print("[DB] SQLALCHEMY_DATABASE_URI=", app.config.get("SQLALCHEMY_DATABASE_URI"))
-    # print("[DB] DATABASE_URL env exists?", "DATABASE_URL" in os.environ)
     @app.get("/health")
     def health():
         return {"ok": True}, 200
@@ -115,16 +106,6 @@ def create_app():
             mimetype="text/plain"
         )
 
-
-    @app.get("/_i18n_test")
-    def _i18n_test():
-        return f"locale={get_locale()} | " + gettext("문장 교정")
-
-    print("DEBUG app.root_path =", app.root_path)
-    print("DEBUG expected mo =", os.path.join(app.root_path, "translations", "en", "LC_MESSAGES", "messages.mo"))
-    print("DEBUG exists? =",
-          os.path.exists(os.path.join(app.root_path, "translations", "en", "LC_MESSAGES", "messages.mo")))
-    print("DEBUG BABEL_TRANSLATION_DIRECTORIES =", app.config.get("BABEL_TRANSLATION_DIRECTORIES"))
 
     return app
 
